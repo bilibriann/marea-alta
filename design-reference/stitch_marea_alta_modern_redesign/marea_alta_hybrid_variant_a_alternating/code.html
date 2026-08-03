@@ -1,0 +1,421 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Marea Alta Logistics | Soluciones Eficientes LATAM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#335c9c",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#4d74b6",
+                        "on-primary-container": "#fefcff",
+                        "secondary": "#5a5e6a",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#dfe2f0",
+                        "on-secondary-container": "#606470",
+                        "tertiary": "#006a3b",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#218550",
+                        "on-tertiary-container": "#f6fff4",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "background": "#0B132B",
+                        "on-background": "#ffffff",
+                        "surface": "#141f3d",
+                        "on-surface": "#ffffff",
+                        "surface-variant": "#1c2a4f",
+                        "on-surface-variant": "#94a3b8",
+                        "outline": "#727782",
+                        "outline-variant": "#c2c6d2",
+                        "inverse-surface": "#0B132B",
+                        "inverse-on-surface": "#ffffff",
+                        "inverse-primary": "#abc7ff",
+                        "surface-bright": "#1c2a4f",
+                        "surface-dim": "#080e21",
+                        "surface-container-lowest": "#060914",
+                        "surface-container-low": "#080e21",
+                        "surface-container": "#0B132B",
+                        "surface-container-high": "#141f3d",
+                        "surface-container-highest": "#1c2a4f",
+                        "accent": "#84bd00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "base-unit": "8px",
+                        "section-padding": "96px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Poppins"],
+                        "body-md": ["Poppins"],
+                        "headline-lg-mobile": ["Poppins"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg": ["Poppins"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .bento-card {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(132, 189, 0, 0.1);
+        }
+        .hero-gradient {
+            background: linear-gradient(to right, rgba(11, 19, 43, 0.95) 0%, rgba(11, 19, 43, 0.6) 100%);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .wave-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .wave-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md">
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full z-50 glass-nav bg-background/80 shadow-sm border-b border-surface-variant">
+<nav class="max-w-container-max mx-auto px-margin-desktop flex items-center justify-between h-20">
+<div class="flex items-center">
+<img alt="Marea Alta Logistics" class="h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLsM16oXCDobrygxbyQyEa_cveXkE9Cr4b-IhfRZbP45ScWd2YT72eQadIhtZUShnk2axQTZuDCWrXv5cVmCbgX1vWznBO5_t01oinQ6HxHF9fr-Br5S_jte8iCNKpkxvYpZgCrV5oTMZ8GJsKjiAQsp-fTvDMLZLQG9WB-ScOkss-jUQr3Iogx_AwoXLZiSh4MxzjEdRGKTksPjM3ff-VF9loCpfrS3pE-u5N5w83xTI6L7YzqVbZyro-I">
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-white font-semibold font-body-md text-body-md border-b-2 border-accent pb-1" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-accent transition-colors duration-200 font-body-md text-body-md" href="#">Services</a>
+<a class="text-on-surface-variant hover:text-accent transition-colors duration-200 font-body-md text-body-md" href="#">Products</a>
+<a class="text-on-surface-variant hover:text-accent transition-colors duration-200 font-body-md text-body-md" href="#">Contact</a>
+</div>
+<button class="bg-accent text-[#0B132B] px-6 py-2.5 rounded-lg font-bold hover:brightness-110 active:scale-95 transition-all shadow-md">
+                Cotizar Ahora
+            </button>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative h-[95vh] min-h-[700px] flex items-center overflow-hidden bg-background">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60 mix-blend-luminosity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9SyMxROGsb5Yfvk6AqtQS2A7IAXMRzmsCUhMN5jSe-KqdKEUvefGVxasvKL3zNvSLLmV14kI4346bCaDy0n0jWhtEjZLh6qNZgRtn8wKtHw6YeBjqbTohc0CJEay5sMAG0LT4-dYlhP8Gfp5zIxCxUMgBU56HsFsMEHxLtw3UCptot2n-EufZvFoNqU_96p2QtTtcONdn7f1_bFeaWAl0f9FzAAJpLS3-OOwtOU8TOiZQKjOKO_NO">
+<div class="absolute inset-0 hero-gradient"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto px-margin-desktop w-full">
+<div class="max-w-3xl space-y-8">
+<span class="inline-block px-4 py-1.5 bg-accent/20 text-accent border border-accent/30 rounded-full font-label-sm text-label-sm tracking-wider">
+                        LÍDERES EN LOGÍSTICA
+                    </span>
+<h1 class="font-headline-xl text-headline-xl text-white leading-tight">
+                        Soluciones logísticas eficientes para LATAM
+                    </h1>
+<p class="text-on-surface-variant text-xl max-w-xl">
+                        Optimizamos su cadena de suministro con precisión y tecnología, garantizando la integridad de cada envío en toda la región.
+                    </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="bg-accent text-[#0B132B] px-10 py-4 rounded-lg font-bold hover:bg-white transition-all shadow-[0_0_20px_rgba(132,189,0,0.3)] text-lg">
+                            Cotizar Ahora
+                        </button>
+<button class="border-2 border-accent/40 text-white px-10 py-4 rounded-lg font-bold backdrop-blur-md hover:bg-accent/10 transition-all text-lg">
+                            Nuestros Servicios
+                        </button>
+</div>
+</div>
+</div>
+<div class="wave-divider z-10">
+<svg data-name="Layer 1" preserveAspectRatio="none" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+<path class="shape-fill" d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C71.55,19.34,147.28,45.2,213,56.44Z" style="fill: #ffffff;"></path>
+</svg>
+</div>
+</section>
+<!-- Values Section -->
+<section class="py-section-padding bg-white relative">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-[#0B132B] mb-6" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">Confianza Construida en Precisión</h2>
+<div class="h-1 w-24 bg-accent mx-auto rounded-full"></div>
+</div>
+<div class="flex overflow-x-auto hide-scrollbar gap-gutter pb-8 snap-x snap-mandatory">
+<!-- Card 1 -->
+<div class="min-w-[300px] md:min-w-[350px] flex-shrink-0 bg-white p-10 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 bento-card snap-center" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-8 text-accent border border-accent/20">
+<span class="material-symbols-outlined text-3xl">ac_unit</span>
+</div>
+<h3 class="font-headline-lg text-2xl text-[#0B132B] mb-4">Maestría Cold-Chain</h3>
+<p class="text-[#0B132B]/70 text-body-md">
+                            Especialistas en el transporte de carga sensible al clima, manteniendo rangos térmicos críticos sin interrupciones.
+                        </p>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[300px] md:min-w-[350px] flex-shrink-0 bg-white p-10 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 bento-card snap-center" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-8 text-accent border border-accent/20">
+<span class="material-symbols-outlined text-3xl">history</span>
+</div>
+<h3 class="font-headline-lg text-2xl text-[#0B132B] mb-4">33 Años de Historia</h3>
+<p class="text-[#0B132B]/70 text-body-md">
+                            Tres décadas de experiencia ininterrumpida forjando rutas seguras y eficientes por todo el continente latinoamericano.
+                        </p>
+</div>
+<!-- Card 3 -->
+<div class="min-w-[300px] md:min-w-[350px] flex-shrink-0 bg-white p-10 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 bento-card snap-center" style="opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-8 text-accent border border-accent/20">
+<span class="material-symbols-outlined text-3xl">verified</span>
+</div>
+<h3 class="font-headline-lg text-2xl text-[#0B132B] mb-4">ISO 9001:2021</h3>
+<p class="text-[#0B132B]/70 text-body-md">
+                            Certificación internacional que avala nuestros procesos de gestión de calidad y mejora continua operativa.
+                        </p>
+</div>
+<!-- Card 4 -->
+<div class="min-w-[300px] md:min-w-[350px] flex-shrink-0 bg-white p-10 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 bento-card snap-center" style="opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-8 text-accent border border-accent/20">
+<span class="material-symbols-outlined text-3xl">public</span>
+</div>
+<h3 class="font-headline-lg text-2xl text-[#0B132B] mb-4">Cobertura Total</h3>
+<p class="text-[#0B132B]/70 text-body-md">
+                            Red logística integrada con presencia en los principales nodos comerciales de toda América Latina.
+                        </p>
+</div>
+</div>
+</div>
+<div class="wave-divider z-10">
+<svg data-name="Layer 1" preserveAspectRatio="none" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+<path class="shape-fill" d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C71.55,19.34,147.28,45.2,213,56.44Z" style="fill: #0B132B;"></path>
+</svg>
+</div>
+</section>
+<!-- Sectors Section -->
+<section class="py-section-padding bg-background relative overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-desktop relative z-10">
+<div class="mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div>
+<span class="text-accent font-label-sm text-label-sm tracking-widest uppercase mb-2 block">Expertise Vertical</span>
+<h2 class="font-headline-xl text-headline-xl text-white" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">Sectores de Especialidad</h2>
+</div>
+<div class="max-w-md">
+<p class="text-on-surface-variant text-body-md">Entendemos los requerimientos únicos de cada industria para ofrecer soluciones de logística a medida y máxima seguridad.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Farmacéuticas -->
+<div class="group relative h-96 bg-[#1C2541] rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwufFVxoezRTSHHBVPI4JXDE-5rVDOJgZElSHAzui6aWZg2EFuFQgiMd871kXWRdSOO9Z6g5z6K-OzZh2evRQ88YlVwz2ftlg707nX1PbxOl-JQRm8uN8tJgQUwpT-7m6giXmZZ_0kosHbkAfmB5IQ6WdsC9dmGhS5n8h8rnOfwA3BbLPT-EulKen3naM0Ys8TCFtQ4MTO48Yx5POPIy_YGzx6rK8ImTxW2HkQutWK3qo0_qEIGsyH">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full border-t border-accent/0 group-hover:border-accent/100 transition-colors duration-300">
+<h4 class="text-white font-bold text-xl mb-2 group-hover:text-accent transition-colors">Farmacéuticas</h4>
+<p class="text-on-surface-variant text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">Cumplimiento estricto de normativas sanitarias y control térmico total.</p>
+</div>
+</div>
+<!-- Alimentarias -->
+<div class="group relative h-96 bg-[#1C2541] rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);"><img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkraBaHURSK5Hatk_G22VvR41YWiENeYu_wCpH0hPpLHTKZEZUbv9ayiMnZ1Svbn_LpaWA99iZIDmPVwm3hgHoks-ihkXPXMKPSWVggniYA2-wwoSnSxkm5ntl9A-DF3W2W0h04mvWwZvTqQGtAoTd_hecQRaDFn7-4G7Q9lhL2g22_Dfg-Z5AfBnajkCpuaPoYfeKE1PbSFGkapxqgH7W8uVbQn4XC26Ei1wbe9gmTdaHcHj7UK0jEYgPFi9ujApZjo6SCBbYZxA" alt="Almacén de logística alimentaria en frío"><div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div><div class="absolute bottom-0 left-0 p-8 w-full border-t border-accent/0 group-hover:border-accent/100 transition-colors duration-300"><h4 class="text-white font-bold text-xl mb-2 group-hover:text-accent transition-colors">Alimentarias</h4><p class="text-on-surface-variant text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">Preservamos la frescura del campo a la mesa mediante logística ágil.</p></div></div>
+<!-- Health Care -->
+<div class="group relative h-96 bg-[#1C2541] rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUvOh_qjQKoM_PDy1bAIxI-33dD94flRdE2PMJAO5TsqHnH1_uKRy4kL9WzIkQnHfUSoHua-VZ8tAlZxFfnrkKpZdsgx_LTMHLv6Fb2GbgOWzJnCV7Th9mcvQ71PbCyiQOppmDFRaaWk-9wOZKZr-sveW40MJt3T3DvVp975ZguVTxzRKH5ytBx5DFwwx2Sj8u2-zv8SNbnLik999SGENLJritBsSJQsDsVuFrd-gq3h5O0biNz5Q">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full border-t border-accent/0 group-hover:border-accent/100 transition-colors duration-300">
+<h4 class="text-white font-bold text-xl mb-2 group-hover:text-accent transition-colors">Health Care</h4>
+<p class="text-on-surface-variant text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">Transporte especializado para dispositivos médicos y equipos de alta gama.</p>
+</div>
+</div>
+<!-- Operadores -->
+<div class="group relative h-96 bg-[#1C2541] rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuI8LUSTTycP9DMSXPMxivutY4JYa87e0u8cP-U1ncS2FclK9uwnDRNrDy4VHLGUxNaSu_-WdmZ8eDJHI9er-mJ3XUiqBfj-Yq7mTZlTDK1mCMjM54gxDYryUwtgjlsaj90AeCGlvMyFJZdhiD0ODzEKhJ_rT7_OksTFB25_SY6IJDN8mV1geJYC1WGdnAwTgAhDDYssHJ5wTaBjEZ08q63VgURDCGLQebyRglKbc3YnYXeZhZAyUn">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full border-t border-accent/0 group-hover:border-accent/100 transition-colors duration-300">
+<h4 class="text-white font-bold text-xl mb-2 group-hover:text-accent transition-colors">Operadores</h4>
+<p class="text-on-surface-variant text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">Integración logística total para maximizar la rentabilidad operativa.</p>
+</div>
+</div>
+</div>
+<div class="mt-16 text-center">
+<button class="border-2 border-accent text-accent px-10 py-4 rounded-lg font-bold hover:bg-accent hover:text-[#0B132B] transition-all shadow-[0_0_15px_rgba(132,189,0,0.2)]">
+                        Ver todos los servicios
+                    </button>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="py-section-padding bg-white relative">
+<div class="wave-divider top-0 rotate-180 z-10">
+
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop mt-12 relative z-20">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+<div class="space-y-10">
+<div class="space-y-4">
+<h2 class="font-headline-xl text-headline-xl text-[#0B132B]" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">Inicie su Cotización</h2>
+<p class="text-[#0B132B]/70 text-lg max-w-md">
+                                Nuestro equipo de expertos está listo para diseñar la ruta más eficiente para su negocio. Reciba una asesoría personalizada hoy mismo.
+                            </p>
+</div>
+<div class="space-y-6 pt-6">
+<div class="flex items-center gap-6 text-[#0B132B] group" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="w-12 h-12 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">call</span>
+</div>
+<span class="text-lg font-semibold group-hover:text-accent transition-colors">+52 (55) 1234-5678</span>
+</div>
+<div class="flex items-center gap-6 text-[#0B132B] group" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="w-12 h-12 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<span class="text-lg font-semibold group-hover:text-accent transition-colors">contacto@marealta.com</span>
+</div>
+<div class="flex items-center gap-6 text-[#0B132B] group" style="opacity: 1; transform: translateY(0px); transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="w-12 h-12 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<span class="text-lg font-semibold group-hover:text-accent transition-colors">Ciudad de México, LATAM Hub</span>
+</div>
+</div>
+</div>
+<div class="bg-white p-10 md:p-14 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100">
+<form class="space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-3">
+<label class="block text-sm font-bold text-[#0B132B]/60 uppercase tracking-wider">Nombre</label>
+<input class="w-full bg-gray-50 border border-gray-200 text-[#0B132B] rounded-lg focus:ring-2 focus:ring-accent focus:border-accent h-14 px-4 transition-all" placeholder="Nombre completo" type="text">
+</div>
+<div class="space-y-3">
+<label class="block text-sm font-bold text-[#0B132B]/60 uppercase tracking-wider">Email</label>
+<input class="w-full bg-gray-50 border border-gray-200 text-[#0B132B] rounded-lg focus:ring-2 focus:ring-accent focus:border-accent h-14 px-4 transition-all" placeholder="correo@empresa.com" type="email">
+</div>
+</div>
+<div class="space-y-3">
+<label class="block text-sm font-bold text-[#0B132B]/60 uppercase tracking-wider">Mensaje</label>
+<textarea class="w-full bg-gray-50 border border-gray-200 text-[#0B132B] rounded-lg focus:ring-2 focus:ring-accent focus:border-accent px-4 py-4 transition-all" placeholder="¿Cómo podemos ayudarle con su logística?" rows="5"></textarea>
+</div>
+<button class="w-full bg-accent text-[#0B132B] py-5 rounded-lg font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(132,189,0,0.2)] text-lg active:scale-[0.98]" type="submit">
+                                Enviar Mensaje
+                            </button>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background text-white py-20 border-t border-white/5">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="space-y-8">
+<div class="flex items-center">
+<img alt="Marea Alta Logistics" class="h-10 w-auto object-contain brightness-0 invert" src="https://lh3.googleusercontent.com/aida/AP1WRLsM16oXCDobrygxbyQyEa_cveXkE9Cr4b-IhfRZbP45ScWd2YT72eQadIhtZUShnk2axQTZuDCWrXv5cVmCbgX1vWznBO5_t01oinQ6HxHF9fr-Br5S_jte8iCNKpkxvYpZgCrV5oTMZ8GJsKjiAQsp-fTvDMLZLQG9WB-ScOkss-jUQr3Iogx_AwoXLZiSh4MxzjEdRGKTksPjM3ff-VF9loCpfrS3pE-u5N5w83xTI6L7YzqVbZyro-I">
+</div>
+<p class="text-on-surface-variant text-body-md leading-relaxed">Logística de alta precisión con cobertura total y excelencia operativa en Latinoamérica.</p>
+</div>
+<div class="space-y-6">
+<h4 class="text-accent font-bold uppercase tracking-widest text-sm">Enlaces Rápidos</h4>
+<ul class="space-y-4">
+<li class=""><a class="text-on-surface-variant hover:text-accent transition-colors" href="#">Home</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-accent transition-colors" href="#">Services</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-accent transition-colors" href="#">Products</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-accent transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div class="space-y-6">
+<h4 class="text-accent font-bold uppercase tracking-widest text-sm">Servicios</h4>
+<ul class="space-y-4">
+<li class=""><a class="text-on-surface-variant hover:text-accent transition-colors" href="#">Cold Chain</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-accent transition-colors" href="#">Air Freight</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-accent transition-colors" href="#">Maritime</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-accent transition-colors" href="#">Last Mile</a></li>
+</ul>
+</div>
+<div class="space-y-6">
+<h4 class="text-accent font-bold uppercase tracking-widest text-sm">Contacto</h4>
+<div class="space-y-4">
+<p class="text-on-surface-variant text-sm flex items-center gap-2"><span class="material-symbols-outlined text-base text-accent">mail</span> contacto@marealta.com</p>
+<p class="text-on-surface-variant text-sm flex items-center gap-2"><span class="material-symbols-outlined text-base text-accent">call</span> +52 (55) 1234-5678</p>
+</div>
+<div class="flex gap-4 mt-6">
+<a class="w-10 h-10 rounded-full bg-surface border border-white/5 flex items-center justify-center hover:border-accent hover:text-accent transition-colors shadow-inner" href="#">
+<span class="material-symbols-outlined text-lg">share</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface border border-white/5 flex items-center justify-center hover:border-accent hover:text-accent transition-colors shadow-inner" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+</a>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop mt-20 pt-10 border-t border-white/10 text-center text-on-surface-variant text-sm">
+            © 2024 Marea Alta Logistics. Todos los derechos reservados.
+        </div>
+</footer>
+<script>
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.bento-card, section h2, .group').forEach(el => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(30px)";
+            el.style.transition = "all 0.8s cubic-bezier(0.22, 1, 0.36, 1)";
+            observer.observe(el);
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+</body></html>

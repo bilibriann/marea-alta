@@ -1,0 +1,71 @@
+import Link from 'next/link'
+import { siteConfig } from '@/config'
+import { CallIcon, MailIcon, ShareIcon, GlobeIcon } from '@/components/icons'
+
+export function Footer() {
+  return (
+    <footer className="border-t-4 border-primary bg-inverse-surface py-20 text-white">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 md:grid-cols-4 md:px-12">
+        <div className="space-y-8">
+          <Link href="/" className="text-xl font-bold text-white">
+            marea<span className="text-primary-container">alta</span>
+          </Link>
+          <p className="leading-relaxed text-white/60">{siteConfig.description}</p>
+        </div>
+        <div className="space-y-6">
+          <h4 className="text-sm font-bold uppercase tracking-widest text-tertiary">
+            Enlaces Rápidos
+          </h4>
+          <ul className="space-y-4">
+            {siteConfig.nav.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="text-white/70 transition-colors hover:text-white">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="space-y-6">
+          <h4 className="text-sm font-bold uppercase tracking-widest text-tertiary">
+            Contacto
+          </h4>
+          <div className="space-y-4">
+            <p className="flex items-center gap-2 text-sm text-white/70">
+              <MailIcon className="h-4 w-4 text-tertiary" /> {siteConfig.contacto.email}
+            </p>
+            <p className="flex items-center gap-2 text-sm text-white/70">
+              <CallIcon className="h-4 w-4 text-tertiary" /> {siteConfig.contacto.telefono}
+            </p>
+          </div>
+        </div>
+        <div className="space-y-6">
+          <h4 className="text-sm font-bold uppercase tracking-widest text-tertiary">
+            Síguenos
+          </h4>
+          <div className="flex gap-4">
+            {siteConfig.redes.instagram && (
+              <a
+                href={siteConfig.redes.instagram}
+                className="flex h-12 w-12 items-center justify-center rounded-none border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
+              >
+                <ShareIcon className="h-5 w-5" />
+              </a>
+            )}
+            {siteConfig.redes.linkedin && (
+              <a
+                href={siteConfig.redes.linkedin}
+                className="flex h-12 w-12 items-center justify-center rounded-none border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
+              >
+                <GlobeIcon className="h-5 w-5" />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="mx-auto mt-20 max-w-7xl border-t border-white/10 px-4 pt-10 text-center text-sm text-white/40 md:px-12">
+        © {new Date().getFullYear()} {siteConfig.name}. Todos los derechos reservados.
+      </div>
+    </footer>
+  )
+}

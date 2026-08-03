@@ -1,0 +1,14 @@
+[
+  {
+    "nombre": "ISO 9001",
+    "descripcion": "Certificación de sistema de gestión de calidad vigente desde 2008.",
+    "imagen": "/images/certificaciones/iso-9001.webp",
+    "organismo": "AENOR"
+  },
+  {
+    "nombre": "IQNET",
+    "descripcion": "Red internacional de organismos de certificación que avala nuestros procesos.",
+    "imagen": "/images/certificaciones/iqnet.webp",
+    "organismo": "IQNET"
+  }
+]

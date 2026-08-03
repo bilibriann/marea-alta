@@ -1,0 +1,50 @@
+{
+  "hero": {
+    "badge": "Fabricantes de Cadena de Frío",
+    "titulo": "Soluciones de cadena de frío para industrias exigentes",
+    "subtitulo": "33 años fabricando embalajes térmicos de alta precisión para los sectores farmacéutico, alimentario y logístico en Chile y el Cono Sur.",
+    "cta": "Solicitar Cotización",
+    "ctaHref": "/contacto",
+    "ctaSecundario": "Ver Servicios",
+    "ctaSecundarioHref": "/servicios"
+  },
+  "confianza": {
+    "titulo": "Confianza Construida en Precisión",
+    "items": [
+      {
+        "icono": "snowflake",
+        "titulo": "Maestría Cold-Chain",
+        "descripcion": "Especialistas en el diseño de embalajes térmicos que mantienen rangos críticos de temperatura sin interrupciones."
+      },
+      {
+        "icono": "history",
+        "titulo": "Trayectoria Comprobada",
+        "descripcion": "Fabricamos soluciones de cadena de frío desde 1987, con distribución en Chile y el Cono Sur."
+      },
+      {
+        "icono": "verified",
+        "titulo": "ISO 9001",
+        "descripcion": "Certificación internacional que avala nuestros procesos de gestión de calidad desde 2008."
+      },
+      {
+        "icono": "globe",
+        "titulo": "Cobertura Cono Sur",
+        "descripcion": "Distribuimos desde San Bernardo, RM hacia clientes farmacéuticos, alimentarios y logísticos de la región."
+      }
+    ]
+  },
+  "nosotros": {
+    "titulo": "33 años cuidando la cadena de frío",
+    "descripcion": "Desde 1987, Marea Alta diseña y fabrica soluciones de embalaje térmico para empresas que no pueden permitirse perder la cadena de frío. Operamos desde San Bernardo, RM, con distribución en el Cono Sur.",
+    "fundacion": 1987
+  },
+  "mision": "Fabricar artículos de calidad que mantengan la cadena de frío, con excelencia en servicio, involucrando a nuestros equipos de producción, administración y tecnología.",
+  "vision": "Expandir nuestra presencia a nivel nacional e internacional con innovaciones tecnológicas que respeten el medio ambiente.",
+  "valores": [
+    "Integridad y honestidad",
+    "Comunicación clara",
+    "Respeto interno y externo",
+    "Responsabilidad ambiental",
+    "Mejora continua de la calidad"
+  ]
+}

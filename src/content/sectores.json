@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "farmaceuticas",
+    "nombre": "Farmacéuticas",
+    "descripcion": "Soluciones que cumplen con GDP y requisitos regulatorios para el transporte de medicamentos sensibles a la temperatura.",
+    "imagen": "/images/sectores/farmaceuticas.webp"
+  },
+  {
+    "slug": "soluciones-alimentarias",
+    "nombre": "Soluciones Alimentarias",
+    "descripcion": "Embalajes certificados para la industria de alimentos que garantizan la cadena de frío desde el origen hasta el consumidor.",
+    "imagen": "/images/sectores/soluciones-alimentarias.webp"
+  },
+  {
+    "slug": "operadores-logistica",
+    "nombre": "Operadores & Logística",
+    "descripcion": "Productos diseñados para operadores logísticos que gestionan múltiples rutas y temperaturas de transporte.",
+    "imagen": "/images/sectores/operadores-logistica.webp"
+  },
+  {
+    "slug": "acuicolas",
+    "nombre": "Acuícolas",
+    "descripcion": "Soluciones para el transporte de productos del mar con alta exigencia de mantención de temperatura.",
+    "imagen": "/images/sectores/acuicolas.webp"
+  },
+  {
+    "slug": "agropecuaria",
+    "nombre": "Agropecuaria",
+    "descripcion": "Embalajes térmicos para el sector agropecuario que protegen la calidad de productos frescos durante la distribución.",
+    "imagen": "/images/sectores/agropecuaria.webp"
+  },
+  {
+    "slug": "health-care",
+    "nombre": "Health Care",
+    "descripcion": "Soluciones especializadas para dispositivos médicos y productos de salud que requieren control estricto de temperatura.",
+    "imagen": "/images/sectores/health-care.webp"
+  }
+]
