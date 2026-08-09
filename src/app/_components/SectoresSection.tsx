@@ -28,9 +28,11 @@ export function SectoresSection({ sectores }: Props) {
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {sectores.map((sector) => (
-            <div
+            <Link
               key={sector.slug}
-              className="group relative h-80 overflow-hidden border border-outline-variant transition-all duration-300 hover:border-primary"
+              href="/#contacto"
+              aria-label={`Solicitar cotización para ${sector.nombre}`}
+              className="group relative block h-80 overflow-hidden border border-outline-variant transition-all duration-300 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               <Image
                 src={sector.imagen}
@@ -43,7 +45,7 @@ export function SectoresSection({ sectores }: Props) {
                 <h4 className="mb-1 text-lg font-bold text-white">{sector.nombre}</h4>
                 <p className="line-clamp-2 text-xs text-white/70">{sector.descripcion}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <div className="mt-16 text-center">

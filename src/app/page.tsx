@@ -1,9 +1,17 @@
 import type { Metadata } from 'next'
-import { getHomeContent, getSectores } from '@/lib/home'
+import {
+  getCertificaciones,
+  getHomeContent,
+  getProveedores,
+  getSectores,
+  getTestimonios,
+} from '@/lib/home'
 import { HeroSection } from './_components/HeroSection'
 import { QuickLinksSection } from './_components/QuickLinksSection'
 import { ConfianzaSection } from './_components/ConfianzaSection'
 import { SectoresSection } from './_components/SectoresSection'
+import { ProveedoresSection } from './_components/ProveedoresSection'
+import { EvidenciaSection } from './_components/EvidenciaSection'
 import { ContactoSection } from './_components/ContactoSection'
 
 export const metadata: Metadata = {
@@ -13,7 +21,13 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const [content, sectores] = await Promise.all([getHomeContent(), getSectores()])
+  const [content, sectores, certificaciones, testimonios, proveedores] = await Promise.all([
+    getHomeContent(),
+    getSectores(),
+    getCertificaciones(),
+    getTestimonios(),
+    getProveedores(),
+  ])
 
   return (
     <>
@@ -21,6 +35,8 @@ export default async function HomePage() {
       <QuickLinksSection />
       <ConfianzaSection confianza={content.confianza} />
       <SectoresSection sectores={sectores} />
+      <ProveedoresSection proveedores={proveedores} />
+      <EvidenciaSection certificaciones={certificaciones} testimonios={testimonios} />
       <ContactoSection />
     </>
   )

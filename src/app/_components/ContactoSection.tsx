@@ -29,7 +29,7 @@ export function ContactoSection() {
   }
 
   return (
-    <section className="bg-surface-dim py-24">
+    <section id="contacto" className="scroll-mt-24 bg-surface-dim py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="grid grid-cols-1 gap-20 lg:grid-cols-2">
           <div className="space-y-10">

@@ -50,6 +50,11 @@ export interface Certificacion {
   organismo: string
 }
 
+export interface Proveedor {
+  nombre: string
+  logo: string
+}
+
 export async function getHomeContent(): Promise<HomeContent> {
   const raw = await fs.readFile(
     path.join(process.cwd(), 'src/content/home.json'),
@@ -80,4 +85,12 @@ export async function getCertificaciones(): Promise<Certificacion[]> {
     'utf8'
   )
   return JSON.parse(raw) as Certificacion[]
+}
+
+export async function getProveedores(): Promise<Proveedor[]> {
+  const raw = await fs.readFile(
+    path.join(process.cwd(), 'src/content/proveedores.json'),
+    'utf8'
+  )
+  return JSON.parse(raw) as Proveedor[]
 }
