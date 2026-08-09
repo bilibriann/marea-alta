@@ -1,0 +1,103 @@
+# Sveltia CMS — configuración de colecciones para Marea Alta.
+#
+# NOTA: la sección `backend` (auth, repo, branch) es responsabilidad del
+# diseño de login "puerta con llave" (middleware + cookie firmada) que se
+# está construyendo por separado — no es parte de esta tarea. Completar
+# antes de desplegar en admin.marea-alta.com.
+backend:
+  name: github # TODO: confirmar backend/auth con el diseño de login separado
+  repo: TODO/marea-alta
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "productos"
+    label: "Productos"
+    folder: "src/content/productos"
+    create: true
+    delete: true
+    slug: "{{fields.nombre}}"
+    format: "frontmatter"
+    extension: "md"
+    identifier_field: nombre
+    fields:
+      - { label: "Nombre", name: "nombre", widget: "string", required: true }
+      - {
+          label: "Subtítulo",
+          name: "subtitulo",
+          widget: "string",
+          required: false,
+          hint: "Ej: Trilaminado, Caja Display 4 Unidades",
+        }
+      - label: "Galería"
+        name: "galeria"
+        widget: "list"
+        required: false
+        field: { label: "Imagen", name: "imagen", widget: "image" }
+      - label: "Grupos de Opciones"
+        name: "grupos_opciones"
+        widget: "list"
+        required: false
+        hint: "Deja vacío si el producto no tiene variantes (ej: Bobina Hidromax). Cada grupo es una categoría libre (Formatos, Empaque, etc.) con sus propias opciones."
+        fields:
+          - {
+              label: "Título del Grupo",
+              name: "titulo_grupo",
+              widget: "string",
+              hint: "Ej: Formatos, Empaque",
+            }
+          - label: "Opciones"
+            name: "opciones"
+            widget: "list"
+            field: { label: "Opción", name: "opcion", widget: "string" }
+      - {
+          label: "Nota Adicional",
+          name: "nota_adicional",
+          widget: "text",
+          required: false,
+        }
+
+  - name: "noticias"
+    label: "Noticias"
+    folder: "src/content/noticias"
+    create: true
+    delete: true
+    slug: "{{fields.titulo}}"
+    format: "frontmatter"
+    extension: "md"
+    identifier_field: titulo
+    sortable_fields: ["fecha", "titulo"]
+    view_filters:
+      - { label: "Recientes primero", field: "fecha", pattern: ".*" }
+    fields:
+      - { label: "Título", name: "titulo", widget: "string", required: true }
+      - {
+          label: "Imagen Destacada",
+          name: "imagen_destacada",
+          widget: "image",
+          required: true,
+        }
+      - {
+          label: "Fecha",
+          name: "fecha",
+          widget: "datetime",
+          format: "YYYY-MM-DD",
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+          required: true,
+        }
+      - {
+          label: "Extracto",
+          name: "extracto",
+          widget: "text",
+          required: true,
+          hint: "Resumen corto para el listado de noticias",
+        }
+      - {
+          label: "Contenido",
+          name: "body",
+          widget: "markdown",
+          required: true,
+        }

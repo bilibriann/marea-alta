@@ -10,6 +10,7 @@ export const siteConfig: SiteConfig = {
     { label: 'Servicios', href: '/servicios' },
     { label: 'Productos', href: '/productos' },
     { label: 'Contacto', href: '/contacto' },
+    { label: 'Noticias', href: '/noticias' },
   ],
   contacto: {
     email: 'ventas@mareaalta-latam.com',
