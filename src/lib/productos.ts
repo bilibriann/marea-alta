@@ -14,6 +14,8 @@ const productoFrontmatterSchema = z.object({
   galeria: z.array(z.string().min(1)).default([]),
   grupos_opciones: z.array(opcionGrupoSchema).default([]),
   nota_adicional: z.string().min(1).optional(),
+  opciones_cantidad: z.array(z.string().min(1)).default([]),
+  video_youtube: z.url().optional(),
 })
 
 export type OpcionGrupo = z.infer<typeof opcionGrupoSchema>

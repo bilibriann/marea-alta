@@ -15,4 +15,9 @@ grupos_opciones:
     opciones:
       - 400gr/20 Unidades x caja
 nota_adicional: "Contenido de prueba — reemplazar por el nombre y datos reales del producto antes de publicar."
+opciones_cantidad:
+  - "50"
+  - "100"
+  - "1000"
+video_youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ---

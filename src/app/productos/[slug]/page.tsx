@@ -4,8 +4,26 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getAllProductos, getProducto } from '@/lib/productos'
 import { ArrowRightIcon } from '@/components/icons'
+import { CotizacionForm } from '../_components/CotizacionForm'
 
 export const dynamicParams = false
+
+function getYoutubeEmbedUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url)
+    if (parsed.hostname === 'youtu.be') {
+      return `https://www.youtube.com/embed${parsed.pathname}`
+    }
+    if (parsed.hostname.includes('youtube.com')) {
+      const id = parsed.searchParams.get('v')
+      if (id) return `https://www.youtube.com/embed/${id}`
+      if (parsed.pathname.startsWith('/embed/')) return url
+    }
+    return null
+  } catch {
+    return null
+  }
+}
 
 export async function generateStaticParams() {
   const productos = await getAllProductos()
@@ -34,6 +52,8 @@ export default async function ProductoPage({
   const { slug } = await params
   const producto = await getProducto(slug)
   if (!producto) notFound()
+
+  const videoEmbedUrl = producto.video_youtube ? getYoutubeEmbedUrl(producto.video_youtube) : null
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-20 md:px-12">
@@ -90,6 +110,28 @@ export default async function ProductoPage({
         <p className="mt-16 border-t border-outline-variant/30 pt-6 text-sm italic text-on-surface-variant">
           {producto.nota_adicional}
         </p>
+      )}
+
+      <div className="mt-20 border-t border-outline-variant/30 pt-16">
+        <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
+          Cotización
+        </span>
+        <h2 className="mb-8 text-headline-lg-mobile text-primary md:text-headline-xl">
+          Solicita tu Cotización
+        </h2>
+        <CotizacionForm producto={producto.nombre} cantidades={producto.opciones_cantidad} />
+      </div>
+
+      {videoEmbedUrl && (
+        <div className="relative mt-16 aspect-video overflow-hidden border border-outline-variant">
+          <iframe
+            src={videoEmbedUrl}
+            title={`Video de ${producto.nombre}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full"
+          />
+        </div>
       )}
     </div>
   )

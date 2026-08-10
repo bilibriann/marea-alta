@@ -58,6 +58,19 @@ collections:
           widget: "text",
           required: false,
         }
+      - label: "Cantidades para Cotizar"
+        name: "opciones_cantidad"
+        widget: "list"
+        required: false
+        hint: "Cantidades disponibles para cotizar este producto (ej: 50, 100, 1000)"
+        field: { label: "Cantidad", name: "cantidad", widget: "string" }
+      - {
+          label: "Video de YouTube",
+          name: "video_youtube",
+          widget: "string",
+          required: false,
+          hint: "URL completa del video (ej: https://www.youtube.com/watch?v=...). Déjalo vacío si el producto no tiene video.",
+        }
 
   - name: "noticias"
     label: "Noticias"
