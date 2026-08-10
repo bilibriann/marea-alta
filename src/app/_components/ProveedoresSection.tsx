@@ -16,7 +16,7 @@ export function ProveedoresSection({ proveedores }: Props) {
             Alianzas Estratégicas
           </span>
           <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">
-            Proveedores de Confianza
+            Productos de Confianza
           </h2>
         </div>
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-6">

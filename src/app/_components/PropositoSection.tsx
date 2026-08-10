@@ -1,4 +1,5 @@
 import type { HomeContent } from '@/lib/home'
+import { ExpandableText } from '@/components/ExpandableText'
 
 interface Props {
   proposito: HomeContent['proposito']
@@ -26,25 +27,16 @@ export function PropositoSection({ proposito, vision, mision }: Props) {
             <h3 className="mb-6 font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
               Visión
             </h3>
-            <div className="space-y-4">
-              {visionParrafos.map((parrafo) => (
-                <p key={parrafo} className="text-lg leading-relaxed text-on-surface-variant">
-                  {parrafo}
-                </p>
-              ))}
-            </div>
+            <ExpandableText
+              parrafos={visionParrafos}
+              parrafoClassName="text-lg leading-relaxed text-on-surface-variant"
+            />
           </div>
           <div className="border border-outline-variant bg-white p-10">
             <h3 className="mb-6 font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
               Misión
             </h3>
-            <div className="space-y-4">
-              {misionParrafos.map((parrafo) => (
-                <p key={parrafo} className="text-on-surface-variant">
-                  {parrafo}
-                </p>
-              ))}
-            </div>
+            <ExpandableText parrafos={misionParrafos} parrafoClassName="text-on-surface-variant" />
           </div>
         </div>
       </div>

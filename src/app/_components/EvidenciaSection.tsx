@@ -25,7 +25,7 @@ export function EvidenciaSection({ certificaciones, testimonios }: Props) {
     <section className="bg-inverse-surface py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="mb-16">
-          <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
+          <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-accent">
             Respaldo Certificado
           </span>
           <h2 className="text-headline-lg-mobile text-white md:text-headline-xl">
@@ -36,20 +36,20 @@ export function EvidenciaSection({ certificaciones, testimonios }: Props) {
           {certificaciones.length > 0 && (
             <div className="space-y-8">
               {sellos.map((sello) => (
-                <div key={sello.src} className="border border-white/10 bg-white p-8">
+                <div key={sello.src} className="inline-block border border-white/10 bg-white p-4">
                   <Image
                     src={sello.src}
                     alt={`Sellos de certificación: ${sello.nombres.join(' y ')}`}
                     width={860}
                     height={739}
-                    className="mx-auto h-auto w-full max-w-xs"
+                    className="h-auto w-32"
                   />
                 </div>
               ))}
               <div className="space-y-6">
                 {certificaciones.map((cert) => (
                   <div key={cert.nombre} className="flex gap-4">
-                    <VerifiedIcon className="h-6 w-6 shrink-0 text-tertiary" />
+                    <VerifiedIcon className="h-6 w-6 shrink-0 text-accent" />
                     <div>
                       <h3 className="text-lg font-bold text-white">{cert.nombre}</h3>
                       <p className="mt-1 text-sm text-white/70">{cert.descripcion}</p>
@@ -72,7 +72,7 @@ export function EvidenciaSection({ certificaciones, testimonios }: Props) {
                   <p className="text-xl leading-relaxed text-white">
                     &ldquo;{testimonio.testimonio}&rdquo;
                   </p>
-                  <footer className="mt-6 font-mono text-xs uppercase tracking-widest text-tertiary">
+                  <footer className="mt-6 font-mono text-xs uppercase tracking-widest text-accent">
                     {testimonio.nombre} — {testimonio.cargo}, {testimonio.empresa}
                   </footer>
                 </blockquote>

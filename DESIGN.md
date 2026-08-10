@@ -2,39 +2,41 @@
 name: Marea Alta — Glacial Precision Works
 description: Sharp, flat, cold-chain industrial system for a 33-year Chilean thermal-packaging manufacturer
 colors:
-  primary: "#335c9c"
+  # Paleta oficial — public/manual de marca/manual de marca.pdf
+  # Azul Principal #045684 es el único azul del proyecto: fondos, textos y estados usan este tono o blanco como contraste.
+  primary: "#045684" # Azul (principal)
   on-primary: "#ffffff"
-  primary-container: "#4d74b6"
-  on-primary-container: "#fefcff"
-  secondary: "#5a5e6a"
+  primary-container: "#ffffff" # hover/pressed: se invierte a blanco con texto azul
+  on-primary-container: "#045684"
+  secondary: "#045684"
   on-secondary: "#ffffff"
-  secondary-container: "#dfe2f0"
-  on-secondary-container: "#606470"
-  tertiary: "#006a3b"
+  secondary-container: "#d9e6ed"
+  on-secondary-container: "#045684"
+  tertiary: "#045684"
   on-tertiary: "#ffffff"
-  tertiary-container: "#218550"
-  on-tertiary-container: "#f6fff4"
-  accent: "#84bd00"
+  tertiary-container: "#ffffff" # borde del badge del hero
+  on-tertiary-container: "#045684"
+  accent: "#ffffff" # acentos sobre fondo azul
   error: "#ba1a1a"
   on-error: "#ffffff"
   error-container: "#ffdad6"
   on-error-container: "#93000a"
-  background: "#f8f9ff"
-  on-background: "#0f1c2d"
-  surface: "#f8f9ff"
-  on-surface: "#0f1c2d"
-  surface-variant: "#d6e3fb"
+  background: "#fefdf9" # tinte de Crema (apoyo)
+  on-background: "#045684"
+  surface: "#fefdf9"
+  on-surface: "#045684"
+  surface-variant: "#faf2dd"
   on-surface-variant: "#424751"
-  surface-bright: "#f8f9ff"
-  surface-dim: "#cddbf3"
+  surface-bright: "#fefdf9"
+  surface-dim: "#fbf5e5"
   surface-container-lowest: "#ffffff"
-  surface-container-low: "#eff3ff"
-  surface-container: "#e6eeff"
-  surface-container-high: "#dde9ff"
-  surface-container-highest: "#d6e3fb"
+  surface-container-low: "#fefdf9"
+  surface-container: "#fdf9ee"
+  surface-container-high: "#fbf5e5"
+  surface-container-highest: "#faf2dd"
   outline: "#727782"
   outline-variant: "#c2c6d2"
-  inverse-surface: "#243143"
+  inverse-surface: "#045684" # Azul (principal)
   inverse-on-surface: "#ebf1ff"
   inverse-primary: "#abc7ff"
 typography:

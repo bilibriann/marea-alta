@@ -13,7 +13,7 @@ export function Footer() {
           <p className="leading-relaxed text-white/60">{siteConfig.description}</p>
         </div>
         <div className="space-y-6">
-          <h4 className="text-sm font-bold uppercase tracking-widest text-tertiary">
+          <h4 className="text-sm font-bold uppercase tracking-widest text-accent">
             Enlaces Rápidos
           </h4>
           <ul className="space-y-4">
@@ -27,20 +27,20 @@ export function Footer() {
           </ul>
         </div>
         <div className="space-y-6">
-          <h4 className="text-sm font-bold uppercase tracking-widest text-tertiary">
+          <h4 className="text-sm font-bold uppercase tracking-widest text-accent">
             Contacto
           </h4>
           <div className="space-y-4">
             <p className="flex items-center gap-2 text-sm text-white/70">
-              <MailIcon className="h-4 w-4 text-tertiary" /> {siteConfig.contacto.email}
+              <MailIcon className="h-4 w-4 text-accent" /> {siteConfig.contacto.email}
             </p>
             <p className="flex items-center gap-2 text-sm text-white/70">
-              <CallIcon className="h-4 w-4 text-tertiary" /> {siteConfig.contacto.telefono}
+              <CallIcon className="h-4 w-4 text-accent" /> {siteConfig.contacto.telefono}
             </p>
           </div>
         </div>
         <div className="space-y-6">
-          <h4 className="text-sm font-bold uppercase tracking-widest text-tertiary">
+          <h4 className="text-sm font-bold uppercase tracking-widest text-accent">
             Síguenos
           </h4>
           <div className="flex gap-4">
