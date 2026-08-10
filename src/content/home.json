@@ -38,8 +38,12 @@
     "descripcion": "Desde 1987, Marea Alta diseña y fabrica soluciones de embalaje térmico para empresas que no pueden permitirse perder la cadena de frío. Operamos desde San Bernardo, RM, con distribución en el Cono Sur.",
     "fundacion": 1987
   },
-  "mision": "Fabricar artículos de calidad que mantengan la cadena de frío, con excelencia en servicio, involucrando a nuestros equipos de producción, administración y tecnología.",
-  "vision": "Expandir nuestra presencia a nivel nacional e internacional con innovaciones tecnológicas que respeten el medio ambiente.",
+  "proposito": {
+    "eyebrow": "Visión y Misión",
+    "titulo": "Nuestro Propósito y Compromiso"
+  },
+  "mision": "Trabajamos para ofrecer artículos de calidad a quienes necesitan llegar con sus productos a destino sin perder la esencial cadena de frío. Con ese objetivo, nos esforzamos en cada paso del proceso de fabricación para que la óptima calidad se mantenga a través del tiempo y, a la vez, nos esmeramos en adaptarnos a las necesidades de quienes nos han escogido para tan importante cometido.\n\nTenemos a todo nuestro equipo de producción, administración y tecnológico involucrado en buscar las mejoras necesarias a fin de mantener la excelencia en servicio y calidad.\n\nComo empresa, tenemos presente la importancia de escoger a nuestros colaboradores, tanto internos como externos, considerando tanto su seriedad y responsabilidad a la hora de cumplir plazos y calidades en su trabajo y en entregas. La integridad y honestidad son también cualidades que deben ser parte de cada integrante de nuestro equipo.\n\nCreemos también que la buena comunicación y el respeto son esenciales a la hora del trato con nuestros clientes y proveedores, así como también en forma interna.\n\nTrabajamos día a día para mantener la calidad de nuestro producto y estamos atentos buscando la forma de mejorarlo a través de nuevas tecnologías, las que añadimos a nuestro proceso productivo regularmente.\n\nNuestros clientes pueden tener la seguridad de que haremos todo lo posible por llegar a cubrir cada una de sus necesidades particulares, adecuándonos a sus requerimientos específicos tanto de características físicas como de entrega del producto requerido.\n\nEl medio ambiente también forma parte de nuestra cadena de valores, por eso continuamente buscamos y adoptamos tecnologías de proceso y materias primas que respeten nuestro entorno y generen, progresivamente, menos impacto medioambiental.",
+  "vision": "Avanzar hasta lograr expandir nuestro mercado a todo el territorio nacional e incursionar a nivel internacional con nuestros productos.\n\nCrecimiento que a su vez vaya acompañado con innovaciones tecnológicas eficientes y respetuosas con el medio ambiente, para la completa satisfacción de nuestros clientes.",
   "valores": [
     "Integridad y honestidad",
     "Comunicación clara",

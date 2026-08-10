@@ -47,18 +47,18 @@
   --color-inverse-on-surface: #ebf1ff;
   --color-inverse-primary: #abc7ff;
 
-  --text-headline-xl: 48px;
-  --text-headline-xl--line-height: 1.1;
+  --text-headline-xl: 38px;
+  --text-headline-xl--line-height: 1.15;
   --text-headline-xl--letter-spacing: -0.02em;
   --text-headline-xl--font-weight: 700;
 
-  --text-headline-lg: 32px;
-  --text-headline-lg--line-height: 1.2;
+  --text-headline-lg: 26px;
+  --text-headline-lg--line-height: 1.25;
   --text-headline-lg--letter-spacing: -0.01em;
   --text-headline-lg--font-weight: 600;
 
-  --text-headline-lg-mobile: 28px;
-  --text-headline-lg-mobile--line-height: 1.2;
+  --text-headline-lg-mobile: 22px;
+  --text-headline-lg-mobile--line-height: 1.25;
   --text-headline-lg-mobile--font-weight: 600;
 
   --text-body-md: 16px;

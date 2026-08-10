@@ -40,19 +40,19 @@ colors:
 typography:
   headline-xl:
     fontFamily: "Poppins, sans-serif"
-    fontSize: "48px"
+    fontSize: "38px"
     fontWeight: 700
-    lineHeight: 1.1
+    lineHeight: 1.15
     letterSpacing: "-0.02em"
   headline-lg:
     fontFamily: "Poppins, sans-serif"
-    fontSize: "32px"
+    fontSize: "26px"
     fontWeight: 600
-    lineHeight: 1.2
+    lineHeight: 1.25
     letterSpacing: "-0.01em"
   headline-lg-mobile:
     fontFamily: "Poppins, sans-serif"
-    fontSize: "28px"
+    fontSize: "22px"
     fontWeight: 600
     lineHeight: 1.2
   body-md:
@@ -140,9 +140,9 @@ The palette pairs one authoritative blue with one verification green against a c
 **Character:** Poppins carries both headlines and body copy in one geometric, open, approachable-but-professional voice; JetBrains Mono is reserved entirely for short uppercase labels, giving those moments a technical, "logged data" register that Poppins never touches.
 
 ### Hierarchy
-- **Headline XL** (700, 48px, line-height 1.1, letter-spacing -0.02em): hero and top-of-section H1/H2 on desktop.
-- **Headline LG** (600, 32px, line-height 1.2, letter-spacing -0.01em): desktop section headings (`md:` breakpoint).
-- **Headline LG Mobile** (600, 28px, line-height 1.2): the same section headings below `md:`.
+- **Headline XL** (700, 38px, line-height 1.15, letter-spacing -0.02em): hero and top-of-section H1/H2 on desktop.
+- **Headline LG** (600, 26px, line-height 1.25, letter-spacing -0.01em): desktop section headings (`md:` breakpoint).
+- **Headline LG Mobile** (600, 22px, line-height 1.25): the same section headings below `md:`.
 - **Body MD** (400, 16px, line-height 1.6): default paragraph copy.
 - **Label SM** (500, 12px, letter-spacing 0.05em, uppercase, JetBrains Mono): section eyebrows and form field labels only.
 

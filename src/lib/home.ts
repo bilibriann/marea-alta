@@ -24,6 +24,10 @@ export interface HomeContent {
     descripcion: string
     fundacion: number
   }
+  proposito: {
+    eyebrow: string
+    titulo: string
+  }
   mision: string
   vision: string
   valores: string[]
