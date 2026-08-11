@@ -1,13 +1,18 @@
 # Sveltia CMS — configuración de colecciones para Marea Alta.
 #
 # Este archivo vive en el proyecto `admin/` (deploy separado, protegido por
-# middleware.ts) y NO en el repo del sitio público — ver admin/README.md.
-# El backend de git sigue apuntando al repo del sitio público, que es
-# donde vive el contenido real (src/content/).
+# proxy.ts) y NO en el repo del sitio público — ver admin/README.md.
+# El backend de git apunta al repo donde vive el contenido real (src/content/).
 backend:
   name: github
-  repo: bilibriann/marea-alta
+  # TEMPORAL: apuntando al fork de Randy para probar el flujo OAuth completo
+  # sin depender de que bilibriann autorice colaboradores todavía.
+  # Cambiar a bilibriann/marea-alta en cuanto confirme el acceso.
+  repo: randyman123/marea-alta
   branch: main
+  # Proxy OAuth propio (admin/src/app/auth, admin/src/app/callback) — ver
+  # admin/README.md. Actualizar si cambia el dominio de este deploy.
+  base_url: https://marea-alta-6m7y.vercel.app
 
 media_folder: "public/images"
 public_folder: "/images"

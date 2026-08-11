@@ -13,5 +13,9 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!login|_next/static|_next/image|favicon.ico).*)'],
+  // auth/callback quedan fuera: son el intercambio OAuth de Sveltia con
+  // GitHub (protegido por su propio CSRF token + cookie), no contenido del
+  // panel — y GitHub redirige el navegador ahí directamente, sin nuestra
+  // cookie de sesión necesariamente "fresca" en ese viaje.
+  matcher: ['/((?!login|auth|callback|_next/static|_next/image|favicon.ico).*)'],
 }
