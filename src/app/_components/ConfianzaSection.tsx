@@ -18,7 +18,7 @@ const ICONS: Record<
 
 export function ConfianzaSection({ confianza }: Props) {
   return (
-    <section className="border-b border-outline-variant/20 bg-surface-container-lowest py-24">
+    <section className="border-b border-outline-variant/20 bg-brand-crema py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="mb-16">
           <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
@@ -33,7 +33,7 @@ export function ConfianzaSection({ confianza }: Props) {
             const Icon = ICONS[item.icono]
             return (
               <div key={item.titulo} className="flex gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none border border-outline-variant bg-primary-container/20 text-primary">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-outline-variant bg-primary-container/20 text-primary">
                   <Icon className="h-6 w-6" />
                 </div>
                 <div>

@@ -9,13 +9,13 @@ export function ProveedoresSection({ proveedores }: Props) {
   if (proveedores.length === 0) return null
 
   return (
-    <section className="border-t border-outline-variant/20 bg-surface-container-low py-24">
+    <section className="border-t border-white/10 bg-primary py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="mb-16 text-center">
-          <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
+          <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-accent">
             Alianzas Estratégicas
           </span>
-          <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">
+          <h2 className="text-headline-lg-mobile text-white md:text-headline-xl">
             Productos de Confianza
           </h2>
         </div>
@@ -23,7 +23,7 @@ export function ProveedoresSection({ proveedores }: Props) {
           {proveedores.map((proveedor) => (
             <div
               key={proveedor.nombre}
-              className="flex h-28 items-center justify-center border border-outline-variant bg-white p-6"
+              className="flex h-28 items-center justify-center rounded-md border border-outline-variant bg-white p-6"
             >
               <Image
                 src={proveedor.logo}
