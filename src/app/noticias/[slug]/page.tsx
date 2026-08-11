@@ -39,12 +39,17 @@ const markdownComponents: Components = {
   a: (props) => (
     <a className="text-primary underline hover:text-primary-container" {...props} />
   ),
-  img: ({ src, alt }) => (
-    <span className="my-8 block overflow-hidden border border-outline-variant">
-      {/* eslint-disable-next-line @next/next/no-img-element -- markdown images have unknown dimensions, incompatible with next/image */}
-      <img src={typeof src === 'string' ? src : undefined} alt={alt ?? ''} className="w-full object-cover" />
-    </span>
-  ),
+  img: ({ src, alt }) => {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+    const resolvedSrc =
+      typeof src === 'string' && src.startsWith('/') ? `${basePath}${src}` : src
+    return (
+      <span className="my-8 block overflow-hidden border border-outline-variant">
+        {/* eslint-disable-next-line @next/next/no-img-element -- markdown images have unknown dimensions, incompatible with next/image */}
+        <img src={typeof resolvedSrc === 'string' ? resolvedSrc : undefined} alt={alt ?? ''} className="w-full object-cover" />
+      </span>
+    )
+  },
 }
 
 export default async function NoticiaPage({
