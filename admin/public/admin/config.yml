@@ -1,12 +1,12 @@
 # Sveltia CMS — configuración de colecciones para Marea Alta.
 #
-# NOTA: la sección `backend` (auth, repo, branch) es responsabilidad del
-# diseño de login "puerta con llave" (middleware + cookie firmada) que se
-# está construyendo por separado — no es parte de esta tarea. Completar
-# antes de desplegar en admin.marea-alta.com.
+# Este archivo vive en el proyecto `admin/` (deploy separado, protegido por
+# middleware.ts) y NO en el repo del sitio público — ver admin/README.md.
+# El backend de git sigue apuntando al repo del sitio público, que es
+# donde vive el contenido real (src/content/).
 backend:
-  name: github # TODO: confirmar backend/auth con el diseño de login separado
-  repo: TODO/marea-alta
+  name: github
+  repo: bilibriann/marea-alta
   branch: main
 
 media_folder: "public/images"
