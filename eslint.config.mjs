@@ -13,6 +13,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // admin/ is an independent Next.js project with its own eslint config.
+    "admin/**",
   ]),
   prettierConfig,
 ]);
