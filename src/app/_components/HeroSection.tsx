@@ -9,19 +9,20 @@ interface Props {
 
 export function HeroSection({ hero }: Props) {
   return (
-    <section className="relative flex h-[85vh] min-h-[600px] items-center overflow-hidden">
+    <section className="relative flex h-[70vh] min-h-[480px] items-center overflow-hidden sm:h-[75vh] sm:min-h-[560px] lg:h-[85vh] lg:min-h-[600px]">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero/hero-bg.webp"
+          src="/images/hero/marealta.png"
           alt=""
           fill
           priority
-          className="object-cover object-right-bottom"
+          sizes="100vw"
+          className="object-cover object-center sm:object-right-bottom"
         />
       </div>
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 md:px-12">
         <div className="max-w-3xl space-y-8">
-          <span className="inline-block rounded-none border border-tertiary-container bg-tertiary px-4 py-1.5 font-mono text-label-sm uppercase tracking-wider text-on-tertiary">
+          <span className="inline-block rounded-md border border-tertiary-container bg-tertiary px-4 py-1.5 font-mono text-label-sm uppercase tracking-wider text-on-tertiary">
             {hero.badge}
           </span>
           <h1 className="text-headline-xl text-white">{hero.titulo}</h1>

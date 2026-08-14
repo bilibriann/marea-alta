@@ -1,18 +1,16 @@
 import type { Metadata } from 'next'
-import {
-  getCertificaciones,
-  getHomeContent,
-  getProveedores,
-  getSectores,
-  getTestimonios,
-} from '@/lib/home'
+import { getCertificaciones, getHomeContent, getProveedores, getSectores } from '@/lib/home'
+import { getAllProductos } from '@/lib/productos'
+import { getAllNoticias } from '@/lib/noticias'
 import { HeroSection } from './_components/HeroSection'
 import { QuickLinksSection } from './_components/QuickLinksSection'
 import { ConfianzaSection } from './_components/ConfianzaSection'
-import { PropositoSection } from './_components/PropositoSection'
-import { SectoresSection } from './_components/SectoresSection'
 import { ProveedoresSection } from './_components/ProveedoresSection'
-import { EvidenciaSection } from './_components/EvidenciaSection'
+import { PropositoSection } from './_components/PropositoSection'
+import { ProductosSection } from './_components/ProductosSection'
+import { SectoresSection } from './_components/SectoresSection'
+import { NoticiasSection } from './_components/NoticiasSection'
+import { CertificacionesSection } from './_components/CertificacionesSection'
 import { ContactoSection } from './_components/ContactoSection'
 
 export const metadata: Metadata = {
@@ -22,12 +20,13 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const [content, sectores, certificaciones, testimonios, proveedores] = await Promise.all([
+  const [content, sectores, certificaciones, proveedores, productos, noticias] = await Promise.all([
     getHomeContent(),
     getSectores(),
     getCertificaciones(),
-    getTestimonios(),
     getProveedores(),
+    getAllProductos(),
+    getAllNoticias(),
   ])
 
   return (
@@ -35,10 +34,12 @@ export default async function HomePage() {
       <HeroSection hero={content.hero} />
       <QuickLinksSection />
       <ConfianzaSection confianza={content.confianza} />
-      <PropositoSection proposito={content.proposito} vision={content.vision} mision={content.mision} />
-      <SectoresSection sectores={sectores} />
       <ProveedoresSection proveedores={proveedores} />
-      <EvidenciaSection certificaciones={certificaciones} testimonios={testimonios} />
+      <PropositoSection proposito={content.proposito} vision={content.vision} mision={content.mision} />
+      <ProductosSection productos={productos} />
+      <SectoresSection sectores={sectores} />
+      <NoticiasSection noticias={noticias} />
+      <CertificacionesSection certificaciones={certificaciones} />
       <ContactoSection />
     </>
   )

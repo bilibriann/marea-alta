@@ -55,13 +55,70 @@ navegador), así que lo implementamos nosotros mismos en vez de sumar
 - `public/admin/config.yml` → `backend.repo` apunta al repo real
   (`bilibriann/marea-alta`) donde vive el contenido (`src/content/`) —
   Sveltia edita ese repo aunque su interfaz se sirva desde este dominio
-  distinto. *(Temporalmente puede apuntar a un fork para pruebas — ver el
-  comentario en el propio `config.yml`.)*
+  distinto.
 
 ## Variables de entorno
 
 Ver `.env.example`. Configurarlas en el proyecto de Vercel (Settings →
 Environment Variables), no en un `.env` committeado.
+
+## Migración al repo real (pendiente)
+
+**Estado actual (2026-08-12):** todo el código apunta a `bilibriann/marea-alta`
+(el repo real), pero el único deploy funcionando en Vercel hoy usa el fork de
+Randy (`randyman123/marea-alta`) para poder probar el login y el flujo OAuth
+sin depender de nadie más. Bloqueado en que bilibriann autorice el acceso de
+Vercel al repo real. Cuando lo confirme, seguir esta lista en orden:
+
+### 1. Crear el proyecto de Vercel nuevo (no reusar el del fork)
+
+- Vercel → Add New → Project → importar `bilibriann/marea-alta`.
+- **Root Directory: `admin/`** (el mismo ajuste que ya usa el proyecto del
+  fork — sin esto, Vercel intenta buildear el sitio público).
+- Dejar el proyecto del fork **como está, sin tocar** (ver punto 4) — no
+  reconectar su repo ni borrarlo todavía, para no perder el entorno de
+  pruebas mientras se termina de configurar el nuevo.
+- Anotar el dominio `*.vercel.app` que Vercel asigna al proyecto nuevo — se
+  necesita para los dos pasos siguientes.
+
+### 2. Variables de entorno a configurar en el proyecto nuevo
+
+Ninguna se hereda automáticamente del proyecto del fork — hay que cargarlas
+todas de nuevo en Settings → Environment Variables:
+
+| Variable | ¿Mismo valor que en el proyecto de pruebas? |
+|---|---|
+| `ADMIN_PASSWORD_CLIENT` | Recomendado generar una nueva — la de pruebas ya circuló en esta conversación |
+| `ADMIN_PASSWORD_DEV` | Recomendado generar una nueva, mismo motivo |
+| `ADMIN_SESSION_SECRET` | Generar una nueva (`openssl rand -base64 32`) — que una sesión firmada en el entorno de pruebas nunca sea válida contra producción |
+| `GITHUB_CLIENT_ID` | Nueva — ver punto 3, es una OAuth App distinta |
+| `GITHUB_CLIENT_SECRET` | Nueva — ver punto 3 |
+
+### 3. OAuth App de GitHub: crear una nueva, no reutilizar la actual
+
+Una OAuth App clásica solo admite **una** Authorization callback URL. Como
+el proyecto del fork se mantiene vivo (punto 4) y su OAuth App actual sigue
+apuntando a `https://marea-alta-6m7y.vercel.app/callback`, reutilizarla y
+cambiarle la callback URL rompería el login GitHub del entorno de pruebas.
+Por eso, crear una **OAuth App nueva y separada**:
+
+1. GitHub → Settings → Developer settings → OAuth Apps → New OAuth App.
+2. Homepage URL y Authorization callback URL usando el dominio anotado en el
+   paso 1, ej.: `https://{dominio-nuevo}.vercel.app/callback`.
+3. Generar el Client Secret y cargar ambos valores (punto 2).
+
+Después de esto, actualizar `public/admin/config.yml`:
+- `backend.base_url` → reemplazar el placeholder `https://TODO-actualizar-dominio-vercel-repo-real` por `https://{dominio-nuevo}.vercel.app`.
+
+Y hacer commit + push (esto sí dispara el deploy real).
+
+### 4. Qué hacer con el proyecto de Vercel del fork
+
+**Dejarlo activo, no borrarlo.** Sirve como entorno de pruebas permanente y
+aislado (nuevas colecciones de Sveltia, cambios al proxy OAuth, etc.) sin
+arriesgar el panel real del cliente. Sugerencia: renombrarlo en el dashboard
+de Vercel a algo como `marea-alta-admin-testing` para que no se confunda con
+el proyecto de producción una vez que ambos convivan.
 
 ## Desarrollo local
 

@@ -5,7 +5,11 @@
   --font-mono: var(--font-jetbrains-mono);
 
   /* Marea Alta — paleta oficial del manual de marca (public/manual de marca/manual de marca.pdf) */
-  /* Azul Principal #045684 es el único azul del proyecto: fondos, textos y estados usan este tono o blanco como contraste. */
+  /* Azul Principal #045684 es el azul de acciones, links y textos de marca en todo el proyecto. */
+  --color-brand-crema: #f9efd4; /* Crema (apoyo) */
+  --color-brand-verde: #abc883; /* Verde claro (principal) */
+  --color-brand-azul-profundo: #083645; /* Azul profundo (secundario) */
+
   --color-primary: #045684; /* Azul (principal) */
   --color-on-primary: #ffffff;
   --color-primary-container: #ffffff; /* hover/pressed: se invierte a blanco con texto azul */
@@ -75,4 +79,39 @@
 body {
   background: var(--color-background);
   color: var(--color-on-background);
+}
+
+/* Pill nav — sliding highlight that tracks the active link via CSS anchor positioning.
+   Progressive enhancement: browsers without anchor-positioning support just show plain links. */
+.pill-nav {
+  position: relative;
+}
+
+.pill-nav a[data-active='true'] > span {
+  anchor-name: --pill-active;
+}
+
+.pill-nav::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  position-anchor: --pill-active;
+  top: anchor(top);
+  bottom: anchor(bottom);
+  left: anchor(left);
+  right: anchor(right);
+  background: currentColor;
+  opacity: 0;
+  border-radius: 999px;
+  pointer-events: none;
+  transition:
+    top 0.26s ease-out,
+    bottom 0.26s ease-out,
+    left 0.26s ease-out,
+    right 0.26s ease-out,
+    opacity 0.2s ease-out;
+}
+
+.pill-nav:has(a[data-active='true'])::after {
+  opacity: 0.12;
 }

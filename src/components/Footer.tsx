@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { siteConfig } from '@/config'
 import { CallIcon, MailIcon, ShareIcon, GlobeIcon } from '@/components/icons'
@@ -7,8 +8,14 @@ export function Footer() {
     <footer className="border-t-4 border-primary bg-inverse-surface py-20 text-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 md:grid-cols-4 md:px-12">
         <div className="space-y-8">
-          <Link href="/" className="text-xl font-bold text-white">
-            marea<span className="text-primary-container">alta</span>
+          <Link href="/" className="inline-block shrink-0">
+            <Image
+              src="/logos/logo-marea-alta.png"
+              alt="Marea Alta"
+              width={386}
+              height={118}
+              className="h-14 w-auto object-contain brightness-0 invert"
+            />
           </Link>
           <p className="leading-relaxed text-white/60">{siteConfig.description}</p>
         </div>
@@ -47,7 +54,7 @@ export function Footer() {
             {siteConfig.redes.instagram && (
               <a
                 href={siteConfig.redes.instagram}
-                className="flex h-12 w-12 items-center justify-center rounded-none border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
+                className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
               >
                 <ShareIcon className="h-5 w-5" />
               </a>
@@ -55,7 +62,7 @@ export function Footer() {
             {siteConfig.redes.linkedin && (
               <a
                 href={siteConfig.redes.linkedin}
-                className="flex h-12 w-12 items-center justify-center rounded-none border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
+                className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
               >
                 <GlobeIcon className="h-5 w-5" />
               </a>

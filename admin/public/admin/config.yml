@@ -5,14 +5,14 @@
 # El backend de git apunta al repo donde vive el contenido real (src/content/).
 backend:
   name: github
-  # TEMPORAL: apuntando al fork de Randy para probar el flujo OAuth completo
-  # sin depender de que bilibriann autorice colaboradores todavía.
-  # Cambiar a bilibriann/marea-alta en cuanto confirme el acceso.
-  repo: randyman123/marea-alta
+  repo: bilibriann/marea-alta
   branch: main
   # Proxy OAuth propio (admin/src/app/auth, admin/src/app/callback) — ver
-  # admin/README.md. Actualizar si cambia el dominio de este deploy.
-  base_url: https://marea-alta-6m7y.vercel.app
+  # "Migración al repo real" en admin/README.md. Este placeholder DEBE
+  # reemplazarse por el dominio real del nuevo proyecto de Vercel antes de
+  # desplegar — si se deja así, el login con GitHub falla de forma visible
+  # en vez de apuntar silenciosamente al proyecto de pruebas equivocado.
+  base_url: https://TODO-actualizar-dominio-vercel-repo-real
 
 media_folder: "public/images"
 public_folder: "/images"
