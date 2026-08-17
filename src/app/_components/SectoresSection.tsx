@@ -40,14 +40,6 @@ export function SectoresSection({ sectores }: Props) {
             </Link>
           ))}
         </div>
-        <div className="mt-16 text-center">
-          <Link
-            href="/servicios"
-            className="inline-block rounded-md border border-primary px-10 py-4 font-bold text-primary transition-all hover:bg-primary hover:text-white"
-          >
-            Ver todos los servicios
-          </Link>
-        </div>
       </div>
     </section>
   )

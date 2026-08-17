@@ -4,7 +4,6 @@ import { ArrowRightIcon } from '@/components/icons'
 
 const links = [
   { label: 'Cotización Rápida', href: '/contacto' },
-  { label: 'Nuestros Servicios', href: '/servicios' },
   { label: 'Catálogo de Productos', href: '/productos' },
 ]
 
@@ -14,7 +13,7 @@ export function QuickLinksSection() {
   return (
     <section className="hidden border-y border-outline-variant/30 bg-inverse-surface md:block">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
-        <div className="grid grid-cols-4 divide-x divide-outline-variant/30">
+        <div className="grid grid-cols-3 divide-x divide-outline-variant/30">
           {items.map((item) => (
             <Link
               key={item.label}

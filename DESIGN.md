@@ -40,6 +40,24 @@ colors:
   inverse-on-surface: "#ebf1ff"
   inverse-primary: "#abc7ff"
 typography:
+  display:
+    fontFamily: "Poppins, sans-serif"
+    fontSize: "32px"
+    fontWeight: 700
+    lineHeight: 1.08
+    letterSpacing: "-0.02em"
+  display-md:
+    fontFamily: "Poppins, sans-serif"
+    fontSize: "44px"
+    fontWeight: 700
+    lineHeight: 1.06
+    letterSpacing: "-0.02em"
+  display-lg:
+    fontFamily: "Poppins, sans-serif"
+    fontSize: "52px"
+    fontWeight: 700
+    lineHeight: 1.04
+    letterSpacing: "-0.02em"
   headline-xl:
     fontFamily: "Poppins, sans-serif"
     fontSize: "38px"
@@ -68,6 +86,12 @@ typography:
     fontWeight: 500
     lineHeight: 1.0
     letterSpacing: "0.05em"
+  label-xs:
+    fontFamily: "JetBrains Mono, monospace"
+    fontSize: "11px"
+    fontWeight: 500
+    lineHeight: 1.2
+    letterSpacing: "0.14em"
 rounded:
   none: "0px"
 spacing:
@@ -142,11 +166,13 @@ The palette pairs one authoritative blue with one verification green against a c
 **Character:** Poppins carries both headlines and body copy in one geometric, open, approachable-but-professional voice; JetBrains Mono is reserved entirely for short uppercase labels, giving those moments a technical, "logged data" register that Poppins never touches.
 
 ### Hierarchy
+- **Display / Display MD / Display LG** (700, 32 / 44 / 52px): page titles only — the H1 of each `/[servicio]`. One step above Headline XL so a page title never reads at the same weight as a section heading inside it. Applied as `text-display md:text-display-md lg:text-display-lg`.
 - **Headline XL** (700, 38px, line-height 1.15, letter-spacing -0.02em): hero and top-of-section H1/H2 on desktop.
 - **Headline LG** (600, 26px, line-height 1.25, letter-spacing -0.01em): desktop section headings (`md:` breakpoint).
 - **Headline LG Mobile** (600, 22px, line-height 1.25): the same section headings below `md:`.
 - **Body MD** (400, 16px, line-height 1.6): default paragraph copy.
 - **Label SM** (500, 12px, letter-spacing 0.05em, uppercase, JetBrains Mono): section eyebrows and form field labels only.
+- **Label XS** (500, 11px, letter-spacing 0.14em, uppercase, JetBrains Mono): micro-labels that mark a surface rather than title it — panel corner marks, certifying body, opening hours, step indices. Wider tracking than Label SM so it reads as an instrument marking, not as a small eyebrow.
 
 ### Named Rules
 **The Mono-Eyebrow Rule.** Every section opens with an uppercase, letter-spaced, mono-font eyebrow line in Safe-Guard Green before the Poppins headline. Skipping it makes a section read as unfinished, not minimal.
@@ -195,6 +221,25 @@ Fixed-width container system: content sits inside a 1280px max-width, with 16px 
 - **Header:** fixed, 80px tall, translucent white with blur (`bg-white/90 backdrop-blur-md`), bottom hairline border. Active link gets a 2px Primary Blue underline; inactive links use `on-surface-variant`, hovering to Primary Blue.
 - **Footer:** full-bleed Inverse Surface (near-navy) band, 4px Primary Blue top border, white/60-opacity body text, Safe-Guard Green section labels.
 
+### Páginas de servicio (`/[servicio]`)
+
+Los siete servicios comparten un solo template. **No existe página índice de servicios**: el recorrido completo vive únicamente en el desplegable de la barra de navegación. Su forma es **columna corta + riel técnico**, y su regla de contenido es que **no son páginas de lectura**.
+
+- **Banda de cabecera a sangre.** Fondo plano en el color del servicio, índice mono (`Servicio 03 de 07`), H1 en Display, resumen y una sola acción: *Solicitar cotización*.
+- **El espacio de la foto va vacío.** La mitad derecha de la banda queda reservada y sin dibujar hasta que exista el archivo en `/public/images/servicios/`: sin marco, sin marca de agua, sin motivo de relleno. `src/lib/servicios.ts` resuelve `imagenDisponible` en build y la banda toma la foto sola cuando aparece. El hueco solo se reserva desde `lg:`; en móvil no se abre un vacío.
+- **Banda de servicio — tres tonos, no siete.** `src/lib/serviciosTema.ts` asigna a cada servicio uno de los tres tonos saturados del manual: Azul `#045684`, Azul profundo `#083645`, Verde claro `#abc883`. La Crema `#f9efd4` nunca es banda — es el suelo de las secciones claras, y usarla como cabecera la dejaría a un paso del fondo de página. Un servicio nuevo creado desde el CMS entra en la rotación en vez de quedar sin tema.
+- **Cuerpo mínimo.** Un párrafo de contexto (*En qué consiste*) y el testimonio. Nada más: los datos específicos viven en el riel, y la prueba formal en la banda de certificaciones.
+- **Riel de ficha.** Columna de 340px con el panel *Ficha del servicio* (alcance, referencia normativa, sectores) y, debajo, el panel de cotización. **Solo el panel de cotización es `sticky`**; el riel completo mide más que la ventana y pegarlo entero dejaría el botón fuera de alcance. El `<aside>` no lleva `self-start`: se estira a la altura de la fila del grid para darle recorrido al panel pegado.
+- **Otros servicios, en una línea.** Al pie, una fila de enlaces de texto sin colores ni números. El listado completo es trabajo del desplegable, no de la página.
+
+#### Named Rules
+**The Scan-Not-Read Rule.** Una página de servicio se recorre completa en una pasada: un párrafo de contexto, datos en el riel y una acción. Un bloque que exige lectura sostenida (párrafo por etapa, FAQ, caso de estudio) no pertenece a esta superficie. Tampoco pertenece la información que se repite idéntica en las siete páginas: si un dato es el mismo en todas, no es contenido, es ruido.
+**The Empty-Slot Rule.** Un lugar reservado para un asset que aún no existe se deja vacío. Ni gris de relleno, ni ícono, ni marco decorativo: el vacío es más honesto y no compite con lo que sí hay.
+
+### Navegación de servicios
+
+`siteConfig.nav` marca el item con `menu: 'servicios'`; el `Header` lo reemplaza por un desplegable armado en build (la lista se resuelve en `layout.tsx`, porque el Header es cliente y no lee contenido) y el `Footer` lo omite, porque no hay página que enlazar. El panel abre **solo por clic**, nunca por hover: con hover el clic siguiente lo cerraba de inmediato, y el clic funciona igual con teclado y en táctil. Cierra con Escape, con clic afuera y al cambiar de ruta. En móvil el mismo item se expande dentro del menú.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -205,5 +250,5 @@ Fixed-width container system: content sits inside a 1280px max-width, with 16px 
 
 ### Don't:
 - **Don't** introduce rounded corners, drop shadows, or a third saturated accent color — that is a different system, not a variation of this one.
-- **Don't** treat `/contacto`, `/servicios`, `/[servicio]`, and `/productos` as reference implementations: they currently render with generic Tailwind gray/blue utility classes (`text-gray-900`, `bg-blue-900`, `rounded-md`) instead of this system's tokens. They are static pages with no planned migration process tracked yet — when work touches them, bring them onto the tokens above rather than extending the untokened styling.
+- **Don't** treat `/productos` as a reference implementation: it still renders with generic Tailwind gray/blue utility classes (`text-gray-900`, `bg-blue-900`) instead of this system's tokens. When work touches it, bring it onto the tokens above rather than extending the untokened styling. (`/contacto` and `/[servicio]` are already migrated and are safe to copy from.)
 - **Don't** pull visual direction from `design-reference/stitch_marea_alta_modern_redesign/` — those are pre-implementation Stitch mockups (softly rounded, shadowed) that the shipped system explicitly departed from.

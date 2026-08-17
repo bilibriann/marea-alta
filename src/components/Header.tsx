@@ -1,31 +1,59 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { siteConfig } from '@/config'
-import { CloseIcon, MenuIcon } from '@/components/icons'
+import { CloseIcon, MenuIcon, ArrowRightIcon } from '@/components/icons'
 
-export function Header() {
+export interface EnlaceServicio {
+  slug: string
+  titulo: string
+}
+
+interface Props {
+  servicios: EnlaceServicio[]
+}
+
+export function Header({ servicios }: Props) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [serviciosOpen, setServiciosOpen] = useState(false)
+  const [serviciosMovilOpen, setServiciosMovilOpen] = useState(false)
   const [lastPathname, setLastPathname] = useState(pathname)
   const [scrolled, setScrolled] = useState(false)
+  const serviciosRef = useRef<HTMLLIElement>(null)
+
+  const enServicio = servicios.some((s) => pathname === `/${s.slug}`)
 
   if (pathname !== lastPathname) {
     setLastPathname(pathname)
     setOpen(false)
+    setServiciosOpen(false)
+    setServiciosMovilOpen(false)
   }
 
   useEffect(() => {
-    if (!open) return
+    if (!open && !serviciosOpen) return
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key !== 'Escape') return
+      setOpen(false)
+      setServiciosOpen(false)
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [open])
+  }, [open, serviciosOpen])
+
+  useEffect(() => {
+    if (!serviciosOpen) return
+    function handlePointerDown(event: MouseEvent) {
+      if (serviciosRef.current?.contains(event.target as Node)) return
+      setServiciosOpen(false)
+    }
+    document.addEventListener('mousedown', handlePointerDown)
+    return () => document.removeEventListener('mousedown', handlePointerDown)
+  }, [serviciosOpen])
 
   useEffect(() => {
     function handleScroll() {
@@ -35,6 +63,13 @@ export function Header() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const enlaceBase =
+    'relative block text-xs font-medium uppercase tracking-[0.08em] transition-colors duration-200'
+  const enlaceActivo = scrolled ? 'text-primary' : 'text-white'
+  const enlaceInactivo = scrolled
+    ? 'text-on-surface-variant hover:text-primary'
+    : 'text-white/70 hover:text-white'
 
   return (
     <header
@@ -67,17 +102,67 @@ export function Header() {
           }
         >
           {siteConfig.nav.map((item) => {
+            if (item.menu === 'servicios') {
+              if (servicios.length === 0) return null
+              return (
+                /* Solo clic, sin hover: el hover abría el panel y el clic siguiente
+                   lo cerraba de inmediato. Además el clic funciona igual con
+                   teclado y en pantallas táctiles. */
+                <li key="servicios" ref={serviciosRef} className="relative z-10">
+                  <button
+                    type="button"
+                    data-active={enServicio}
+                    aria-expanded={serviciosOpen}
+                    aria-controls="menu-servicios"
+                    onClick={() => setServiciosOpen((value) => !value)}
+                    className={`${enlaceBase} cursor-pointer ${enServicio ? enlaceActivo : enlaceInactivo}`}
+                  >
+                    <span className="relative z-10 inline-flex items-center gap-1.5 rounded-full px-4 py-2">
+                      {item.label}
+                      <ArrowRightIcon
+                        aria-hidden="true"
+                        className={`h-3 w-3 transition-transform duration-200 ${
+                          serviciosOpen ? '-rotate-90' : 'rotate-90'
+                        }`}
+                      />
+                    </span>
+                  </button>
+                  {serviciosOpen && (
+                    <ul
+                      id="menu-servicios"
+                      className="absolute left-1/2 top-full z-20 w-72 -translate-x-1/2 overflow-hidden rounded-md border border-outline-variant/60 bg-white py-2"
+                    >
+                      {servicios.map((servicio) => {
+                        const active = pathname === `/${servicio.slug}`
+                        return (
+                          <li key={servicio.slug}>
+                            <Link
+                              href={`/${servicio.slug}`}
+                              aria-current={active ? 'page' : undefined}
+                              className={`block px-5 py-2.5 text-sm font-medium transition-colors ${
+                                active
+                                  ? 'bg-surface-container-high text-primary'
+                                  : 'text-on-surface-variant hover:bg-surface-container-high hover:text-primary'
+                              }`}
+                            >
+                              {servicio.titulo}
+                            </Link>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  )}
+                </li>
+              )
+            }
+
             const active = pathname === item.href
             return (
               <li key={item.href} className="relative z-10">
                 <Link
                   href={item.href}
                   data-active={active}
-                  className={
-                    scrolled
-                      ? `relative block text-xs font-medium uppercase tracking-[0.08em] transition-colors duration-200 ${active ? 'text-primary' : 'text-on-surface-variant hover:text-primary'}`
-                      : `relative block text-xs font-medium uppercase tracking-[0.08em] transition-colors duration-200 ${active ? 'text-white' : 'text-white/70 hover:text-white'}`
-                  }
+                  className={`${enlaceBase} ${active ? enlaceActivo : enlaceInactivo}`}
                 >
                   <span className="relative z-10 inline-block rounded-full px-4 py-2">
                     {item.label}
@@ -131,31 +216,76 @@ export function Header() {
             }
           >
             {siteConfig.nav.map((item) => {
-              const active = pathname === item.href
-              if (scrolled) {
+              if (item.menu === 'servicios') {
+                if (servicios.length === 0) return null
                 return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={
-                      active
-                        ? 'py-4 font-bold tracking-wide text-primary'
-                        : 'py-4 font-bold tracking-wide text-on-surface transition-colors hover:text-primary'
-                    }
-                  >
-                    {item.label}
-                  </Link>
+                  <div key="servicios">
+                    <button
+                      type="button"
+                      aria-expanded={serviciosMovilOpen}
+                      aria-controls="menu-servicios-movil"
+                      onClick={() => setServiciosMovilOpen((value) => !value)}
+                      className={`flex w-full items-center justify-between py-4 font-bold tracking-wide ${
+                        scrolled
+                          ? enServicio
+                            ? 'text-primary'
+                            : 'text-on-surface'
+                          : enServicio
+                            ? 'text-white'
+                            : 'text-white/70'
+                      }`}
+                    >
+                      {item.label}
+                      <ArrowRightIcon
+                        aria-hidden="true"
+                        className={`h-4 w-4 transition-transform duration-200 ${
+                          serviciosMovilOpen ? '-rotate-90' : 'rotate-90'
+                        }`}
+                      />
+                    </button>
+                    {serviciosMovilOpen && (
+                      <ul id="menu-servicios-movil" className="pb-4">
+                        {servicios.map((servicio) => {
+                          const active = pathname === `/${servicio.slug}`
+                          return (
+                            <li key={servicio.slug}>
+                              <Link
+                                href={`/${servicio.slug}`}
+                                aria-current={active ? 'page' : undefined}
+                                className={`block py-2.5 pl-4 text-sm font-medium ${
+                                  scrolled
+                                    ? active
+                                      ? 'text-primary'
+                                      : 'text-on-surface-variant hover:text-primary'
+                                    : active
+                                      ? 'text-white'
+                                      : 'text-white/70 hover:text-white'
+                                }`}
+                              >
+                                {servicio.titulo}
+                              </Link>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    )}
+                  </div>
                 )
               }
+
+              const active = pathname === item.href
+              const clase = scrolled
+                ? active
+                  ? 'text-primary'
+                  : 'text-on-surface transition-colors hover:text-primary'
+                : active
+                  ? 'text-white'
+                  : 'text-white/70 transition-colors hover:text-white'
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={
-                    active
-                      ? 'py-4 font-bold tracking-wide text-white'
-                      : 'py-4 font-bold tracking-wide text-white/70 transition-colors hover:text-white'
-                  }
+                  className={`py-4 font-bold tracking-wide ${clase}`}
                 >
                   {item.label}
                 </Link>

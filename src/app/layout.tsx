@@ -3,6 +3,7 @@ import { Poppins, JetBrains_Mono } from 'next/font/google'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { siteConfig } from '@/config'
+import { getAllServicios } from '@/lib/servicios'
 import './globals.css'
 
 const poppins = Poppins({
@@ -26,17 +27,22 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  // El Header es cliente y no puede leer el contenido: la lista del desplegable
+  // de Servicios se resuelve aquí, en build.
+  const servicios = await getAllServicios()
+  const enlacesServicios = servicios.map((s) => ({ slug: s.slug, titulo: s.titulo }))
+
   return (
     <html lang="es">
       <body
         className={`${poppins.variable} ${jetbrainsMono.variable} flex min-h-screen flex-col bg-background font-sans text-on-background antialiased`}
       >
-        <Header />
+        <Header servicios={enlacesServicios} />
         <main className="flex-1 pt-20">{children}</main>
         <Footer />
       </body>

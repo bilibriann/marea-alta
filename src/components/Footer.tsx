@@ -24,13 +24,18 @@ export function Footer() {
             Enlaces Rápidos
           </h4>
           <ul className="space-y-4">
-            {siteConfig.nav.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="text-white/70 transition-colors hover:text-white">
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {siteConfig.nav
+              .filter((item) => !item.menu)
+              .map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-white/70 transition-colors hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
           </ul>
         </div>
         <div className="space-y-6">

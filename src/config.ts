@@ -7,7 +7,9 @@ export const siteConfig: SiteConfig = {
   url: 'https://mareaalta-latam.com',
   nav: [
     { label: 'Inicio', href: '/' },
-    { label: 'Servicios', href: '/servicios' },
+    // No hay página índice de servicios: este item es el desplegable que el Header
+    // arma a partir de src/content/servicios.
+    { label: 'Servicios', href: '#', menu: 'servicios' },
     { label: 'Productos', href: '/productos' },
     { label: 'Contacto', href: '/contacto' },
     { label: 'Noticias', href: '/noticias' },

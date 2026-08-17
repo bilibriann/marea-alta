@@ -52,6 +52,23 @@
   --color-inverse-on-surface: #ebf1ff;
   --color-inverse-primary: #abc7ff;
 
+  /* Display — título de página (H1 de cada servicio). Un escalón
+     por encima de headline-xl, que sigue siendo el tamaño de encabezado de sección. */
+  --text-display: 32px;
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 700;
+
+  --text-display-md: 44px;
+  --text-display-md--line-height: 1.06;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-md--font-weight: 700;
+
+  --text-display-lg: 52px;
+  --text-display-lg--line-height: 1.04;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg--font-weight: 700;
+
   --text-headline-xl: 38px;
   --text-headline-xl--line-height: 1.15;
   --text-headline-xl--letter-spacing: -0.02em;
@@ -74,6 +91,12 @@
   --text-label-sm--line-height: 1;
   --text-label-sm--letter-spacing: 0.05em;
   --text-label-sm--font-weight: 500;
+
+  /* Micro-etiqueta mono: marcas de esquina, organismo certificador, horario. */
+  --text-label-xs: 11px;
+  --text-label-xs--line-height: 1.2;
+  --text-label-xs--letter-spacing: 0.14em;
+  --text-label-xs--font-weight: 500;
 }
 
 body {
@@ -87,7 +110,8 @@ body {
   position: relative;
 }
 
-.pill-nav a[data-active='true'] > span {
+/* El item de Servicios es un <button>, no un <a>: el selector no puede exigir enlace. */
+.pill-nav [data-active='true'] > span {
   anchor-name: --pill-active;
 }
 
@@ -112,6 +136,6 @@ body {
     opacity 0.2s ease-out;
 }
 
-.pill-nav:has(a[data-active='true'])::after {
+.pill-nav:has([data-active='true'])::after {
   opacity: 0.12;
 }
