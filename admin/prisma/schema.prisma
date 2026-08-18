@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Rol {
+  admin
+  dev
+}
+
+enum Estado {
+  borrador
+  publicado
+}
+
+model Usuario {
+  id            Int       @id @default(autoincrement())
+  nombreUsuario String    @unique
+  passwordHash  String
+  rol           Rol
+  activo        Boolean   @default(true)
+  fechaCreacion DateTime  @default(now())
+  ultimoAcceso  DateTime?
+
+  productos Producto[]
+  noticias  Noticia[]
+}
+
+model Producto {
+  id                    Int      @id @default(autoincrement())
+  nombre                String
+  slug                  String   @unique
+  subtitulo             String?
+  notaAdicional         String?  @db.Text
+  videoYoutubeUrl       String?
+  cantidadesParaCotizar Json     @default("[]")
+  estado                Estado   @default(borrador)
+  fechaCreacion         DateTime @default(now())
+  fechaActualizacion    DateTime @updatedAt
+
+  creadoPorId Int?
+  creadoPor   Usuario? @relation(fields: [creadoPorId], references: [id])
+
+  imagenes       ImagenProducto[]
+  gruposOpciones GrupoOpciones[]
+
+  @@index([creadoPorId])
+}
+
+model ImagenProducto {
+  id         Int      @id @default(autoincrement())
+  url        String
+  orden      Int      @default(0)
+  productoId Int
+  producto   Producto @relation(fields: [productoId], references: [id], onDelete: Cascade)
+
+  @@index([productoId])
+}
+
+model GrupoOpciones {
+  id          Int      @id @default(autoincrement())
+  tituloGrupo String
+  orden       Int      @default(0)
+  opciones    Json
+  productoId  Int
+  producto    Producto @relation(fields: [productoId], references: [id], onDelete: Cascade)
+
+  @@index([productoId])
+}
+
+model Noticia {
+  id                 Int      @id @default(autoincrement())
+  titulo             String
+  slug               String   @unique
+  imagenDestacadaUrl String
+  fecha              DateTime
+  extracto           String   @db.Text
+  contenido          String   @db.LongText
+  estado             Estado   @default(borrador)
+  fechaCreacion      DateTime @default(now())
+  fechaActualizacion DateTime @updatedAt
+
+  creadoPorId Int?
+  creadoPor   Usuario? @relation(fields: [creadoPorId], references: [id])
+
+  @@index([creadoPorId])
+}

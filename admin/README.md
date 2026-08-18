@@ -1,128 +1,163 @@
 # Marea Alta — Panel de Administración
 
-Proyecto Next.js independiente del sitio público (`../`). Sirve el panel de
-Sveltia CMS detrás de una "puerta con llave" (proxy + cookie firmada).
+Proyecto Next.js independiente del sitio público (`../`). Es el backend + panel
+propio para administrar **Productos** y **Noticias** (Fase 1) — reemplaza el
+CMS basado en Git (Sveltia) que se usaba antes, para que el cliente pueda
+publicar contenido con un login usuario/contraseña propio, sin necesitar
+ninguna cuenta de GitHub.
 
-Se despliega en Vercel apuntando el **Root Directory** a esta carpeta
-(`admin/`). El sitio público sigue desplegándose sin cambios a Hostinger vía
-FTP desde la raíz del repo — ambos proyectos comparten el mismo repositorio
-de GitHub pero se construyen y despliegan por separado.
+Se despliega en Vercel (plan Hobby, gratis) apuntando el **Root Directory** a
+esta carpeta (`admin/`). El sitio público sigue desplegándose sin cambios a
+Hostinger vía FTP desde la raíz del repo — ambos proyectos comparten el mismo
+repositorio de GitHub pero se construyen y despliegan por separado.
 
-## Por qué está separado del sitio público
+## Arquitectura
 
-El sitio público usa `output: 'export'` (100% estático, sin servidor) para
-poder desplegarse en Hostinger. Un proxy (`middleware`/`proxy.ts`) funcional
-requiere un runtime de servidor (Edge/Node), lo que es incompatible con
-`output: 'export'` en un mismo build. Por eso el panel vive en su propio
-proyecto Next.js, con su propio `next.config.ts` (sin `output: 'export'`),
-desplegado en Vercel.
+- **Base de datos:** MySQL. En desarrollo, un contenedor local (`docker-compose.yml`
+  en la raíz del repo); en producción, MySQL gestionado de Hostinger.
+- **ORM:** [Prisma](prisma/schema.prisma) — define el modelo de
+  `Usuario`, `Producto`, `ImagenProducto`, `GrupoOpciones` y `Noticia`.
+- **Imágenes:** Cloudflare R2 (S3-compatible). En desarrollo, un MinIO local
+  que habla el mismo protocolo — ver [src/lib/storage.ts](src/lib/storage.ts).
+  Solo cambian variables de entorno entre dev y producción, el código es el
+  mismo.
+- **Login:** usuario/contraseña propio (bcrypt + JWT firmado con `jose`),
+  sesión de 30 días que se renueva mientras haya uso (`src/proxy.ts`,
+  `src/lib/auth.ts`, `src/lib/credenciales.ts`). Dos roles: `admin` (cliente y
+  su equipo) y `dev` (nosotros) — mismos permisos sobre Productos/Noticias en
+  esta fase; la única diferencia práctica hoy es quién gestiona cuentas.
+- **Sitio público:** sigue siendo 100% estático (`output: 'export'`,
+  `../next.config.ts`). `../src/lib/productos.ts` y `../src/lib/noticias.ts`
+  leen de la misma base MySQL **en build time** (con `mysql2`, sin Prisma —
+  son solo lecturas de contenido publicado, no justifica un segundo ORM).
+  Publicar contenido nuevo requiere un rebuild — ver "Publicar cambios" abajo.
 
-## Cómo funciona
+## Desarrollo local
 
-### Puerta con llave (nuestra sesión)
+```bash
+# 1. Levantar MySQL + MinIO (desde la raíz del repo)
+docker compose up -d
 
-- `src/proxy.ts` protege todo excepto `/login`, `/auth` y `/callback`: si no
-  hay cookie de sesión válida, redirige a `/login?from={ruta-original}`.
-- `/login` — formulario de contraseña (Server Action). Compara contra
-  `ADMIN_PASSWORD_CLIENT` / `ADMIN_PASSWORD_DEV` con `timingSafeEqual`
-  (`src/lib/password.ts`, solo corre en runtime Node — nunca se importa desde
-  el proxy).
-- Al validar, firma un JWT con `jose` (`src/lib/auth.ts`, compatible con Edge
-  runtime) con payload `{ role: 'client' | 'dev' }` y lo guarda en una cookie
-  `HttpOnly; Secure (en producción); SameSite=Lax`.
+# 2. Variables de entorno
+cp .env.example .env
+# completar ADMIN_SESSION_SECRET (openssl rand -base64 32) — el resto de los
+# valores de ejemplo ya apuntan a los contenedores locales
 
-### Proxy OAuth de GitHub (sesión de Sveltia, independiente de la nuestra)
+# 3. Instalar dependencias y aplicar el schema
+npm install
+npx prisma migrate dev
 
-Sveltia CMS necesita autenticarse contra GitHub para poder comitear al repo
-de contenido — es un login *distinto* al de arriba. Ese intercambio requiere
-un servidor (el `client_secret` de la OAuth App no puede vivir en el
-navegador), así que lo implementamos nosotros mismos en vez de sumar
-`sveltia-cms-auth` como plataforma aparte:
+# 4. Crear un usuario para poder loguearte
+npm run usuarios -- crear randy "tu-contraseña-local" dev
 
-- `src/app/auth/route.ts` — Sveltia abre esto en un popup; redirige a GitHub
-  con un token CSRF propio guardado en cookie.
-- `src/app/callback/route.ts` — GitHub redirige acá con el `code`; se canjea
-  por un access token (usa `GITHUB_CLIENT_ID`/`GITHUB_CLIENT_SECRET`) y se le
-  devuelve a Sveltia vía `postMessage` en la ventana del popup.
-- `src/lib/oauth.ts` — reimplementación fiel del protocolo de
-  [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) (mismo
-  handshake de `postMessage`, mismos nombres de cookie/params), portada a
-  Route Handlers de Next.js.
-- `public/admin/config.yml` → `backend.base_url` apunta a este mismo deploy.
-  Si cambia el dominio (ej. al migrar a `admin.marea-alta.com`), hay que
-  actualizar **tres lugares**: `base_url` acá, la "Authorization callback
-  URL" de la OAuth App en GitHub, y el `Homepage URL` de la misma.
-- `public/admin/config.yml` → `backend.repo` apunta al repo real
-  (`bilibriann/marea-alta`) donde vive el contenido (`src/content/`) —
-  Sveltia edita ese repo aunque su interfaz se sirva desde este dominio
-  distinto.
+# 5. Levantar el panel
+npm run dev
+```
+
+El sitio público (`../`) necesita su propio `DATABASE_URL` en `../.env` (ver
+`../.env.example`) para poder leer Productos/Noticias al correr `npm run
+build` o `npm run dev` ahí.
+
+## Gestión de usuarios
+
+No hay pantalla de usuarios en el panel — es deliberado (ver historial de
+diseño): son 2-4 cuentas que cambian rara vez, así que se gestionan por CLI.
+
+```bash
+npm run usuarios -- crear <nombreUsuario> <password> <admin|dev>
+npm run usuarios -- listar
+npm run usuarios -- desactivar <nombreUsuario>
+npm run usuarios -- activar <nombreUsuario>
+npm run usuarios -- reset-password <nombreUsuario> <nuevaPassword>
+```
+
+Si alguien olvida su contraseña, la resetea quien tenga acceso a correr este
+script contra la base correspondiente (no hay recuperación por email en esta
+fase).
+
+## Publicar cambios (rebuild del sitio público)
+
+Como el sitio público es estático, un producto o noticia nueva no aparece
+sola — hay que reconstruir y volver a desplegar. Hoy ese paso es **manual**:
+correr el workflow de GitHub Actions (`Actions` → `Deploy to GitHub Pages` →
+`Run workflow`) o hacerlo localmente. Automatizar esto (ej. un botón
+"Publicar" en el panel que dispare el rebuild) queda pendiente — ver
+checklist abajo.
 
 ## Variables de entorno
 
 Ver `.env.example`. Configurarlas en el proyecto de Vercel (Settings →
 Environment Variables), no en un `.env` committeado.
 
-## Migración al repo real (pendiente)
-
-**Estado actual (2026-08-12):** todo el código apunta a `bilibriann/marea-alta`
-(el repo real), pero el único deploy funcionando en Vercel hoy usa el fork de
-Randy (`randyman123/marea-alta`) para poder probar el login y el flujo OAuth
-sin depender de nadie más. Bloqueado en que bilibriann autorice el acceso de
-Vercel al repo real. Cuando lo confirme, seguir esta lista en orden:
-
-### 1. Crear el proyecto de Vercel nuevo (no reusar el del fork)
-
-- Vercel → Add New → Project → importar `bilibriann/marea-alta`.
-- **Root Directory: `admin/`** (el mismo ajuste que ya usa el proyecto del
-  fork — sin esto, Vercel intenta buildear el sitio público).
-- Dejar el proyecto del fork **como está, sin tocar** (ver punto 4) — no
-  reconectar su repo ni borrarlo todavía, para no perder el entorno de
-  pruebas mientras se termina de configurar el nuevo.
-- Anotar el dominio `*.vercel.app` que Vercel asigna al proyecto nuevo — se
-  necesita para los dos pasos siguientes.
-
-### 2. Variables de entorno a configurar en el proyecto nuevo
-
-Ninguna se hereda automáticamente del proyecto del fork — hay que cargarlas
-todas de nuevo en Settings → Environment Variables:
-
-| Variable | ¿Mismo valor que en el proyecto de pruebas? |
+| Variable | Qué es |
 |---|---|
-| `ADMIN_PASSWORD_CLIENT` | Recomendado generar una nueva — la de pruebas ya circuló en esta conversación |
-| `ADMIN_PASSWORD_DEV` | Recomendado generar una nueva, mismo motivo |
-| `ADMIN_SESSION_SECRET` | Generar una nueva (`openssl rand -base64 32`) — que una sesión firmada en el entorno de pruebas nunca sea válida contra producción |
-| `GITHUB_CLIENT_ID` | Nueva — ver punto 3, es una OAuth App distinta |
-| `GITHUB_CLIENT_SECRET` | Nueva — ver punto 3 |
+| `DATABASE_URL` | Conexión a MySQL |
+| `ADMIN_SESSION_SECRET` | Firma las cookies de sesión (JWT) |
+| `R2_ENDPOINT` | Endpoint S3-compatible (MinIO en dev, R2 en prod) |
+| `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY` | Credenciales del bucket |
+| `R2_BUCKET` | Nombre del bucket |
+| `R2_PUBLIC_BASE_URL` | URL pública base para armar los links de las imágenes |
 
-### 3. OAuth App de GitHub: crear una nueva, no reutilizar la actual
+## Checklist de migración a producción (Hostinger real)
 
-Una OAuth App clásica solo admite **una** Authorization callback URL. Como
-el proyecto del fork se mantiene vivo (punto 4) y su OAuth App actual sigue
-apuntando a `https://marea-alta-6m7y.vercel.app/callback`, reutilizarla y
-cambiarle la callback URL rompería el login GitHub del entorno de pruebas.
-Por eso, crear una **OAuth App nueva y separada**:
+**Estado actual:** todo el desarrollo se hizo contra MySQL/MinIO locales
+(Docker). Falta migrar a credenciales reales — se diseñó así a propósito
+(confirmado en el diseño de arquitectura) para no bloquear el desarrollo
+mientras se conseguían los accesos. Migrar no debería requerir tocar código,
+solo configuración — Prisma versiona el schema como migraciones, así que
+"cambiar de base" es correr esas migraciones contra la base nueva.
 
-1. GitHub → Settings → Developer settings → OAuth Apps → New OAuth App.
-2. Homepage URL y Authorization callback URL usando el dominio anotado en el
-   paso 1, ej.: `https://{dominio-nuevo}.vercel.app/callback`.
-3. Generar el Client Secret y cargar ambos valores (punto 2).
+### 1. MySQL de Hostinger
 
-Después de esto, actualizar `public/admin/config.yml`:
-- `backend.base_url` → reemplazar el placeholder `https://TODO-actualizar-dominio-vercel-repo-real` por `https://{dominio-nuevo}.vercel.app`.
+- [ ] Crear la base de datos MySQL en el panel de Hostinger.
+- [ ] Confirmar que acepta conexiones remotas — necesitan alcanzarla tanto
+      Vercel (donde corre `admin/`) como los runners de GitHub Actions (donde
+      se hace el build del sitio público). Esto último es lo menos habitual:
+      los runners de GitHub no tienen IP fija, así que puede requerir
+      habilitar acceso amplio en el firewall de Hostinger o buscar una
+      alternativa (ej. un proxy/túnel) si Hostinger no lo permite — **validar
+      esto antes de asumir que el build en CI va a funcionar**.
+- [ ] Aplicar el schema con `npx prisma migrate deploy` (no `migrate dev` —
+      ese es para iteración local, no necesita ni debe usarse en producción).
+- [ ] Crear las cuentas reales con `npm run usuarios -- crear ...` corriendo
+      contra el `DATABASE_URL` de producción (localmente, apuntando
+      temporalmente el `.env` a la base real, o desde donde sea más cómodo
+      ejecutar el script con esa variable).
 
-Y hacer commit + push (esto sí dispara el deploy real).
+### 2. Cloudflare R2
 
-### 4. Qué hacer con el proyecto de Vercel del fork
+- [ ] Crear cuenta de Cloudflare (si no existe) y un bucket R2 nuevo para
+      producción — no reutilizar el bucket/credenciales de desarrollo.
+- [ ] Configurar acceso público de lectura (dominio propio tipo
+      `images.marea-alta.cl` vía Cloudflare, según se definió en el diseño de
+      arquitectura).
+- [ ] Generar un API token de R2 con permisos de lectura/escritura sobre ese
+      bucket → `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY`.
 
-**Dejarlo activo, no borrarlo.** Sirve como entorno de pruebas permanente y
-aislado (nuevas colecciones de Sveltia, cambios al proxy OAuth, etc.) sin
-arriesgar el panel real del cliente. Sugerencia: renombrarlo en el dashboard
-de Vercel a algo como `marea-alta-admin-testing` para que no se confunda con
-el proyecto de producción una vez que ambos convivan.
+### 3. Variables de entorno en Vercel (proyecto `admin/`)
 
-## Desarrollo local
+- [ ] `DATABASE_URL` → MySQL de Hostinger.
+- [ ] `ADMIN_SESSION_SECRET` → generar uno **nuevo** (`openssl rand -base64
+      32`), no reusar el de desarrollo.
+- [ ] `R2_ENDPOINT`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`,
+      `R2_PUBLIC_BASE_URL` → valores del bucket de producción.
 
-```bash
-npm install
-npm run dev
-```
+### 4. GitHub Actions (build del sitio público)
+
+- [ ] Agregar el secret `DATABASE_URL` en Settings → Secrets and variables →
+      Actions, apuntando a la misma base de Hostinger (ver punto 1 sobre
+      conectividad desde los runners).
+- [ ] Agregar el paso de despliegue real a Hostinger vía FTP a
+      [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) — hoy
+      el workflow solo publica a GitHub Pages como entorno de prueba; falta
+      sumar la subida FTP con las credenciales reales de Hostinger.
+- [ ] Decidir y armar el disparador de "publicar" (ver sección arriba): que
+      el panel llame a la API de GitHub (`workflow_dispatch`) para
+      automatizar el rebuild, o mantenerlo manual por ahora.
+
+### 5. Verificación end-to-end
+
+- [ ] Login en el panel de producción con una cuenta real.
+- [ ] Crear un producto/noticia de prueba, publicarlo, correr el rebuild, y
+      confirmar que aparece en el sitio real.
+- [ ] Confirmar que las imágenes cargan desde el dominio de R2 de producción.

@@ -1,54 +1,50 @@
-import path from 'path'
-import fs from 'fs/promises'
-import matter from 'gray-matter'
-import { z } from 'zod'
+import type { RowDataPacket } from 'mysql2'
+import { getPool } from './db'
 
-const noticiaFrontmatterSchema = z.object({
-  titulo: z.string().min(1),
-  imagen_destacada: z.string().min(1),
-  fecha: z.coerce.date(),
-  extracto: z.string().min(1),
-})
-
-export interface Noticia extends z.infer<typeof noticiaFrontmatterSchema> {
+export interface Noticia {
+  titulo: string
+  imagen_destacada: string
+  fecha: Date
+  extracto: string
   slug: string
   contenido: string
 }
 
-const noticiasDir = path.join(process.cwd(), 'src/content/noticias')
+interface NoticiaRow extends RowDataPacket {
+  titulo: string
+  slug: string
+  imagenDestacadaUrl: string
+  fecha: Date
+  extracto: string
+  contenido: string
+}
 
-function parseNoticia(file: string, raw: string): Noticia {
-  const { data, content } = matter(raw)
-  try {
-    const frontmatter = noticiaFrontmatterSchema.parse(data)
-    return { ...frontmatter, slug: file.replace(/\.md$/, ''), contenido: content.trim() }
-  } catch (err) {
-    throw new Error(
-      `Noticia inválida en src/content/noticias/${file}: ${err instanceof Error ? err.message : String(err)}`
-    )
+function mapRow(row: NoticiaRow): Noticia {
+  return {
+    titulo: row.titulo,
+    imagen_destacada: row.imagenDestacadaUrl,
+    fecha: row.fecha,
+    extracto: row.extracto,
+    slug: row.slug,
+    contenido: row.contenido,
   }
 }
 
+const SELECT_NOTICIA = 'SELECT titulo, slug, imagenDestacadaUrl, fecha, extracto, contenido FROM `Noticia`'
+
 export async function getAllNoticias(): Promise<Noticia[]> {
-  const files = await fs.readdir(noticiasDir)
-  const noticias = await Promise.all(
-    files
-      .filter((f) => f.endsWith('.md'))
-      .map(async (file) => {
-        const raw = await fs.readFile(path.join(noticiasDir, file), 'utf8')
-        return parseNoticia(file, raw)
-      })
+  const pool = getPool()
+  const [rows] = await pool.query<NoticiaRow[]>(
+    `${SELECT_NOTICIA} WHERE estado = 'publicado' ORDER BY fecha DESC`
   )
-  return noticias.sort((a, b) => b.fecha.getTime() - a.fecha.getTime())
+  return rows.map(mapRow)
 }
 
 export async function getNoticia(slug: string): Promise<Noticia | null> {
-  const file = `${slug}.md`
-  try {
-    const raw = await fs.readFile(path.join(noticiasDir, file), 'utf8')
-    return parseNoticia(file, raw)
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null
-    throw err
-  }
+  const pool = getPool()
+  const [rows] = await pool.query<NoticiaRow[]>(
+    `${SELECT_NOTICIA} WHERE slug = ? AND estado = 'publicado' LIMIT 1`,
+    [slug]
+  )
+  return rows[0] ? mapRow(rows[0]) : null
 }

@@ -1,0 +1,58 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: marea-alta-mysql-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: marea_alta
+      MYSQL_USER: marea_alta
+      MYSQL_PASSWORD: marea_alta
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-proot']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Sustituto local de Cloudflare R2 para desarrollo: habla el mismo protocolo
+  # S3, así que el cliente de storage no distingue uno de otro (ver
+  # admin/src/lib/storage.ts) — en producción solo cambian las variables de
+  # entorno R2_*.
+  minio:
+    image: minio/minio:latest
+    container_name: marea-alta-minio-dev
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: marea_alta
+      MINIO_ROOT_PASSWORD: marea_alta_dev
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - minio_dev_data:/data
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 marea_alta marea_alta_dev &&
+      mc mb -p local/marea-alta &&
+      mc anonymous set public local/marea-alta
+      "
+
+volumes:
+  mysql_dev_data:
+  minio_dev_data:

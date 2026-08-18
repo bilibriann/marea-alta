@@ -27,9 +27,15 @@ jobs:
 
       - run: npm ci
 
+      # Productos y Noticias se leen de MySQL en build time (src/lib/productos.ts,
+      # src/lib/noticias.ts) — requiere el secret DATABASE_URL configurado en
+      # Settings → Secrets and variables → Actions, apuntando a una base
+      # alcanzable desde los runners de GitHub (ver checklist de migración a
+      # Hostinger en admin/README.md).
       - run: npm run build
         env:
           GITHUB_PAGES: 'true'
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - run: touch out/.nojekyll
 
