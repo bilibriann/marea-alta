@@ -1,37 +1,26 @@
-export interface ContactFormData {
-  nombre: string
-  email: string
-  mensaje: string
-}
+import { CONTACT_EMAIL } from '@/config'
 
 export interface FormResult {
   ok: boolean
   error?: string
 }
 
-export async function sendContactForm(_data: ContactFormData): Promise<FormResult> {
-  // stub — conectar Formspree o Web3Forms aquí
-  return { ok: true }
-}
-
-export async function subscribeNewsletter(_email: string): Promise<FormResult> {
-  // stub — conectar servicio de email marketing aquí
-  return { ok: true }
-}
-
-export interface CotizacionFormData {
-  nombre: string
-  apellido: string
-  email: string
-  mensaje: string
-  producto: string
-  cantidades: string[]
-}
-
-export async function sendCotizacionForm(data: CotizacionFormData): Promise<FormResult> {
+/**
+ * Único camino de envío del sitio. Contacto, newsletter y las cotizaciones por
+ * producto pasan todos por aquí; no agregues un segundo `fetch` en otro lado.
+ *
+ * El destinatario sale siempre de CONTACT_EMAIL (src/config.ts). Ojo: en el
+ * plan gratuito Web3Forms entrega al buzón asociado a la access key e ignora
+ * `to`; se manda igual para que el destino viaje en el payload y para que al
+ * confirmar el dominio baste con cambiar la constante.
+ */
+async function postForm(
+  campos: Record<string, string | string[]>,
+  asunto: string
+): Promise<FormResult> {
   const endpoint = process.env.NEXT_PUBLIC_FORMS_ENDPOINT
   if (!endpoint) {
-    return { ok: false, error: 'El formulario de cotización aún no está configurado.' }
+    return { ok: false, error: 'El formulario aún no está configurado.' }
   }
 
   const body = new FormData()
@@ -39,13 +28,15 @@ export async function sendCotizacionForm(data: CotizacionFormData): Promise<Form
   if (web3formsAccessKey) {
     body.append('access_key', web3formsAccessKey)
   }
-  body.append('nombre', data.nombre)
-  body.append('apellido', data.apellido)
-  body.append('email', data.email)
-  body.append('mensaje', data.mensaje)
-  body.append('producto', data.producto)
-  for (const cantidad of data.cantidades) {
-    body.append('cantidades', cantidad)
+  body.append('to', CONTACT_EMAIL)
+  body.append('subject', asunto)
+
+  for (const [clave, valor] of Object.entries(campos)) {
+    if (Array.isArray(valor)) {
+      for (const item of valor) body.append(clave, item)
+    } else if (valor) {
+      body.append(clave, valor)
+    }
   }
 
   try {
@@ -55,10 +46,55 @@ export async function sendCotizacionForm(data: CotizacionFormData): Promise<Form
       headers: { Accept: 'application/json' },
     })
     if (!res.ok) {
-      return { ok: false, error: 'No se pudo enviar la cotización. Intenta nuevamente.' }
+      return { ok: false, error: 'No se pudo enviar el mensaje. Intenta nuevamente.' }
     }
     return { ok: true }
   } catch {
-    return { ok: false, error: 'No se pudo enviar la cotización. Revisa tu conexión e intenta nuevamente.' }
+    return { ok: false, error: 'No se pudo enviar el mensaje. Revisa tu conexión e intenta nuevamente.' }
   }
+}
+
+export interface ContactFormData {
+  nombre: string
+  email: string
+  mensaje: string
+}
+
+export async function sendContactForm(data: ContactFormData): Promise<FormResult> {
+  return postForm(
+    { nombre: data.nombre, email: data.email, replyto: data.email, mensaje: data.mensaje },
+    `Contacto web — ${data.nombre}`
+  )
+}
+
+export async function subscribeNewsletter(email: string): Promise<FormResult> {
+  return postForm({ email, replyto: email }, 'Nueva suscripción al newsletter')
+}
+
+export interface CotizacionFormData {
+  nombre: string
+  apellido: string
+  email: string
+  mensaje: string
+  /** Nombre del producto desde cuya página se envía; va prellenado en el form. */
+  producto: string
+  /** URL de la ficha del producto, para que el correo enlace de vuelta. */
+  productoUrl?: string
+  cantidades: string[]
+}
+
+export async function sendCotizacionForm(data: CotizacionFormData): Promise<FormResult> {
+  return postForm(
+    {
+      nombre: data.nombre,
+      apellido: data.apellido,
+      email: data.email,
+      replyto: data.email,
+      mensaje: data.mensaje,
+      producto: data.producto,
+      ...(data.productoUrl ? { producto_url: data.productoUrl } : {}),
+      cantidades: data.cantidades,
+    },
+    `Cotización — ${data.producto}`
+  )
 }

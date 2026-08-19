@@ -21,7 +21,7 @@ export function CertificacionesSection({ certificaciones }: Props) {
   }, [])
 
   return (
-    <section className="border-t border-outline-variant/20 bg-brand-verde py-24">
+    <section className="border-t border-outline-variant/20 bg-white py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="mb-16">
           <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">

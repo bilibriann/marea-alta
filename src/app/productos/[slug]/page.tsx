@@ -3,7 +3,9 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getAllProductos, getProducto } from '@/lib/productos'
-import { ArrowRightIcon } from '@/components/icons'
+import { assetPath } from '@/lib/assetPath'
+import { siteConfig } from '@/config'
+import { ArrowRightIcon, DownloadIcon } from '@/components/icons'
 import { CotizacionForm } from '../_components/CotizacionForm'
 
 export const dynamicParams = false
@@ -73,6 +75,19 @@ export default async function ProductoPage({
         <p className="mt-2 text-lg text-on-surface-variant">{producto.subtitulo}</p>
       )}
 
+      {/* La ficha es opcional: sin `ficha` en el frontmatter no hay botón, en vez
+          de un enlace que termine en 404. */}
+      {producto.ficha && (
+        <a
+          href={assetPath(producto.ficha)}
+          download
+          className="mt-6 inline-flex items-center gap-2 rounded-md border border-primary px-6 py-3 text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-on-primary"
+        >
+          <DownloadIcon className="h-5 w-5" aria-hidden="true" />
+          Descargar ficha comercial (PDF)
+        </a>
+      )}
+
       {producto.galeria.length > 0 && (
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {producto.galeria.map((imagen) => (
@@ -119,7 +134,11 @@ export default async function ProductoPage({
         <h2 className="mb-8 text-headline-lg-mobile text-primary md:text-headline-xl">
           Solicita tu Cotización
         </h2>
-        <CotizacionForm producto={producto.nombre} cantidades={producto.opciones_cantidad} />
+        <CotizacionForm
+          producto={producto.nombre}
+          productoUrl={`${siteConfig.url}/productos/${producto.slug}`}
+          cantidades={producto.opciones_cantidad}
+        />
       </div>
 
       {videoEmbedUrl && (

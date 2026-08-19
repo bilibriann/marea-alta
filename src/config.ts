@@ -1,5 +1,15 @@
 import type { SiteConfig } from '@/types'
 
+/**
+ * Destino único de todo el correo que sale del sitio: formulario de contacto,
+ * newsletter y las cotizaciones por producto. El dominio definitivo todavía no
+ * está confirmado, así que se sobreescribe por entorno
+ * (NEXT_PUBLIC_CONTACT_EMAIL) sin tocar código. No repitas esta dirección en
+ * ningún otro archivo: importa esta constante.
+ */
+export const CONTACT_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'ventas@mareaalta-latam.com'
+
 export const siteConfig: SiteConfig = {
   name: 'Marea Alta Chile SpA',
   description:
@@ -15,7 +25,7 @@ export const siteConfig: SiteConfig = {
     { label: 'Noticias', href: '/noticias' },
   ],
   contacto: {
-    email: 'ventas@mareaalta-latam.com',
+    email: CONTACT_EMAIL,
     telefono: '+56 9 4041 7967',
     direccion: 'Avda. Lo Espejo Nº02124, Bodegas 6-7, San Bernardo, RM',
     horario: 'Lun–Vie, 9:00–18:00',

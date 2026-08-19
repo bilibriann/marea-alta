@@ -19,5 +19,6 @@ opciones_cantidad:
   - "50"
   - "100"
   - "1000"
+ficha: "/fichas/producto-de-prueba-1.pdf"
 video_youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ---

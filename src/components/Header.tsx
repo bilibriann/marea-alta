@@ -65,7 +65,7 @@ export function Header({ servicios }: Props) {
   }, [])
 
   const enlaceBase =
-    'relative block text-xs font-medium uppercase tracking-[0.08em] transition-colors duration-200'
+    'relative block text-[11px] font-medium uppercase tracking-[0.08em] transition-colors duration-200'
   const enlaceActivo = scrolled ? 'text-primary' : 'text-white'
   const enlaceInactivo = scrolled
     ? 'text-on-surface-variant hover:text-primary'
@@ -177,8 +177,8 @@ export function Header({ servicios }: Props) {
             href="/contacto"
             className={
               scrolled
-                ? 'rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-primary-container hover:text-on-primary-container active:scale-95 md:px-6 md:text-base'
-                : 'rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-primary-container hover:text-on-primary-container active:scale-95 md:px-6 md:text-base'
+                ? 'rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-primary-container hover:text-on-primary-container active:scale-95 md:px-6'
+                : 'rounded-md bg-white px-4 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-primary-container hover:text-on-primary-container active:scale-95 md:px-6'
             }
           >
             Cotizar Ahora
@@ -225,7 +225,7 @@ export function Header({ servicios }: Props) {
                       aria-expanded={serviciosMovilOpen}
                       aria-controls="menu-servicios-movil"
                       onClick={() => setServiciosMovilOpen((value) => !value)}
-                      className={`flex w-full items-center justify-between py-4 font-bold tracking-wide ${
+                      className={`flex w-full items-center justify-between py-4 text-sm font-bold tracking-wide ${
                         scrolled
                           ? enServicio
                             ? 'text-primary'
@@ -285,7 +285,7 @@ export function Header({ servicios }: Props) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`py-4 font-bold tracking-wide ${clase}`}
+                  className={`py-4 text-sm font-bold tracking-wide ${clase}`}
                 >
                   {item.label}
                 </Link>

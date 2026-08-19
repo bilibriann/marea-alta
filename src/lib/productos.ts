@@ -16,6 +16,15 @@ const productoFrontmatterSchema = z.object({
   nota_adicional: z.string().min(1).optional(),
   opciones_cantidad: z.array(z.string().min(1)).default([]),
   video_youtube: z.url().optional(),
+  // Opcional: si el producto no trae ficha, el botón de descarga no se renderiza.
+  // El PDF vive en public/, así que la ruta empieza en / (ej: /fichas/x.pdf).
+  ficha: z
+    .string()
+    .min(1)
+    .refine((v) => v.startsWith('/'), {
+      message: 'La ficha debe ser una ruta dentro de public/, empezando por "/" (ej: /fichas/producto.pdf)',
+    })
+    .optional(),
 })
 
 export type OpcionGrupo = z.infer<typeof opcionGrupoSchema>

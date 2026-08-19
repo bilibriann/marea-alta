@@ -1,11 +1,10 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import { getAllServicios, getServicio } from '@/lib/servicios'
 import { getCertificaciones, getSectores, getTestimonios } from '@/lib/home'
 import { temaServicio } from '@/lib/serviciosTema'
-import { ArrowRightIcon, VerifiedIcon } from '@/components/icons'
+import { VerifiedIcon } from '@/components/icons'
 import { BandaServicio } from './_components/BandaServicio'
 import { RielServicio } from './_components/RielServicio'
 import { OtrosServicios } from './_components/OtrosServicios'
@@ -151,28 +150,6 @@ export default async function ServicioPage({
       )}
 
       <OtrosServicios servicios={servicios} actual={servicio.slug} />
-
-      <section className="border-t border-outline-variant/30 bg-brand-crema py-16 md:py-20">
-        <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 md:flex-row md:items-end md:justify-between md:px-12">
-          <div>
-            <h2 className="max-w-2xl text-headline-lg-mobile text-primary md:text-headline-xl">
-              Conversemos su requerimiento de {servicio.titulo.toLowerCase()}
-            </h2>
-            <p className="mt-4 max-w-xl leading-relaxed text-on-surface-variant">
-              Escríbanos con el rango de temperatura, el volumen y el tiempo de tránsito de su
-              operación. Le respondemos con una propuesta y, si corresponde, con el respaldo
-              documental del servicio.
-            </p>
-          </div>
-          <Link
-            href="/contacto"
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-primary px-8 py-4 text-base font-bold text-white transition-all hover:bg-brand-azul-profundo active:scale-95"
-          >
-            Solicitar cotización
-            <ArrowRightIcon className="h-4 w-4" />
-          </Link>
-        </div>
-      </section>
     </>
   )
 }
