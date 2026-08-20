@@ -8,11 +8,12 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
-  // Next.js no sirve index.html de un directorio automáticamente (a
-  // diferencia de un host estático típico) — sin esto, /admin da 404 y solo
-  // funciona la ruta exacta /admin/index.html.
-  async rewrites() {
-    return [{ source: '/admin', destination: '/admin/index.html' }]
+  experimental: {
+    serverActions: {
+      // Default de Next.js es 1MB — muy poco para fotos de producto/noticia
+      // reales (ver diagnóstico de subida de imágenes fallando en el panel).
+      bodySizeLimit: '10mb',
+    },
   },
 }
 
