@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { subirImagenAction } from '@/lib/actions/subida'
 import { crearNoticiaAction, actualizarNoticiaAction } from '@/lib/actions/noticias'
 import type { NoticiaInput } from '@/lib/noticias'
+import { TAMANO_MAXIMO_IMAGEN_BYTES, TAMANO_MAXIMO_IMAGEN_MB } from '@/lib/limites'
 
 interface Props {
   noticiaId?: number
@@ -43,6 +44,11 @@ export default function NoticiaForm({ noticiaId, inicial }: Props) {
     e.target.value = ''
     if (!archivo) return
 
+    if (archivo.size > TAMANO_MAXIMO_IMAGEN_BYTES) {
+      setError(`La imagen pesa demasiado (máximo ${TAMANO_MAXIMO_IMAGEN_MB}MB). Comprímela o achícala e intenta de nuevo.`)
+      return
+    }
+
     setSubiendo(true)
     setError(null)
     try {
@@ -62,6 +68,11 @@ export default function NoticiaForm({ noticiaId, inicial }: Props) {
     const archivo = e.target.files?.[0]
     e.target.value = ''
     if (!archivo) return
+
+    if (archivo.size > TAMANO_MAXIMO_IMAGEN_BYTES) {
+      setError(`La imagen pesa demasiado (máximo ${TAMANO_MAXIMO_IMAGEN_MB}MB). Comprímela o achícala e intenta de nuevo.`)
+      return
+    }
 
     setSubiendoInline(true)
     setError(null)

@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useTransition, type ChangeEvent, type FormEvent } from 'react'
+import { useState, useTransition, type ChangeEvent, type SubmitEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { subirImagenAction } from '@/lib/actions/subida'
 import { crearProductoAction, actualizarProductoAction } from '@/lib/actions/productos'
 import type { ProductoInput } from '@/lib/productos'
+import { TAMANO_MAXIMO_IMAGEN_BYTES, TAMANO_MAXIMO_IMAGEN_MB } from '@/lib/limites'
 
 interface Props {
   productoId?: number
@@ -31,6 +32,11 @@ export default function ProductoForm({ productoId, inicial }: Props) {
     const archivo = e.target.files?.[0]
     e.target.value = ''
     if (!archivo) return
+
+    if (archivo.size > TAMANO_MAXIMO_IMAGEN_BYTES) {
+      setError(`La imagen pesa demasiado (máximo ${TAMANO_MAXIMO_IMAGEN_MB}MB). Comprímela o achícala e intenta de nuevo.`)
+      return
+    }
 
     setSubiendo(true)
     setError(null)
@@ -61,7 +67,7 @@ export default function ProductoForm({ productoId, inicial }: Props) {
     setGrupos((prev) => prev.map((g, i) => (i === index ? { ...g, ...cambios } : g)))
   }
 
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: SubmitEvent) {
     e.preventDefault()
     setError(null)
 
