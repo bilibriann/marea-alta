@@ -27,6 +27,11 @@ function getYoutubeEmbedUrl(url: string): string | null {
 
 export async function generateStaticParams() {
   const productos = await getAllProductos()
+  // Un array vacío rompe el build entero con `output: 'export'` (bug conocido
+  // de Next.js, ver vercel/next.js#58171) — si no hay productos publicados,
+  // generamos un slug que nunca va a coincidir con uno real; getProducto()
+  // devuelve null y la página ya llama notFound() para ese caso.
+  if (productos.length === 0) return [{ slug: '__placeholder__' }]
   return productos.map((p) => ({ slug: p.slug }))
 }
 
