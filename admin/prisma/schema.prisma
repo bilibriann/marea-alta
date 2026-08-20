@@ -76,7 +76,7 @@ model Noticia {
   id                 Int      @id @default(autoincrement())
   titulo             String
   slug               String   @unique
-  imagenDestacadaUrl String
+  imagenDestacadaUrl String?
   fecha              DateTime
   extracto           String   @db.Text
   contenido          String   @db.LongText

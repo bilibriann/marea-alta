@@ -10,7 +10,7 @@ interface Props {
   noticiaId?: number
   inicial?: {
     titulo: string
-    imagenDestacadaUrl: string
+    imagenDestacadaUrl: string | null
     fecha: Date
     extracto: string
     contenido: string
@@ -26,7 +26,9 @@ function aFechaInput(fecha?: Date): string {
 export default function NoticiaForm({ noticiaId, inicial }: Props) {
   const router = useRouter()
   const [titulo, setTitulo] = useState(inicial?.titulo ?? '')
-  const [imagenDestacadaUrl, setImagenDestacadaUrl] = useState(inicial?.imagenDestacadaUrl ?? '')
+  const [imagenDestacadaUrl, setImagenDestacadaUrl] = useState<string | null>(
+    inicial?.imagenDestacadaUrl ?? null
+  )
   const [fecha, setFecha] = useState(aFechaInput(inicial?.fecha) || aFechaInput(new Date()))
   const [extracto, setExtracto] = useState(inicial?.extracto ?? '')
   const [contenido, setContenido] = useState(inicial?.contenido ?? '')
@@ -80,14 +82,9 @@ export default function NoticiaForm({ noticiaId, inicial }: Props) {
     e.preventDefault()
     setError(null)
 
-    if (!imagenDestacadaUrl) {
-      setError('La imagen destacada es obligatoria.')
-      return
-    }
-
     const input: NoticiaInput = {
       titulo,
-      imagenDestacadaUrl,
+      imagenDestacadaUrl: imagenDestacadaUrl ?? undefined,
       fecha: new Date(fecha),
       extracto,
       contenido,
@@ -119,11 +116,15 @@ export default function NoticiaForm({ noticiaId, inicial }: Props) {
       </div>
 
       <div className="form-campo">
-        <label>Imagen destacada *</label>
+        <label>Imagen destacada</label>
+        <p className="form-hint">Opcional — se puede publicar una noticia sin imagen.</p>
         {imagenDestacadaUrl && (
           <div className="imagen-destacada-preview">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={imagenDestacadaUrl} alt="" />
+            <button type="button" className="btn-secundario" onClick={() => setImagenDestacadaUrl(null)}>
+              Quitar imagen
+            </button>
           </div>
         )}
         <input type="file" accept="image/*" onChange={handleSubidaImagen} disabled={subiendo} />

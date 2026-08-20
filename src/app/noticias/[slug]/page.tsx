@@ -11,6 +11,11 @@ export const dynamicParams = false
 
 export async function generateStaticParams() {
   const noticias = await getAllNoticias()
+  // Un array vacío rompe el build entero con `output: 'export'` (bug conocido
+  // de Next.js, ver vercel/next.js#58171) — si no hay noticias publicadas,
+  // generamos un slug que nunca va a coincidir con uno real; getNoticia()
+  // devuelve null y la página ya llama notFound() para ese caso.
+  if (noticias.length === 0) return [{ slug: '__placeholder__' }]
   return noticias.map((n) => ({ slug: n.slug }))
 }
 
@@ -78,9 +83,11 @@ export default async function NoticiaPage({
         {noticia.titulo}
       </h1>
 
-      <div className="relative mt-10 h-80 overflow-hidden border border-outline-variant sm:h-96">
-        <Image src={noticia.imagen_destacada} alt={noticia.titulo} fill className="object-cover" />
-      </div>
+      {noticia.imagen_destacada && (
+        <div className="relative mt-10 h-80 overflow-hidden border border-outline-variant sm:h-96">
+          <Image src={noticia.imagen_destacada} alt={noticia.titulo} fill className="object-cover" />
+        </div>
+      )}
 
       <div className="mt-12 max-w-none">
         <ReactMarkdown components={markdownComponents}>{noticia.contenido}</ReactMarkdown>

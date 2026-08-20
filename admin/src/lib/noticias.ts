@@ -6,7 +6,7 @@ import type { Estado } from '@prisma/client'
 
 export const noticiaInputSchema = z.object({
   titulo: z.string().min(1),
-  imagenDestacadaUrl: z.string().min(1),
+  imagenDestacadaUrl: z.string().min(1).optional(),
   fecha: z.coerce.date(),
   extracto: z.string().min(1),
   contenido: z.string().min(1),
@@ -40,7 +40,13 @@ export async function crearNoticia(input: NoticiaInput, creadoPorId: number) {
   const slug = await slugUnico(datos.titulo, (s) => slugYaExiste(s))
 
   return prisma.noticia.create({
-    data: { ...datos, estado: datos.estado as Estado, slug, creadoPorId },
+    data: {
+      ...datos,
+      imagenDestacadaUrl: datos.imagenDestacadaUrl ?? null,
+      estado: datos.estado as Estado,
+      slug,
+      creadoPorId,
+    },
     include: noticiaConRelaciones,
   })
 }
@@ -55,11 +61,19 @@ export async function actualizarNoticia(id: number, input: NoticiaInput) {
 
   const resultado = await prisma.noticia.update({
     where: { id },
-    data: { ...datos, estado: datos.estado as Estado, slug },
+    data: {
+      ...datos,
+      // undefined en `update` significa "no tocar este campo" para Prisma —
+      // acá sí queremos poder dejarlo explícitamente en null si se quitó la
+      // imagen, por eso el `?? null` en vez de dejar pasar el undefined tal cual.
+      imagenDestacadaUrl: datos.imagenDestacadaUrl ?? null,
+      estado: datos.estado as Estado,
+      slug,
+    },
     include: noticiaConRelaciones,
   })
 
-  if (actual.imagenDestacadaUrl !== datos.imagenDestacadaUrl) {
+  if (actual.imagenDestacadaUrl && actual.imagenDestacadaUrl !== datos.imagenDestacadaUrl) {
     await eliminarImagen(keyDesdeUrl(actual.imagenDestacadaUrl)).catch(() => {})
   }
 
@@ -71,5 +85,7 @@ export async function eliminarNoticia(id: number) {
   if (!actual) return
 
   await prisma.noticia.delete({ where: { id } })
-  await eliminarImagen(keyDesdeUrl(actual.imagenDestacadaUrl)).catch(() => {})
+  if (actual.imagenDestacadaUrl) {
+    await eliminarImagen(keyDesdeUrl(actual.imagenDestacadaUrl)).catch(() => {})
+  }
 }

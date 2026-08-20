@@ -27,12 +27,16 @@ export function NoticiasSection({ noticias }: Props) {
               className="group flex flex-col overflow-hidden rounded-md border border-white/10 transition-all duration-300 hover:border-white"
             >
               <div className="relative h-52 overflow-hidden">
-                <Image
-                  src={noticia.imagen_destacada}
-                  alt={noticia.titulo}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                {noticia.imagen_destacada ? (
+                  <Image
+                    src={noticia.imagen_destacada}
+                    alt={noticia.titulo}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-surface-container" />
+                )}
               </div>
               <div className="flex flex-1 flex-col gap-2 bg-white p-6">
                 <span className="font-mono text-label-sm uppercase tracking-widest text-tertiary">

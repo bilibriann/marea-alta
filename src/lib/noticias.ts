@@ -3,7 +3,7 @@ import { getPool } from './db'
 
 export interface Noticia {
   titulo: string
-  imagen_destacada: string
+  imagen_destacada: string | null
   fecha: Date
   extracto: string
   slug: string
@@ -13,7 +13,7 @@ export interface Noticia {
 interface NoticiaRow extends RowDataPacket {
   titulo: string
   slug: string
-  imagenDestacadaUrl: string
+  imagenDestacadaUrl: string | null
   fecha: Date
   extracto: string
   contenido: string
