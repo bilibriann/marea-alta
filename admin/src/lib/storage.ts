@@ -1,23 +1,24 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { randomUUID } from 'node:crypto'
 
+// Node solo acepta tab, ASCII imprimible (0x20-0x7e) y bytes altos (0x80-0xff)
+// en un valor de header HTTP (ver checkInvalidHeaderChar en Node, y RFC 9110).
+// Cualquier otra cosa —incluyendo caracteres "invisibles" como espacio de
+// ancho cero (U+200B) o BOM (U+FEFF), típicos de copiar/pegar desde el
+// navegador o apps de texto enriquecido— revienta el SDK de AWS al armar el
+// header Authorization con un ERR_INVALID_CHAR genérico que no dice ni la
+// variable ni el carácter culpable.
+const CARACTER_INVALIDO_EN_HEADER = /[^\t\x20-\x7e\x80-\xff]/g
+
 /**
- * Lee una variable de entorno recortando espacios/saltos de línea de los
- * extremos (típico al copiar/pegar credenciales en el dashboard de Vercel —
- * un \n de más rompe el header Authorization que arma el SDK con un
- * `ERR_INVALID_CHAR` críptico que no dice cuál variable es la culpable).
- * Si después de recortar sigue teniendo un carácter de control, tiramos un
- * error explícito con el nombre de la variable en vez de dejar que reviente
- * más abajo dentro del SDK de AWS.
+ * Lee una variable de entorno y le quita cualquier carácter que rompería un
+ * header HTTP (no solo en los extremos — un espacio de ancho cero en medio
+ * de la credencial no lo saca un `.trim()`).
  */
 function envVarLimpia(nombre: string): string | undefined {
   const valor = process.env[nombre]
   if (valor === undefined) return undefined
-  const limpio = valor.trim()
-  if (/[\x00-\x1f\x7f]/.test(limpio)) {
-    throw new Error(`La variable de entorno ${nombre} contiene un carácter de control inválido.`)
-  }
-  return limpio
+  return valor.replace(CARACTER_INVALIDO_EN_HEADER, '').trim()
 }
 
 // Cliente S3 genérico: en desarrollo apunta al MinIO de docker-compose.yml,
