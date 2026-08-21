@@ -66,33 +66,33 @@ export function ContactoSection() {
   }
 
   return (
-    <section id="contacto" className="scroll-mt-24 bg-brand-azul-profundo py-24">
+    <section id="contacto" className="scroll-mt-24 border-y border-primary/15 bg-brand-azul-profundo py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="grid grid-cols-1 gap-20 lg:grid-cols-2">
           <div className="space-y-10">
             <div className="space-y-4">
-              <span className="block font-mono text-label-sm font-bold uppercase tracking-widest text-accent">
+              <span className="block font-mono text-label-sm font-bold uppercase tracking-widest text-primary">
                 Contacto
               </span>
-              <h2 className="text-headline-lg-mobile text-white md:text-headline-xl">
+              <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">
                 Inicie su Cotización
               </h2>
-              <p className="max-w-md text-lg text-white/70">
+              <p className="max-w-md text-lg text-on-surface-variant">
                 Nuestro equipo de expertos está listo para diseñar la solución de cadena de frío
                 más adecuada para su negocio. Reciba una asesoría personalizada hoy mismo.
               </p>
             </div>
             <div className="space-y-6 pt-6">
-              <div className="flex items-center gap-4 text-white">
-                <CallIcon className="h-5 w-5 text-accent" />
+              <div className="flex items-center gap-4 text-primary">
+                <CallIcon className="h-5 w-5 text-primary" />
                 <span className="font-semibold">{siteConfig.contacto.telefono}</span>
               </div>
-              <div className="flex items-center gap-4 text-white">
-                <MailIcon className="h-5 w-5 text-accent" />
+              <div className="flex items-center gap-4 text-primary">
+                <MailIcon className="h-5 w-5 text-primary" />
                 <span className="font-semibold">{siteConfig.contacto.email}</span>
               </div>
-              <div className="flex items-center gap-4 text-white">
-                <PinIcon className="h-5 w-5 text-accent" />
+              <div className="flex items-center gap-4 text-primary">
+                <PinIcon className="h-5 w-5 text-primary" />
                 <span className="font-semibold">{siteConfig.contacto.direccion}</span>
               </div>
             </div>

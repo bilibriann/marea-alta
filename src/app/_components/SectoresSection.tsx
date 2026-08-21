@@ -24,18 +24,19 @@ export function SectoresSection({ sectores }: Props) {
               key={sector.slug}
               href="/#contacto"
               aria-label={`Solicitar cotización para ${sector.nombre}`}
-              className="group relative block h-80 overflow-hidden rounded-md border border-outline-variant transition-all duration-300 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="group flex flex-col overflow-hidden rounded-md border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
-              <Image
-                src={sector.imagen}
-                alt={sector.nombre}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-inverse-surface/70 transition-colors group-hover:bg-inverse-surface/50" />
-              <div className="absolute bottom-0 left-0 w-full border-t border-white/10 bg-inverse-surface/90 p-6">
-                <h4 className="mb-1 text-lg font-bold text-white">{sector.nombre}</h4>
-                <p className="line-clamp-2 text-xs text-white/70">{sector.descripcion}</p>
+              <div className="relative h-64 w-full overflow-hidden">
+                <Image
+                  src={sector.imagen}
+                  alt={sector.nombre}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="border-t border-outline-variant/60 p-6">
+                <h4 className="mb-1 text-lg font-bold text-primary">{sector.nombre}</h4>
+                <p className="line-clamp-2 text-xs text-on-surface-variant">{sector.descripcion}</p>
               </div>
             </Link>
           ))}

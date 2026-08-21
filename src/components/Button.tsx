@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react'
 
-type Variant = 'primary' | 'outline'
+type Variant = 'primary' | 'white'
 
 const base =
   'inline-flex items-center justify-center rounded-md px-8 py-3.5 text-base font-bold transition-all active:scale-95'
 
 const variants: Record<Variant, string> = {
   primary: 'bg-primary text-white hover:bg-primary-container hover:text-on-primary-container',
-  outline: 'border border-white text-white hover:bg-white/10',
+  white: 'bg-white text-primary hover:bg-white/85',
 }
 
 function buttonClass(variant: Variant, className: string) {

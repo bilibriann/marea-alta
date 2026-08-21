@@ -4,11 +4,11 @@
   --font-sans: var(--font-poppins);
   --font-mono: var(--font-jetbrains-mono);
 
-  /* Marea Alta — paleta oficial del manual de marca (public/manual de marca/manual de marca.pdf) */
+  /* Marea Alta — paleta oficial del manual de marca (originales/marca/manual de marca.pdf) */
   /* Azul Principal #045684 es el azul de acciones, links y textos de marca en todo el proyecto. */
   --color-brand-crema: #f9efd4; /* Crema (apoyo) */
   --color-brand-verde: #abc883; /* Verde claro (principal) */
-  --color-brand-azul-profundo: #083645; /* Azul profundo (secundario) */
+  --color-brand-azul-profundo: #d2e9f7; /* Celeste claro (secundario) */
 
   --color-primary: #045684; /* Azul (principal) */
   --color-on-primary: #ffffff;

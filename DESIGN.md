@@ -2,7 +2,7 @@
 name: Marea Alta — Glacial Precision Works
 description: Sharp, flat, cold-chain industrial system for a 33-year Chilean thermal-packaging manufacturer
 colors:
-  # Paleta oficial — public/manual de marca/manual de marca.pdf
+  # Paleta oficial — originales/marca/manual de marca.pdf
   # Azul Principal #045684 es el único azul del proyecto: fondos, textos y estados usan este tono o blanco como contraste.
   primary: "#045684" # Azul (principal)
   on-primary: "#ffffff"
@@ -227,7 +227,8 @@ Los siete servicios comparten un solo template. **No existe página índice de s
 
 - **Banda de cabecera a sangre.** Fondo plano en el color del servicio, índice mono (`Servicio 03 de 07`), H1 en Display, resumen y una sola acción: *Solicitar cotización*.
 - **El espacio de la foto va vacío.** La mitad derecha de la banda queda reservada y sin dibujar hasta que exista el archivo en `/public/images/servicios/`: sin marco, sin marca de agua, sin motivo de relleno. `src/lib/servicios.ts` resuelve `imagenDisponible` en build y la banda toma la foto sola cuando aparece. El hueco solo se reserva desde `lg:`; en móvil no se abre un vacío.
-- **Banda de servicio — tres tonos, no siete.** `src/lib/serviciosTema.ts` asigna a cada servicio uno de los tres tonos saturados del manual: Azul `#045684`, Azul profundo `#083645`, Verde claro `#abc883`. La Crema `#f9efd4` nunca es banda — es el suelo de las secciones claras, y usarla como cabecera la dejaría a un paso del fondo de página. Un servicio nuevo creado desde el CMS entra en la rotación en vez de quedar sin tema.
+- **Celeste claro como secundario.** El secundario es `#d2e9f7` (antes Azul profundo `#083645`). Es un tono claro, así que todo lo que se apoya en él lleva tinta oscura: títulos y rótulos en `text-primary` (6.27:1) y cuerpos en `text-on-surface-variant` (7.43:1). Se usa a intensidad plena, no al 80%: rebajado quedaba a 1.06:1 del fondo crema y la banda desaparecía. Aun a intensidad plena la separación con el fondo es de 1.23:1, por eso cada banda celeste lleva `border-y border-primary/15`. Dos usos NO migraron al secundario porque necesitan un tono oscuro: los velos del hero, que sostienen el titular blanco sobre la foto, y el hover del botón de contacto — ambos pasaron a `primary`.
+- **Banda de servicio — tres tonos, no siete.** `src/lib/serviciosTema.ts` asigna a cada servicio uno de los tres tonos saturados del manual: Azul `#045684`, Celeste claro `#d2e9f7`, Verde claro `#abc883`. La Crema `#f9efd4` nunca es banda — es el suelo de las secciones claras, y usarla como cabecera la dejaría a un paso del fondo de página. Un servicio nuevo creado desde el CMS entra en la rotación en vez de quedar sin tema.
 - **Cuerpo mínimo.** Un párrafo de contexto (*En qué consiste*) y el testimonio. Nada más: los datos específicos viven en el riel, y la prueba formal en la banda de certificaciones.
 - **Riel de ficha.** Columna de 340px con el panel *Ficha del servicio* (alcance, referencia normativa, sectores) y, debajo, el panel de cotización. **Solo el panel de cotización es `sticky`**; el riel completo mide más que la ventana y pegarlo entero dejaría el botón fuera de alcance. El `<aside>` no lleva `self-start`: se estira a la altura de la fila del grid para darle recorrido al panel pegado.
 - **Otros servicios, en una línea.** Al pie, una fila de enlaces de texto sin colores ni números. El listado completo es trabajo del desplegable, no de la página.

@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "tres-osos",
+    "nombre": "Tres Osos",
+    "logo": "/logos/logo_tres_osos.png",
+    "alt": "Logo de Tres Osos",
+    "orden": 10
+  },
+  {
+    "slug": "wetland",
+    "nombre": "Wetland",
+    "logo": "/logos/logo_wetland.png",
+    "alt": "Logo de Wetland",
+    "orden": 20
+  },
+  {
+    "slug": "freddo-termiko",
+    "nombre": "Freddo Termiko",
+    "logo": "/logos/logo_freddo.png",
+    "alt": "Logo de Freddo Termiko",
+    "orden": 30
+  },
+  {
+    "slug": "sollievo",
+    "nombre": "Sollievo",
+    "logo": "/logos/logo_solievo.png",
+    "alt": "Logo de Sollievo",
+    "orden": 40
+  },
+  {
+    "slug": "hidromax-60",
+    "nombre": "HidroMax 60",
+    "logo": "/logos/logo_hidromax60.png",
+    "alt": "Logo de HidroMax 60",
+    "orden": 50
+  }
+]

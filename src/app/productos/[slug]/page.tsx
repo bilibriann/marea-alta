@@ -75,17 +75,23 @@ export default async function ProductoPage({
         <p className="mt-2 text-lg text-on-surface-variant">{producto.subtitulo}</p>
       )}
 
-      {/* La ficha es opcional: sin `ficha` en el frontmatter no hay botón, en vez
-          de un enlace que termine en 404. */}
-      {producto.ficha && (
-        <a
-          href={assetPath(producto.ficha)}
-          download
-          className="mt-6 inline-flex items-center gap-2 rounded-md border border-primary px-6 py-3 text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-on-primary"
-        >
-          <DownloadIcon className="h-5 w-5" aria-hidden="true" />
-          Descargar ficha comercial (PDF)
-        </a>
+      {/* Las fichas son opcionales: sin ninguna no hay botón, en vez de un enlace
+          que termine en 404. Con varias, la etiqueta es lo único que las
+          distingue, así que cae al nombre genérico solo si falta. */}
+      {producto.fichas.length > 0 && (
+        <div className="mt-6 flex flex-wrap gap-3">
+          {producto.fichas.map((ficha) => (
+            <a
+              key={ficha.archivo}
+              href={assetPath(ficha.archivo)}
+              download
+              className="inline-flex items-center gap-2 rounded-md border border-primary px-6 py-3 text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-on-primary"
+            >
+              <DownloadIcon className="h-5 w-5" aria-hidden="true" />
+              {ficha.etiqueta ? `Ficha ${ficha.etiqueta} (PDF)` : 'Descargar ficha comercial (PDF)'}
+            </a>
+          ))}
+        </div>
       )}
 
       {producto.galeria.length > 0 && (

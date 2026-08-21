@@ -7,25 +7,16 @@ import { ArrowRightIcon } from '@/components/icons'
 interface Props {
   servicio: Servicio
   tema: TemaServicio
-  posicion: number
-  total: number
 }
 
-export function BandaServicio({ servicio, tema, posicion, total }: Props) {
-  const indice = String(posicion).padStart(2, '0')
-
+export function BandaServicio({ servicio, tema }: Props) {
   return (
     <section className={tema.banda}>
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="grid gap-12 py-14 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16 lg:py-20">
           <div>
-            <p
-              className={`font-mono text-label-sm font-bold uppercase tracking-widest ${tema.cuerpo}`}
-            >
-              Servicio {indice} de {String(total).padStart(2, '0')}
-            </p>
             <h1
-              className={`mt-5 text-display md:text-display-md lg:text-display-lg ${tema.titulo}`}
+              className={`text-display md:text-display-md lg:text-display-lg ${tema.titulo}`}
             >
               {servicio.titulo}
             </h1>

@@ -54,9 +54,27 @@ export interface Certificacion {
   organismo: string
 }
 
-export interface Proveedor {
+/**
+ * Marcas fabricadas por Marea Alta. `orden` manda el renderizado y va de 10 en
+ * 10: reordenar la grilla es cambiar un número en marcas-propias.json, sin
+ * renumerar el resto ni tocar un componente.
+ */
+export interface MarcaPropia {
+  slug: string
   nombre: string
   logo: string
+  alt: string
+  orden: number
+  url?: string
+}
+
+/** Marca de terceros que Marea Alta distribuye. Otra forma, otra sección. */
+export interface Distribucion {
+  nombre: string
+  logo: string
+  alt: string
+  url: string
+  descripcion: string
 }
 
 export async function getHomeContent(): Promise<HomeContent> {
@@ -91,10 +109,19 @@ export async function getCertificaciones(): Promise<Certificacion[]> {
   return JSON.parse(raw) as Certificacion[]
 }
 
-export async function getProveedores(): Promise<Proveedor[]> {
+export async function getMarcasPropias(): Promise<MarcaPropia[]> {
   const raw = await fs.readFile(
-    path.join(process.cwd(), 'src/content/proveedores.json'),
+    path.join(process.cwd(), 'src/content/marcas-propias.json'),
     'utf8'
   )
-  return JSON.parse(raw) as Proveedor[]
+  const marcas = JSON.parse(raw) as MarcaPropia[]
+  return marcas.sort((a, b) => a.orden - b.orden)
+}
+
+export async function getDistribucion(): Promise<Distribucion> {
+  const raw = await fs.readFile(
+    path.join(process.cwd(), 'src/content/distribucion.json'),
+    'utf8'
+  )
+  return JSON.parse(raw) as Distribucion
 }

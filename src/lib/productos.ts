@@ -8,6 +8,18 @@ const opcionGrupoSchema = z.object({
   opciones: z.array(z.string().min(1)).min(1),
 })
 
+const fichaSchema = z.object({
+  // El PDF vive en public/, así que la ruta empieza en / (ej: /fichas/x.pdf).
+  archivo: z
+    .string()
+    .min(1)
+    .refine((v) => v.startsWith('/'), {
+      message: 'La ficha debe ser una ruta dentro de public/, empezando por "/" (ej: /fichas/producto.pdf)',
+    }),
+  /** Distingue una ficha de otra cuando el producto tiene varias. */
+  etiqueta: z.string().min(1).optional(),
+})
+
 const productoFrontmatterSchema = z.object({
   nombre: z.string().min(1),
   subtitulo: z.string().min(1).optional(),
@@ -16,18 +28,14 @@ const productoFrontmatterSchema = z.object({
   nota_adicional: z.string().min(1).optional(),
   opciones_cantidad: z.array(z.string().min(1)).default([]),
   video_youtube: z.url().optional(),
-  // Opcional: si el producto no trae ficha, el botón de descarga no se renderiza.
-  // El PDF vive en public/, así que la ruta empieza en / (ej: /fichas/x.pdf).
-  ficha: z
-    .string()
-    .min(1)
-    .refine((v) => v.startsWith('/'), {
-      message: 'La ficha debe ser una ruta dentro de public/, empezando por "/" (ej: /fichas/producto.pdf)',
-    })
-    .optional(),
+  // Un producto puede documentarse con más de una ficha: el mismo artículo tiene
+  // fichas separadas por formato (20x28 y 23x29) o por envase (impreso y
+  // metalizado). La etiqueta es lo que distingue un botón de descarga del otro.
+  fichas: z.array(fichaSchema).default([]),
 })
 
 export type OpcionGrupo = z.infer<typeof opcionGrupoSchema>
+export type Ficha = z.infer<typeof fichaSchema>
 
 export interface Producto extends z.infer<typeof productoFrontmatterSchema> {
   slug: string

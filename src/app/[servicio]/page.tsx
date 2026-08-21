@@ -65,7 +65,6 @@ export default async function ServicioPage({
   if (!servicio) notFound()
 
   const tema = temaServicio(servicio.slug, servicio.orden)
-  const posicion = servicios.findIndex((s) => s.slug === servicio.slug) + 1
   const nombresSector = new Map(sectores.map((s) => [s.slug, s.nombre]))
   const testimonio = testimonios[0]
 
@@ -73,12 +72,7 @@ export default async function ServicioPage({
     <>
       <div hidden dangerouslySetInnerHTML={{ __html: CONTRATO }} />
 
-      <BandaServicio
-        servicio={servicio}
-        tema={tema}
-        posicion={posicion}
-        total={servicios.length}
-      />
+      <BandaServicio servicio={servicio} tema={tema} />
 
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 lg:py-16">
@@ -107,12 +101,12 @@ export default async function ServicioPage({
       </div>
 
       {certificaciones.length > 0 && (
-        <section className="bg-brand-azul-profundo py-16 md:py-20">
+        <section className="border-y border-primary/15 bg-brand-azul-profundo py-16 md:py-20">
           <div className="mx-auto max-w-7xl px-4 md:px-12">
-            <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-brand-verde">
+            <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-primary">
               Respaldo verificable
             </span>
-            <h2 className="text-headline-lg-mobile text-white md:text-headline-xl">
+            <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">
               Certificaciones vigentes
             </h2>
             <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
@@ -133,11 +127,11 @@ export default async function ServicioPage({
               <div className="grid gap-8 sm:grid-cols-2 lg:gap-10">
                 {certificaciones.map((cert) => (
                   <div key={cert.nombre} className="flex gap-4">
-                    <VerifiedIcon className="mt-0.5 h-6 w-6 shrink-0 text-brand-verde" />
+                    <VerifiedIcon className="mt-0.5 h-6 w-6 shrink-0 text-primary" />
                     <div>
-                      <h3 className="text-lg font-bold text-white">{cert.nombre}</h3>
-                      <p className="mt-2 leading-relaxed text-white/70">{cert.descripcion}</p>
-                      <p className="mt-3 font-mono text-label-xs uppercase text-white/50">
+                      <h3 className="text-lg font-bold text-primary">{cert.nombre}</h3>
+                      <p className="mt-2 leading-relaxed text-on-surface-variant">{cert.descripcion}</p>
+                      <p className="mt-3 font-mono text-label-xs uppercase text-on-surface-variant">
                         Organismo: {cert.organismo}
                       </p>
                     </div>

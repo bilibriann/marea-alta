@@ -43,3 +43,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Originales sin optimizar: respaldo local. Fuera de public/ a propósito, porque
+# Next copia public/ entero al build y los estaría desplegando.
+/originales/

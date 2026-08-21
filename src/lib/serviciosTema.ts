@@ -1,6 +1,7 @@
 /**
- * Cada servicio recibe una de las tres bandas saturadas del manual de marca
- * (Azul principal #045684, Azul profundo #083645, Verde claro #abc883).
+ * Cada servicio recibe una de las tres bandas del manual de marca
+ * (Azul principal #045684, Celeste claro #d2e9f7, Verde claro #abc883).
+ * Solo la primera es oscura: las otras dos llevan el texto en azul principal.
  * La Crema #f9efd4 nunca es banda: es el suelo de las secciones claras, así que
  * usarla como cabecera la dejaría a un paso del fondo de página.
  */
@@ -38,23 +39,23 @@ const TEMAS: Record<ClaveTema, TemaServicio> = {
   },
   azulProfundo: {
     banda: 'bg-brand-azul-profundo',
-    titulo: 'text-white',
-    cuerpo: 'text-white/75',
-    linea: 'border-white/20',
-    boton: 'bg-white text-brand-azul-profundo hover:bg-brand-verde',
+    titulo: 'text-primary',
+    cuerpo: 'text-on-surface-variant',
+    linea: 'border-primary/20',
+    boton: 'bg-primary text-white hover:bg-white hover:text-primary',
     bloque: 'bg-brand-azul-profundo',
-    bloqueBoton: 'bg-brand-verde text-brand-azul-profundo hover:bg-white',
-    bloqueCuerpo: 'text-white/75',
+    bloqueBoton: 'bg-primary text-white hover:bg-white hover:text-primary',
+    bloqueCuerpo: 'text-on-surface-variant',
   },
   verde: {
     banda: 'bg-brand-verde',
-    titulo: 'text-brand-azul-profundo',
-    cuerpo: 'text-brand-azul-profundo/80',
-    linea: 'border-brand-azul-profundo/25',
-    boton: 'bg-brand-azul-profundo text-white hover:bg-white hover:text-brand-azul-profundo',
+    titulo: 'text-primary',
+    cuerpo: 'text-on-surface-variant',
+    linea: 'border-primary/25',
+    boton: 'bg-primary text-white hover:bg-white hover:text-primary',
     bloque: 'bg-brand-verde',
-    bloqueBoton: 'bg-brand-azul-profundo text-white hover:bg-white hover:text-brand-azul-profundo',
-    bloqueCuerpo: 'text-brand-azul-profundo/80',
+    bloqueBoton: 'bg-primary text-white hover:bg-white hover:text-primary',
+    bloqueCuerpo: 'text-on-surface-variant',
   },
 }
 

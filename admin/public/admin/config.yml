@@ -27,6 +27,11 @@ collections:
     format: "frontmatter"
     extension: "md"
     identifier_field: nombre
+    # Las imágenes de cada producto caen en su propia carpeta en vez de
+    # amontonarse en /images: la galería de un producto se revisa y se limpia
+    # sin tocar la de los demás.
+    media_folder: "/public/images/productos/{{slug}}"
+    public_folder: "/images/productos/{{slug}}"
     fields:
       - { label: "Nombre", name: "nombre", widget: "string", required: true }
       - {
@@ -69,15 +74,27 @@ collections:
         required: false
         hint: "Cantidades disponibles para cotizar este producto (ej: 50, 100, 1000)"
         field: { label: "Cantidad", name: "cantidad", widget: "string" }
-      - {
-          label: "Ficha Comercial (PDF)",
-          name: "ficha",
-          widget: "file",
-          required: false,
-          media_folder: "/public/fichas",
-          public_folder: "/fichas",
-          hint: "PDF opcional. Si lo dejas vacío, el botón de descarga simplemente no aparece en la página del producto.",
-        }
+      - label: "Fichas Comerciales (PDF)"
+        name: "fichas"
+        widget: "list"
+        required: false
+        hint: "Un producto puede tener más de una ficha (por formato o por envase). Si lo dejas vacío, el botón de descarga no aparece."
+        fields:
+          - {
+              label: "Archivo PDF",
+              name: "archivo",
+              widget: "file",
+              required: true,
+              media_folder: "/public/fichas",
+              public_folder: "/fichas",
+            }
+          - {
+              label: "Etiqueta",
+              name: "etiqueta",
+              widget: "string",
+              required: false,
+              hint: "Solo si el producto tiene varias fichas, para distinguirlas (ej: 20x28 cm, Envase metalizado).",
+            }
       - {
           label: "Video de YouTube",
           name: "video_youtube",
