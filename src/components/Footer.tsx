@@ -30,7 +30,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-white/70 transition-colors hover:text-white"
+                    className="nav-indicador inline-block text-white/70 transition-colors hover:text-white"
                   >
                     {item.label}
                   </Link>

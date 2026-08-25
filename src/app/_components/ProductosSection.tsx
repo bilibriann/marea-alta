@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Producto } from '@/lib/productos'
+import { Reveal } from '@/components/Reveal'
 
 interface Props {
   productos: Producto[]
@@ -12,18 +13,20 @@ export function ProductosSection({ productos }: Props) {
   return (
     <section className="border-y border-primary/15 bg-brand-azul-profundo py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
-        <div className="mb-16">
+        <Reveal className="mb-16">
           <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-primary">
             Catálogo
           </span>
-          <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">Productos</h2>
-        </div>
+          <h2 className="linea-decorativa text-headline-lg-mobile text-primary md:text-headline-xl">
+            Productos
+          </h2>
+        </Reveal>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {productos.map((producto) => (
+          {productos.map((producto, indice) => (
+            <Reveal key={producto.slug} retraso={indice * 120} className="h-full">
             <Link
-              key={producto.slug}
               href={`/productos/${producto.slug}`}
-              className="group flex flex-col overflow-hidden rounded-md border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:border-primary"
+              className="tarjeta-interactiva group flex h-full flex-col overflow-hidden rounded-md border border-outline-variant bg-surface-container-lowest"
             >
               <div className="relative h-64 w-full overflow-hidden">
                 {producto.galeria[0] ? (
@@ -44,16 +47,17 @@ export function ProductosSection({ productos }: Props) {
                 )}
               </div>
             </Link>
+            </Reveal>
           ))}
         </div>
-        <div className="mt-16 text-center">
+        <Reveal className="mt-16 text-center">
           <Link
             href="/productos"
-            className="inline-block rounded-md border border-primary px-10 py-4 font-bold text-primary transition-all hover:bg-primary hover:text-white"
+            className="inline-block rounded-md border border-primary px-10 py-4 font-bold text-primary transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/25 active:translate-y-0 active:scale-95"
           >
             Ver catálogo completo
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

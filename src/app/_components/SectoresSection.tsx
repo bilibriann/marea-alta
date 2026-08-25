@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Sector } from '@/lib/home'
+import { Reveal } from '@/components/Reveal'
 
 interface Props {
   sectores: Sector[]
@@ -10,21 +11,21 @@ export function SectoresSection({ sectores }: Props) {
   return (
     <section className="border-t border-outline-variant/20 bg-white py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
-        <div className="mb-16">
+        <Reveal className="mb-16">
           <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
             Expertise Vertical
           </span>
-          <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">
+          <h2 className="linea-decorativa text-headline-lg-mobile text-primary md:text-headline-xl">
             Sectores de Especialidad
           </h2>
-        </div>
+        </Reveal>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {sectores.map((sector) => (
+          {sectores.map((sector, indice) => (
+            <Reveal key={sector.slug} retraso={indice * 120} className="h-full">
             <Link
-              key={sector.slug}
               href="/#contacto"
               aria-label={`Solicitar cotización para ${sector.nombre}`}
-              className="group flex flex-col overflow-hidden rounded-md border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="tarjeta-interactiva group flex h-full flex-col overflow-hidden rounded-md border border-outline-variant bg-surface-container-lowest"
             >
               <div className="relative h-64 w-full overflow-hidden">
                 <Image
@@ -39,6 +40,7 @@ export function SectoresSection({ sectores }: Props) {
                 <p className="line-clamp-2 text-xs text-on-surface-variant">{sector.descripcion}</p>
               </div>
             </Link>
+            </Reveal>
           ))}
         </div>
       </div>

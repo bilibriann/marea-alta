@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getProductosContent, getAllProductos } from '@/lib/productos'
+import { Reveal } from '@/components/Reveal'
 
 export const metadata: Metadata = {
   title: 'Productos',
@@ -13,25 +14,25 @@ export default async function ProductosPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-20 md:px-12">
-      <div className="mb-16 max-w-2xl">
+      <Reveal className="mb-16 max-w-2xl">
         <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
           Catálogo
         </span>
-        <h1 className="text-headline-lg-mobile text-primary md:text-headline-xl">
+        <h1 className="linea-decorativa text-headline-lg-mobile text-primary md:text-headline-xl">
           {contenido.titulo}
         </h1>
         <p className="mt-4 text-on-surface-variant">{contenido.descripcion}</p>
-      </div>
+      </Reveal>
 
       {productos.length === 0 ? (
         <p className="text-on-surface-variant">Aún no hay productos publicados.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {productos.map((producto) => (
+          {productos.map((producto, indice) => (
+            <Reveal key={producto.slug} retraso={indice * 120} className="h-full">
             <Link
-              key={producto.slug}
               href={`/productos/${producto.slug}`}
-              className="group flex flex-col overflow-hidden border border-outline-variant bg-surface-container-lowest transition-all duration-300 hover:border-primary"
+              className="tarjeta-interactiva group flex h-full flex-col overflow-hidden border border-outline-variant bg-surface-container-lowest"
             >
               <div className="relative h-64 w-full overflow-hidden">
                 {producto.galeria[0] ? (
@@ -52,6 +53,7 @@ export default async function ProductosPage() {
                 )}
               </div>
             </Link>
+            </Reveal>
           ))}
         </div>
       )}

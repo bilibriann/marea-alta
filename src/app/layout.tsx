@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Poppins, JetBrains_Mono } from 'next/font/google'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { SmoothScroll } from '@/components/SmoothScroll'
 import { siteConfig } from '@/config'
 import { getAllServicios } from '@/lib/servicios'
 import './globals.css'
@@ -39,9 +40,18 @@ export default async function RootLayout({
 
   return (
     <html lang="es">
+      <head>
+        {/* Sin JS el IntersectionObserver nunca corre y los ~50 bloques
+            envueltos en <Reveal> se quedarían en opacidad 0: la página se
+            vería casi vacía. Esto los deja visibles y quietos. */}
+        <noscript>
+          <style>{`.al-ver,.al-ver-izq,.al-ver-der{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body
         className={`${poppins.variable} ${jetbrainsMono.variable} flex min-h-screen flex-col bg-background font-sans text-on-background antialiased`}
       >
+        <SmoothScroll />
         <Header servicios={enlacesServicios} />
         <main className="flex-1 pt-20">{children}</main>
         <Footer />

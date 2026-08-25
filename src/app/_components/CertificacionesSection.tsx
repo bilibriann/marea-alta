@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { Certificacion } from '@/lib/home'
 import { VerifiedIcon } from '@/components/icons'
+import { Reveal } from '@/components/Reveal'
 
 interface Props {
   certificaciones: Certificacion[]
@@ -23,14 +24,19 @@ export function CertificacionesSection({ certificaciones }: Props) {
   return (
     <section className="border-t border-outline-variant/20 bg-white py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
-        <div className="mb-16">
+        <Reveal className="mb-16">
           <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
             Respaldo Certificado
           </span>
-          <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">Certificaciones</h2>
-        </div>
+          <h2 className="linea-decorativa text-headline-lg-mobile text-primary md:text-headline-xl">
+            Certificaciones
+          </h2>
+        </Reveal>
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.2fr]">
-          <div className="flex flex-wrap items-center justify-center gap-12 rounded-md border border-outline-variant bg-white px-10 py-10 sm:gap-16">
+          <Reveal
+            variante="izquierda"
+            className="tarjeta-interactiva flex h-full flex-wrap items-center justify-center gap-12 rounded-md border border-outline-variant bg-white px-10 py-10 sm:gap-16"
+          >
             {sellos.map((sello) => (
               <Image
                 key={sello.src}
@@ -41,10 +47,11 @@ export function CertificacionesSection({ certificaciones }: Props) {
                 className="h-36 w-auto"
               />
             ))}
-          </div>
+          </Reveal>
           <div className="space-y-6">
-            {certificaciones.map((cert) => (
-              <div key={cert.nombre} className="flex gap-4">
+            {certificaciones.map((cert, indice) => (
+              <Reveal key={cert.nombre} variante="derecha" retraso={indice * 120}>
+              <div className="item-interactivo -m-2 flex gap-4 rounded-xl p-2">
                 <VerifiedIcon className="h-6 w-6 shrink-0 text-primary" />
                 <div>
                   <h3 className="text-lg font-bold text-on-surface">{cert.nombre}</h3>
@@ -54,6 +61,7 @@ export function CertificacionesSection({ certificaciones }: Props) {
                   </p>
                 </div>
               </div>
+              </Reveal>
             ))}
           </div>
         </div>

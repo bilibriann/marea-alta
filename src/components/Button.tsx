@@ -3,12 +3,17 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react'
 
 type Variant = 'primary' | 'white'
 
+// El levantar-y-asentar es el gesto compartido de todos los CTA: sube medio
+// paso en hover con una sombra teñida de azul de marca (nunca negra) y vuelve
+// a apoyarse al presionar. `active:translate-y-0` es necesario: sin él el
+// botón se queda flotando mientras se hunde por el scale.
 const base =
-  'inline-flex items-center justify-center rounded-md px-8 py-3.5 text-base font-bold transition-all active:scale-95'
+  'inline-flex items-center justify-center rounded-md px-8 py-3.5 text-base font-bold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-95'
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-primary text-white hover:bg-primary-container hover:text-on-primary-container',
-  white: 'bg-white text-primary hover:bg-white/85',
+  primary:
+    'bg-primary text-white hover:bg-primary-container hover:text-on-primary-container hover:shadow-lg hover:shadow-primary/25',
+  white: 'bg-white text-primary hover:bg-white/85 hover:shadow-lg hover:shadow-primary/30',
 }
 
 function buttonClass(variant: Variant, className: string) {

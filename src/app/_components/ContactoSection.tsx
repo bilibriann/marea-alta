@@ -11,6 +11,7 @@ import {
   AlertCircleIcon,
   SpinnerIcon,
 } from '@/components/icons'
+import { Reveal } from '@/components/Reveal'
 
 type FieldErrors = Partial<Record<'nombre' | 'email' | 'mensaje', string>>
 
@@ -69,12 +70,12 @@ export function ContactoSection() {
     <section id="contacto" className="scroll-mt-24 border-y border-primary/15 bg-brand-azul-profundo py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="grid grid-cols-1 gap-20 lg:grid-cols-2">
-          <div className="space-y-10">
+          <Reveal variante="izquierda" className="space-y-10">
             <div className="space-y-4">
               <span className="block font-mono text-label-sm font-bold uppercase tracking-widest text-primary">
                 Contacto
               </span>
-              <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">
+              <h2 className="linea-decorativa text-headline-lg-mobile text-primary md:text-headline-xl">
                 Inicie su Cotización
               </h2>
               <p className="max-w-md text-lg text-on-surface-variant">
@@ -83,21 +84,21 @@ export function ContactoSection() {
               </p>
             </div>
             <div className="space-y-6 pt-6">
-              <div className="flex items-center gap-4 text-primary">
-                <CallIcon className="h-5 w-5 text-primary" />
+              <div className="item-interactivo -m-2 flex items-center gap-4 rounded-xl p-2 text-primary">
+                <CallIcon className="h-5 w-5 shrink-0 text-primary" />
                 <span className="font-semibold">{siteConfig.contacto.telefono}</span>
               </div>
-              <div className="flex items-center gap-4 text-primary">
-                <MailIcon className="h-5 w-5 text-primary" />
+              <div className="item-interactivo -m-2 flex items-center gap-4 rounded-xl p-2 text-primary">
+                <MailIcon className="h-5 w-5 shrink-0 text-primary" />
                 <span className="font-semibold">{siteConfig.contacto.email}</span>
               </div>
-              <div className="flex items-center gap-4 text-primary">
-                <PinIcon className="h-5 w-5 text-primary" />
+              <div className="item-interactivo -m-2 flex items-center gap-4 rounded-xl p-2 text-primary">
+                <PinIcon className="h-5 w-5 shrink-0 text-primary" />
                 <span className="font-semibold">{siteConfig.contacto.direccion}</span>
               </div>
             </div>
-          </div>
-          <div className="bg-white p-10 md:p-14">
+          </Reveal>
+          <Reveal variante="derecha" retraso={120} className="bg-white p-10 md:p-14">
             <form className="space-y-8" onSubmit={handleSubmit} noValidate>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 <div className="space-y-3">
@@ -175,7 +176,7 @@ export function ContactoSection() {
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="flex w-full items-center justify-center gap-3 rounded-md bg-primary py-4 text-lg font-bold text-white transition-all hover:bg-primary-container hover:text-on-primary-container disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex w-full items-center justify-center gap-3 rounded-md bg-primary py-4 text-lg font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-container hover:text-on-primary-container hover:shadow-lg hover:shadow-primary/25 active:translate-y-0 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               >
                 {status === 'sending' && <SpinnerIcon className="h-5 w-5 animate-spin" />}
                 {status === 'sending' ? 'Enviando…' : 'Enviar Mensaje'}
@@ -195,7 +196,7 @@ export function ContactoSection() {
                 )}
               </div>
             </form>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

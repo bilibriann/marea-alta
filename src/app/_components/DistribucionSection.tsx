@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { Distribucion } from '@/lib/home'
 import { ButtonLink } from '@/components/Button'
+import { Reveal } from '@/components/Reveal'
 
 interface Props {
   distribucion: Distribucion
@@ -13,12 +14,15 @@ export function DistribucionSection({ distribucion }: Props) {
     // clara que viene después.
     <section className="border-y border-primary/15 bg-brand-azul-profundo py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
-        <div className="mb-16 text-center">
-          <h2 className="text-headline-lg-mobile text-primary md:text-headline-xl">
+        <Reveal className="mb-16 text-center">
+          <h2 className="linea-decorativa-centrada text-headline-lg-mobile text-primary md:text-headline-xl">
             Distribuidor Estratégico Oficial
           </h2>
-        </div>
-        <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 rounded-md border border-outline-variant bg-white p-8 text-center sm:flex-row sm:gap-10 sm:p-10 sm:text-left">
+        </Reveal>
+        <Reveal
+          retraso={120}
+          className="tarjeta-interactiva mx-auto flex max-w-4xl flex-col items-center gap-8 rounded-md border border-outline-variant bg-white p-8 text-center sm:flex-row sm:gap-10 sm:p-10 sm:text-left"
+        >
           <div className="flex h-24 w-full shrink-0 items-center justify-center sm:w-48">
             <Image
               src={distribucion.logo}
@@ -40,7 +44,7 @@ export function DistribucionSection({ distribucion }: Props) {
               Visitar glutlack.cl
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

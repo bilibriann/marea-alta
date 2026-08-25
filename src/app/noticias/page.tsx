@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getAllNoticias } from '@/lib/noticias'
 import { formatFecha } from '@/lib/formatFecha'
+import { Reveal } from '@/components/Reveal'
 
 export const metadata: Metadata = {
   title: 'Noticias',
@@ -14,25 +15,27 @@ export default async function NoticiasPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-20 md:px-12">
-      <div className="mb-16 max-w-2xl">
+      <Reveal className="mb-16 max-w-2xl">
         <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
           Novedades
         </span>
-        <h1 className="text-headline-lg-mobile text-primary md:text-headline-xl">Noticias</h1>
+        <h1 className="linea-decorativa text-headline-lg-mobile text-primary md:text-headline-xl">
+          Noticias
+        </h1>
         <p className="mt-4 text-on-surface-variant">
           Actualidad, novedades y avances de Marea Alta.
         </p>
-      </div>
+      </Reveal>
 
       {noticias.length === 0 ? (
         <p className="text-on-surface-variant">Aún no hay noticias publicadas.</p>
       ) : (
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {noticias.map((noticia) => (
+          {noticias.map((noticia, indice) => (
+            <Reveal key={noticia.slug} retraso={indice * 120} className="h-full">
             <Link
-              key={noticia.slug}
               href={`/noticias/${noticia.slug}`}
-              className="group flex flex-col overflow-hidden border border-outline-variant transition-all duration-300 hover:border-primary"
+              className="tarjeta-interactiva group flex h-full flex-col overflow-hidden border border-outline-variant"
             >
               <div className="relative h-52 overflow-hidden">
                 <Image
@@ -50,6 +53,7 @@ export default async function NoticiasPage() {
                 <p className="line-clamp-3 text-sm text-on-surface-variant">{noticia.extracto}</p>
               </div>
             </Link>
+            </Reveal>
           ))}
         </div>
       )}
