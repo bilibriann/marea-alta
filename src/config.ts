@@ -27,7 +27,7 @@ export const siteConfig: SiteConfig = {
   contacto: {
     email: CONTACT_EMAIL,
     telefono: '+56 9 4041 7967',
-    direccion: 'Avda. Lo Espejo Nº02124, Bodegas 6-7, San Bernardo, RM',
+    direccion: 'José Joaquín Prieto 9001, Bodegas 11-12, Galpón 2, Lo Espejo, RM',
     horario: 'Lun–Vie, 9:00–18:00',
   },
   redes: {

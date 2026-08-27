@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import type { Certificacion } from '@/lib/home'
 import { VerifiedIcon } from '@/components/icons'
+import { ImagenAmpliable } from '@/components/ImagenAmpliable'
 import { Reveal } from '@/components/Reveal'
 
 interface Props {
@@ -35,16 +35,17 @@ export function CertificacionesSection({ certificaciones }: Props) {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.2fr]">
           <Reveal
             variante="izquierda"
-            className="tarjeta-interactiva flex h-full flex-wrap items-center justify-center gap-12 rounded-md border border-outline-variant bg-white px-10 py-10 sm:gap-16"
+            className="tarjeta-interactiva flex h-full items-center justify-center rounded-md border border-outline-variant bg-white px-8 py-8"
           >
             {sellos.map((sello) => (
-              <Image
+              <ImagenAmpliable
                 key={sello.src}
                 src={sello.src}
-                alt={`Sello de certificación: ${sello.nombres.join(' y ')}`}
-                width={860}
-                height={739}
-                className="h-36 w-auto"
+                alt={`Sellos de certificación: ${sello.nombres.join(' y ')}`}
+                width={1327}
+                height={784}
+                sizes="(min-width: 1024px) 30vw, 90vw"
+                className="w-full max-w-md"
               />
             ))}
           </Reveal>
