@@ -9,6 +9,19 @@ export interface OpcionGrupo {
   opciones: string[]
 }
 
+/**
+ * Una ficha comercial (PDF) descargable desde la página de producto — feature
+ * de main sin relación con el CMS. Plan B todavía no tiene tabla propia para
+ * esto (`admin/prisma/schema.prisma`), así que por ahora `getAllProductos`/
+ * `getProducto` siempre devuelven `fichas: []`; portar la carga real desde
+ * MySQL/R2 queda como tarea aparte, deliberada, no algo que se cuele en esta
+ * resolución de merge.
+ */
+export interface Ficha {
+  archivo: string
+  etiqueta?: string
+}
+
 export interface Producto {
   nombre: string
   subtitulo?: string
@@ -17,6 +30,7 @@ export interface Producto {
   nota_adicional?: string
   opciones_cantidad: string[]
   video_youtube?: string
+  fichas: Ficha[]
   slug: string
 }
 
@@ -84,6 +98,7 @@ async function ensamblarProductos(rows: ProductoRow[]): Promise<Producto[]> {
     nota_adicional: row.notaAdicional ?? undefined,
     opciones_cantidad: parseJson<string[]>(row.cantidadesParaCotizar),
     video_youtube: row.videoYoutubeUrl ?? undefined,
+    fichas: [],
     slug: row.slug,
   }))
 }

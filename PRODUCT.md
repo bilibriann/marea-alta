@@ -23,7 +23,7 @@ Marea Alta Chile SpA fabrica embalajes térmicos de alta precisión para mantene
 - Sitio 100% estático (Next.js App Router, `output: 'export'`), desplegado en Hostinger vía FTP con GitHub Actions.
 - Contenido editorial (servicios, sectores, testimonios, clientes, certificaciones, home) vive en `src/content/` y está pensado para ser editado eventualmente por un CMS (Sveltia o Decap) sin tocar componentes.
 - Rutas: home, `/servicios` (índice) + `/[servicio]` (detalle por slug), `/productos`, `/contacto`.
-- Operan desde San Bernardo, RM, con distribución regional — no e-commerce, el flujo de conversión es cotización/contacto, no compra directa online.
+- Operan desde Lo Espejo, RM, con distribución regional — no e-commerce, el flujo de conversión es cotización/contacto, no compra directa online.
 
 ## Capabilities and Constraints
 
@@ -37,7 +37,7 @@ Marea Alta Chile SpA fabrica embalajes térmicos de alta precisión para mantene
 - Nombre legal: Marea Alta Chile SpA.
 - Certificaciones formales a exhibir: ISO 9001 (desde 2008, organismo AENOR) e IQNET.
 - Redes: Instagram, LinkedIn, Facebook (@mareaaltachile / mareaalta).
-- Contacto: ventas@mareaalta-latam.com, +56 9 4041 7967, Avda. Lo Espejo Nº02124, Bodegas 6-7, San Bernardo, RM. Horario Lun–Vie 9:00–18:00.
+- Contacto: ventas@mareaalta-latam.com, +56 9 4041 7967, José Joaquín Prieto 9001, Bodegas 11-12, Galpón 2, Lo Espejo, RM. Horario Lun–Vie 9:00–18:00.
 
 ## Evidence on Hand
 

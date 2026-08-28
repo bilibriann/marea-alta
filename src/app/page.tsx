@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
-import { getCertificaciones, getHomeContent, getProveedores, getSectores } from '@/lib/home'
+import { getCertificaciones, getDistribucion, getHomeContent, getMarcasPropias, getSectores } from '@/lib/home'
 import { getAllProductos } from '@/lib/productos'
 import { getAllNoticias } from '@/lib/noticias'
 import { HeroSection } from './_components/HeroSection'
 import { QuickLinksSection } from './_components/QuickLinksSection'
 import { ConfianzaSection } from './_components/ConfianzaSection'
-import { ProveedoresSection } from './_components/ProveedoresSection'
+import { MarcasPropiasSection } from './_components/MarcasPropiasSection'
+import { DistribucionSection } from './_components/DistribucionSection'
 import { PropositoSection } from './_components/PropositoSection'
 import { ProductosSection } from './_components/ProductosSection'
 import { SectoresSection } from './_components/SectoresSection'
@@ -20,11 +21,12 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const [content, sectores, certificaciones, proveedores, productos, noticias] = await Promise.all([
+  const [content, sectores, certificaciones, marcasPropias, distribucion, productos, noticias] = await Promise.all([
     getHomeContent(),
     getSectores(),
     getCertificaciones(),
-    getProveedores(),
+    getMarcasPropias(),
+    getDistribucion(),
     getAllProductos(),
     getAllNoticias(),
   ])
@@ -34,7 +36,8 @@ export default async function HomePage() {
       <HeroSection hero={content.hero} />
       <QuickLinksSection />
       <ConfianzaSection confianza={content.confianza} />
-      <ProveedoresSection proveedores={proveedores} />
+      <MarcasPropiasSection marcas={marcasPropias} />
+      <DistribucionSection distribucion={distribucion} />
       <PropositoSection proposito={content.proposito} vision={content.vision} mision={content.mision} />
       <ProductosSection productos={productos} />
       <SectoresSection sectores={sectores} />

@@ -6,6 +6,7 @@ import { sendCotizacionForm } from '@/lib/forms'
 
 interface Props {
   producto: string
+  productoUrl?: string
   cantidades: string[]
 }
 
@@ -14,7 +15,7 @@ type Status = 'idle' | 'loading' | 'success' | 'error'
 const inputClass =
   'w-full border border-outline-variant bg-surface-container-lowest px-4 py-3 text-on-surface placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none'
 
-export function CotizacionForm({ producto, cantidades }: Props) {
+export function CotizacionForm({ producto, productoUrl, cantidades }: Props) {
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState<string | null>(null)
 
@@ -32,6 +33,7 @@ export function CotizacionForm({ producto, cantidades }: Props) {
       email: String(data.get('email') ?? ''),
       mensaje: String(data.get('mensaje') ?? ''),
       producto,
+      productoUrl,
       cantidades: data.getAll('cantidades').map(String),
     })
 
@@ -56,6 +58,22 @@ export function CotizacionForm({ producto, cantidades }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Prellenado y no editable: la cotización siempre queda atada al producto
+          de esta página, y el visitante ve cuál es antes de enviar. */}
+      <div>
+        <label htmlFor="producto" className="mb-2 block text-sm font-medium text-on-surface">
+          Producto
+        </label>
+        <input
+          id="producto"
+          name="producto"
+          type="text"
+          value={producto}
+          readOnly
+          className={`${inputClass} cursor-default bg-surface-container-low font-medium`}
+        />
+      </div>
+
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor="nombre" className="mb-2 block text-sm font-medium text-on-surface">

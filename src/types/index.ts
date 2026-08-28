@@ -1,6 +1,11 @@
 export interface NavItem {
   label: string
   href: string
+  /**
+   * Marca el item como desplegable en vez de enlace. El Header lo reemplaza por
+   * el menú de servicios; el Footer lo omite, porque no hay página que enlazar.
+   */
+  menu?: 'servicios'
 }
 
 export interface SiteConfig {

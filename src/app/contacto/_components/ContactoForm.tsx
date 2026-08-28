@@ -197,7 +197,7 @@ export function ContactoForm() {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-base font-bold text-white transition-colors hover:bg-brand-azul-profundo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:bg-brand-azul-profundo disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-base font-bold text-white transition-colors hover:bg-primary-container hover:text-on-primary-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:bg-primary-container active:text-on-primary-container disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
           >
             {status === 'sending' && <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />}
             {status === 'sending' ? 'Enviando...' : 'Enviar Mensaje'}

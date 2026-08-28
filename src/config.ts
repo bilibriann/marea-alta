@@ -1,5 +1,15 @@
 import type { SiteConfig } from '@/types'
 
+/**
+ * Destino único de todo el correo que sale del sitio: formulario de contacto,
+ * newsletter y las cotizaciones por producto. El dominio definitivo todavía no
+ * está confirmado, así que se sobreescribe por entorno
+ * (NEXT_PUBLIC_CONTACT_EMAIL) sin tocar código. No repitas esta dirección en
+ * ningún otro archivo: importa esta constante.
+ */
+export const CONTACT_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'ventas@mareaalta-latam.com'
+
 export const siteConfig: SiteConfig = {
   name: 'Marea Alta Chile SpA',
   description:
@@ -7,15 +17,17 @@ export const siteConfig: SiteConfig = {
   url: 'https://mareaalta-latam.com',
   nav: [
     { label: 'Inicio', href: '/' },
-    { label: 'Servicios', href: '/servicios' },
+    // No hay página índice de servicios: este item es el desplegable que el Header
+    // arma a partir de src/content/servicios.
+    { label: 'Servicios', href: '#', menu: 'servicios' },
     { label: 'Productos', href: '/productos' },
     { label: 'Contacto', href: '/contacto' },
     { label: 'Noticias', href: '/noticias' },
   ],
   contacto: {
-    email: 'ventas@mareaalta-latam.com',
+    email: CONTACT_EMAIL,
     telefono: '+56 9 4041 7967',
-    direccion: 'Avda. Lo Espejo Nº02124, Bodegas 6-7, San Bernardo, RM',
+    direccion: 'José Joaquín Prieto 9001, Bodegas 11-12, Galpón 2, Lo Espejo, RM',
     horario: 'Lun–Vie, 9:00–18:00',
   },
   redes: {
