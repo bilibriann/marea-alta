@@ -30,7 +30,16 @@ function parseNoticia(file: string, raw: string): Noticia {
 }
 
 export async function getAllNoticias(): Promise<Noticia[]> {
-  const files = await fs.readdir(noticiasDir)
+  // Sin noticias publicadas el directorio queda vacío, y git no versiona
+  // carpetas vacías: en un clon limpio `noticiasDir` puede no existir y el
+  // readdir tumbaría el build entero. Un listado vacío es la respuesta correcta.
+  let files: string[]
+  try {
+    files = await fs.readdir(noticiasDir)
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return []
+    throw err
+  }
   const noticias = await Promise.all(
     files
       .filter((f) => f.endsWith('.md'))

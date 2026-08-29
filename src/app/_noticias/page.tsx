@@ -1,3 +1,14 @@
+/*
+ * Carpeta prefijada con "_": en el App Router eso la vuelve privada y Next no
+ * genera ninguna ruta desde aquí. Es la contraparte de haber ocultado Noticias
+ * del navbar y del home — el código queda intacto y para reactivar la sección
+ * basta renombrarla a "noticias" y volver a poner contenido en
+ * src/content/noticias.
+ *
+ * No basta con vaciar src/content/noticias dejando la ruta viva: /noticias/[slug]
+ * es dinámica y con output:'export' Next falla si generateStaticParams no
+ * devuelve al menos un slug.
+ */
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
