@@ -2,13 +2,13 @@
   {
     "nombre": "ISO 9001",
     "descripcion": "Certificación de sistema de gestión de calidad vigente desde 2008.",
-    "imagen": "/certificaciones/certificaciones.jpeg",
+    "imagen": "/certificaciones/Sello AENOR ISO 9001_NEG.svg",
     "organismo": "AENOR"
   },
   {
     "nombre": "IQNET",
     "descripcion": "Red internacional de organismos de certificación que avala nuestros procesos.",
-    "imagen": "/certificaciones/certificaciones.jpeg",
+    "imagen": "",
     "organismo": "IQNET"
   }
 ]
