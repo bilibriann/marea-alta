@@ -1,15 +1,20 @@
 # Hostinger / Apache — el export de Next genera "contacto.html", no
 # "contacto/index.html". Sin estas reglas, /contacto responde 404.
 
-Options -MultiViews
+Options -MultiViews -Indexes
 DirectoryIndex index.html
+
+# El export crea DOS cosas por ruta: contacto.html y una carpeta contacto/ con
+# los payloads RSC. Sin esto Apache ve el directorio, redirige a /contacto/ y
+# devuelve 403 porque adentro no hay index.html.
+DirectorySlash Off
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
   # /contacto  ->  /contacto.html  (solo si el archivo existe)
+  # Sin "!-d" a propósito: el .html tiene que ganarle a la carpeta homónima.
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}.html -f
   RewriteRule ^(.*)$ $1.html [L]
 </IfModule>
