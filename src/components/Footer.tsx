@@ -55,23 +55,17 @@ export function Footer() {
           <h4 className="text-sm font-bold uppercase tracking-widest text-accent">
             Síguenos
           </h4>
-          <div className="flex gap-4">
-            {siteConfig.redes.instagram && (
-              <a
-                href={siteConfig.redes.instagram}
-                className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
-              >
-                <ShareIcon className="h-5 w-5" />
-              </a>
-            )}
-            {siteConfig.redes.linkedin && (
-              <a
-                href={siteConfig.redes.linkedin}
-                className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
-              >
-                <GlobeIcon className="h-5 w-5" />
-              </a>
-            )}
+          {/* Los iconos quedan a la vista pero sin enlace: las URLs de redes
+              todavía no están confirmadas y no queremos mandar a nadie a un
+              perfil equivocado. Para reactivarlos, rellena siteConfig.redes y
+              vuelve a envolver cada icono en un <a href>. */}
+          <div className="flex gap-4" aria-hidden="true">
+            <span className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5">
+              <ShareIcon className="h-5 w-5" />
+            </span>
+            <span className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5">
+              <GlobeIcon className="h-5 w-5" />
+            </span>
           </div>
         </div>
       </div>
