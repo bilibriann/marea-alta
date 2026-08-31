@@ -97,9 +97,9 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
           {producto.galeria.map((imagen) => (
             <div
               key={imagen}
-              className="relative h-64 overflow-hidden border border-outline-variant"
+              className="relative h-64 overflow-hidden rounded-md border border-outline-variant bg-white"
             >
-              <Image src={imagen} alt={producto.nombre} fill className="object-cover" />
+              <Image src={imagen} alt={producto.nombre} fill className="object-contain p-6" />
             </div>
           ))}
         </div>

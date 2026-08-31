@@ -30,29 +30,29 @@ export default async function ProductosPage() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {productos.map((producto, indice) => (
             <Reveal key={producto.slug} retraso={indice * 120} className="h-full">
-            <Link
-              href={`/productos/${producto.slug}`}
-              className="tarjeta-interactiva group flex h-full flex-col overflow-hidden border border-outline-variant bg-surface-container-lowest"
-            >
-              <div className="relative h-64 w-full overflow-hidden">
-                {producto.galeria[0] ? (
-                  <Image
-                    src={producto.galeria[0]}
-                    alt={producto.nombre}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="h-full w-full bg-surface-container" />
-                )}
-              </div>
-              <div className="border-t border-outline-variant/60 p-6">
-                <h2 className="mb-1 text-lg font-bold text-primary">{producto.nombre}</h2>
-                {producto.subtitulo && (
-                  <p className="text-xs text-on-surface-variant">{producto.subtitulo}</p>
-                )}
-              </div>
-            </Link>
+              <Link
+                href={`/productos/${producto.slug}`}
+                className="tarjeta-interactiva group flex h-full flex-col overflow-hidden rounded-md border border-outline-variant bg-white"
+              >
+                <div className="relative h-64 w-full overflow-hidden">
+                  {producto.galeria[0] ? (
+                    <Image
+                      src={producto.galeria[0]}
+                      alt={producto.nombre}
+                      fill
+                      className="object-contain p-6 transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-surface-container" />
+                  )}
+                </div>
+                <div className="border-t border-outline-variant/60 p-6">
+                  <h2 className="mb-1 text-lg font-bold text-primary">{producto.nombre}</h2>
+                  {producto.subtitulo && (
+                    <p className="text-xs text-on-surface-variant">{producto.subtitulo}</p>
+                  )}
+                </div>
+              </Link>
             </Reveal>
           ))}
         </div>
