@@ -19,7 +19,7 @@ import { ContactoSection } from './_components/ContactoSection'
 export const metadata: Metadata = {
   title: 'Inicio',
   description:
-    'Marea Alta: 33 años fabricando soluciones de cadena de frío para las industrias farmacéutica, alimentaria y logística en Chile.',
+    'Marea Alta: 36 años fabricando soluciones de cadena de frío para las industrias farmacéutica, alimentaria y logística en Chile.',
 }
 
 export default async function HomePage() {

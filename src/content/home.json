@@ -2,7 +2,7 @@
   "hero": {
     "badge": "Fabricantes de Cadena de Frío",
     "titulo": "Soluciones de cadena de frío para industrias exigentes",
-    "subtitulo": "33 años fabricando embalajes térmicos de alta precisión para los sectores farmacéutico, alimentario y logístico en Chile y el Cono Sur.",
+    "subtitulo": "36 años fabricando embalajes térmicos de alta precisión para los sectores farmacéutico, alimentario y logístico en Chile y el Cono Sur.",
     "cta": "Solicitar Cotización",
     "ctaHref": "/contacto",
     "ctaSecundario": "Ver Productos",
@@ -19,7 +19,7 @@
       {
         "icono": "history",
         "titulo": "Trayectoria Comprobada",
-        "descripcion": "Fabricamos soluciones de cadena de frío desde 1987, con distribución en Chile y el Cono Sur."
+        "descripcion": "Fabricamos soluciones de cadena de frío desde 1990, con distribución en Chile y el Cono Sur."
       },
       {
         "icono": "verified",
@@ -29,14 +29,14 @@
       {
         "icono": "globe",
         "titulo": "Cobertura Cono Sur",
-        "descripcion": "Distribuimos desde Lo Espejo, RM hacia clientes farmacéuticos, alimentarios y logísticos de la región."
+        "descripcion": "Distribuimos desde la Región Metropolitana, Santiago, hacia clientes farmacéuticos, alimentarios y logísticos de la región."
       }
     ]
   },
   "nosotros": {
-    "titulo": "33 años cuidando la cadena de frío",
-    "descripcion": "Desde 1987, Marea Alta diseña y fabrica soluciones de embalaje térmico para empresas que no pueden permitirse perder la cadena de frío. Operamos desde Lo Espejo, RM, con distribución en el Cono Sur.",
-    "fundacion": 1987
+    "titulo": "36 años cuidando la cadena de frío",
+    "descripcion": "Desde 1990, Marea Alta diseña y fabrica soluciones de embalaje térmico para empresas que no pueden permitirse perder la cadena de frío. Operamos desde Lo Espejo, RM, con distribución en el Cono Sur.",
+    "fundacion": 1990
   },
   "proposito": {
     "eyebrow": "Visión y Misión",
