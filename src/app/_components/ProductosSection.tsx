@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import type { Producto } from '@/lib/productos'
 import { Reveal } from '@/components/Reveal'
+import { TarjetaProducto } from '@/components/TarjetaProducto'
 
 interface Props {
   productos: Producto[]
@@ -23,31 +23,12 @@ export function ProductosSection({ productos }: Props) {
         </Reveal>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {productos.map((producto, indice) => (
-            <Reveal key={producto.slug} retraso={indice * 120} className="h-full">
-              <Link
-                href={`/productos/${producto.slug}`}
-                className="tarjeta-interactiva group flex h-full flex-col overflow-hidden rounded-md border border-outline-variant bg-white"
-              >
-                <div className="relative h-64 w-full overflow-hidden">
-                  {producto.galeria[0] ? (
-                    <Image
-                      src={producto.galeria[0]}
-                      alt={producto.nombre}
-                      fill
-                      className="object-contain p-6 transition-transform duration-700 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="h-full w-full bg-surface-container" />
-                  )}
-                </div>
-                <div className="border-t border-outline-variant/60 p-6">
-                  <h3 className="mb-1 text-lg font-bold text-primary">{producto.nombre}</h3>
-                  {producto.subtitulo && (
-                    <p className="text-xs text-on-surface-variant">{producto.subtitulo}</p>
-                  )}
-                </div>
-              </Link>
-            </Reveal>
+            <TarjetaProducto
+              key={producto.slug}
+              producto={producto}
+              retraso={indice * 120}
+              nivelTitulo="h3"
+            />
           ))}
         </div>
         <Reveal className="mt-16 text-center">
