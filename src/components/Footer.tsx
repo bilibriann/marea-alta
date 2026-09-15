@@ -67,6 +67,13 @@ export function Footer() {
               <GlobeIcon className="h-5 w-5" />
             </span>
           </div>
+          <Image
+            src="/logos/marca-chile.webp"
+            alt="Marca Chile"
+            width={360}
+            height={340}
+            className="mt-4 h-auto w-36"
+          />
         </div>
       </div>
       <div className="mx-auto mt-20 max-w-7xl border-t border-white/10 px-4 pt-10 text-center text-sm text-white/40 md:px-12">
