@@ -3,13 +3,15 @@
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { AlertCircle, CheckCircle2, Clock, Loader2, Mail, MapPin, Phone } from 'lucide-react'
 import { siteConfig } from '@/config'
-import { sendContactForm } from '@/lib/forms'
+import { CAMPO_TRAMPA, LIMITES, sendContactForm } from '@/lib/forms'
+import { CampoTrampa } from '@/components/CampoTrampa'
 
 type FieldErrors = Partial<Record<'nombre' | 'email' | 'mensaje', string>>
 
 const inputBase =
   'h-12 w-full rounded-lg border bg-white px-4 text-base text-on-background outline-none transition-colors placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-surface-container-high disabled:opacity-70'
-const inputValid = 'border-outline-variant hover:border-primary/40 focus:border-primary focus:ring-primary'
+const inputValid =
+  'border-outline-variant hover:border-primary/40 focus:border-primary focus:ring-primary'
 const inputError = 'border-error hover:border-error focus:border-error focus:ring-error'
 
 function ContactInfoItem({
@@ -37,6 +39,7 @@ function ContactInfoItem({
 export function ContactoForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [errors, setErrors] = useState<FieldErrors>({})
+  const [errorEnvio, setErrorEnvio] = useState<string | null>(null)
 
   const telefonoHref = `tel:${siteConfig.contacto.telefono.replace(/[^\d+]/g, '')}`
   const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -74,6 +77,7 @@ export function ContactoForm() {
       nombre: String(data.get('nombre') ?? ''),
       email: String(data.get('email') ?? ''),
       mensaje: String(data.get('mensaje') ?? ''),
+      trampa: String(data.get(CAMPO_TRAMPA) ?? ''),
     })
 
     if (result.ok) {
@@ -81,6 +85,7 @@ export function ContactoForm() {
       form.reset()
     } else {
       setStatus('error')
+      setErrorEnvio(result.error ?? null)
     }
   }
 
@@ -95,7 +100,10 @@ export function ContactoForm() {
         </div>
         <div className="space-y-6">
           <ContactInfoItem icon={Mail} label="Email">
-            <a href={`mailto:${siteConfig.contacto.email}`} className="hover:text-primary hover:underline">
+            <a
+              href={`mailto:${siteConfig.contacto.email}`}
+              className="hover:text-primary hover:underline"
+            >
               {siteConfig.contacto.email}
             </a>
           </ContactInfoItem>
@@ -122,6 +130,7 @@ export function ContactoForm() {
 
       <div className="rounded-2xl border border-outline-variant/60 bg-white p-8 shadow-md shadow-on-background/5 md:p-10">
         <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+          <CampoTrampa />
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <label htmlFor="nombre" className="block text-sm font-semibold text-on-background">
@@ -132,6 +141,7 @@ export function ContactoForm() {
                 name="nombre"
                 type="text"
                 autoComplete="name"
+                maxLength={LIMITES.nombre}
                 required
                 aria-required="true"
                 placeholder="Nombre completo"
@@ -155,6 +165,7 @@ export function ContactoForm() {
                 name="email"
                 type="email"
                 autoComplete="email"
+                maxLength={LIMITES.email}
                 required
                 aria-required="true"
                 placeholder="correo@empresa.com"
@@ -179,6 +190,7 @@ export function ContactoForm() {
               id="mensaje"
               name="mensaje"
               rows={5}
+              maxLength={LIMITES.mensaje}
               required
               aria-required="true"
               placeholder="¿Cómo podemos ayudarle con su cadena de frío?"
@@ -199,7 +211,9 @@ export function ContactoForm() {
             disabled={status === 'sending'}
             className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-3.5 text-base font-bold text-white transition-colors hover:bg-primary-container hover:text-on-primary-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:bg-primary-container active:text-on-primary-container disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
           >
-            {status === 'sending' && <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />}
+            {status === 'sending' && (
+              <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />
+            )}
             {status === 'sending' ? 'Enviando...' : 'Enviar Mensaje'}
           </button>
 
@@ -218,7 +232,7 @@ export function ContactoForm() {
               className="flex items-center gap-3 rounded-lg border border-error/30 bg-error-container/40 p-4 text-sm font-medium text-error"
             >
               <AlertCircle className="h-5 w-5 shrink-0" aria-hidden="true" />
-              No pudimos enviar tu mensaje. Intenta nuevamente.
+              {errorEnvio ?? 'No pudimos enviar tu mensaje. Intenta nuevamente.'}
             </p>
           )}
         </form>

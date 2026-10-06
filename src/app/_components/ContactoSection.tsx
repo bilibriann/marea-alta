@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from 'react'
 import { siteConfig } from '@/config'
-import { sendContactForm } from '@/lib/forms'
+import { CAMPO_TRAMPA, LIMITES, sendContactForm } from '@/lib/forms'
+import { CampoTrampa } from '@/components/CampoTrampa'
 import {
   CallIcon,
   MailIcon,
@@ -24,6 +25,7 @@ const inputError = 'border-error hover:border-error focus:border-error focus:rin
 export function ContactoSection() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [errors, setErrors] = useState<FieldErrors>({})
+  const [errorEnvio, setErrorEnvio] = useState<string | null>(null)
 
   function validate(data: FormData): FieldErrors {
     const nombre = String(data.get('nombre') ?? '').trim()
@@ -56,6 +58,7 @@ export function ContactoSection() {
       nombre: String(data.get('nombre') ?? ''),
       email: String(data.get('email') ?? ''),
       mensaje: String(data.get('mensaje') ?? ''),
+      trampa: String(data.get(CAMPO_TRAMPA) ?? ''),
     })
 
     if (result.ok) {
@@ -63,11 +66,15 @@ export function ContactoSection() {
       form.reset()
     } else {
       setStatus('error')
+      setErrorEnvio(result.error ?? null)
     }
   }
 
   return (
-    <section id="contacto" className="scroll-mt-24 border-y border-primary/15 bg-brand-azul-profundo py-24">
+    <section
+      id="contacto"
+      className="scroll-mt-24 border-y border-primary/15 bg-brand-azul-profundo py-24"
+    >
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="grid grid-cols-1 gap-20 lg:grid-cols-2">
           <Reveal variante="izquierda" className="space-y-10">
@@ -79,8 +86,8 @@ export function ContactoSection() {
                 Inicie su Cotización
               </h2>
               <p className="max-w-md text-lg text-on-surface-variant">
-                Nuestro equipo de expertos está listo para diseñar la solución de cadena de frío
-                más adecuada para su negocio. Reciba una asesoría personalizada hoy mismo.
+                Nuestro equipo de expertos está listo para diseñar la solución de cadena de frío más
+                adecuada para su negocio. Reciba una asesoría personalizada hoy mismo.
               </p>
             </div>
             <div className="space-y-6 pt-6">
@@ -100,6 +107,7 @@ export function ContactoSection() {
           </Reveal>
           <Reveal variante="derecha" retraso={120} className="bg-white p-10 md:p-14">
             <form className="space-y-8" onSubmit={handleSubmit} noValidate>
+              <CampoTrampa />
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 <div className="space-y-3">
                   <label
@@ -113,6 +121,7 @@ export function ContactoSection() {
                     name="nombre"
                     type="text"
                     autoComplete="name"
+                    maxLength={LIMITES.nombre}
                     placeholder="Nombre completo"
                     aria-invalid={Boolean(errors.nombre)}
                     aria-describedby={errors.nombre ? 'nombre-error' : undefined}
@@ -137,6 +146,7 @@ export function ContactoSection() {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    maxLength={LIMITES.email}
                     placeholder="correo@empresa.com"
                     aria-invalid={Boolean(errors.email)}
                     aria-describedby={errors.email ? 'email-error' : undefined}
@@ -161,6 +171,7 @@ export function ContactoSection() {
                   id="mensaje"
                   name="mensaje"
                   rows={5}
+                  maxLength={LIMITES.mensaje}
                   placeholder="¿Cómo podemos ayudarle con su cadena de frío?"
                   aria-invalid={Boolean(errors.mensaje)}
                   aria-describedby={errors.mensaje ? 'mensaje-error' : undefined}
@@ -191,7 +202,7 @@ export function ContactoSection() {
                 {status === 'error' && (
                   <p className="flex items-center gap-3 rounded-md border border-error/30 bg-error-container/40 p-4 text-sm font-medium text-error">
                     <AlertCircleIcon className="h-5 w-5 shrink-0" />
-                    No pudimos enviar tu mensaje. Intenta nuevamente.
+                    {errorEnvio ?? 'No pudimos enviar tu mensaje. Intenta nuevamente.'}
                   </p>
                 )}
               </div>
