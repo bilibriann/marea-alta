@@ -21,6 +21,23 @@ DirectorySlash Off
 
 ErrorDocument 404 /404.html
 
+# Cabeceras de seguridad. HTTPS y la redirección desde http ya las pone
+# Hostinger; esto completa lo que falta.
+<IfModule mod_headers.c>
+  # El navegador recuerda por un año que este dominio va solo por HTTPS.
+  # Sin includeSubDomains: no sabemos si todos los subdominios tienen SSL.
+  Header always set Strict-Transport-Security "max-age=31536000"
+  # Ningún otro sitio puede meter estas páginas en un iframe (clickjacking).
+  Header always set X-Frame-Options "SAMEORIGIN"
+  # El navegador no adivina el tipo de un archivo: usa el que declaramos.
+  Header always set X-Content-Type-Options "nosniff"
+  # A sitios externos solo se les informa el dominio, no la URL completa.
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # Cámara, micrófono, ubicación y pagos apagados: el sitio no los usa. No se
+  # tocan los permisos que necesita el video embebido de YouTube.
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+</IfModule>
+
 # Assets con hash: cache larga. HTML: siempre revalidar.
 <IfModule mod_expires.c>
   ExpiresActive On
