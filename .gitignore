@@ -47,3 +47,7 @@ next-env.d.ts
 # Originales sin optimizar: respaldo local. Fuera de public/ a propósito, porque
 # Next copia public/ entero al build y los estaría desplegando.
 /originales/
+
+# Proyecto admin/: sus dependencias y build tampoco van al repo.
+/admin/node_modules/
+/admin/.next/
