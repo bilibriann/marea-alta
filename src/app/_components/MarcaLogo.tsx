@@ -32,7 +32,7 @@ export function MarcaLogo({ logo, alt, nombre }: Props) {
       width={240}
       height={96}
       onError={() => setFalló(true)}
-      className="h-auto max-h-14 w-auto max-w-full object-contain grayscale transition-all duration-300 hover:grayscale-0"
+      className="h-auto max-h-14 w-auto max-w-full object-contain"
     />
   )
 }

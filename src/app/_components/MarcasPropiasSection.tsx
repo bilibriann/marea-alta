@@ -9,7 +9,7 @@ interface Props {
 
 const basis = 'basis-[calc(50%-0.75rem)] sm:basis-44'
 const card =
-  'flex h-28 w-full items-center justify-center rounded-md border border-outline-variant bg-white p-6'
+  'tarjeta-interactiva flex h-28 w-full items-center justify-center rounded-md border border-outline-variant bg-white p-6'
 
 export function MarcasPropiasSection({ marcas }: Props) {
   if (marcas.length === 0) return null
@@ -19,7 +19,7 @@ export function MarcasPropiasSection({ marcas }: Props) {
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <Reveal className="mb-16 text-center">
           <h2 className="linea-decorativa-centrada text-headline-lg-mobile text-white md:text-headline-xl">
-            Alianzas Estratégicas
+            Nuestros productos y marcas estratégicas
           </h2>
         </Reveal>
         {/* flex-wrap y no grid: con un número fijo de columnas, tres marcas dejan
@@ -33,7 +33,7 @@ export function MarcasPropiasSection({ marcas }: Props) {
             return (
               <Reveal key={marca.slug} retraso={indice * 100} className={basis}>
                 {marca.url ? (
-                  <Link href={marca.url} className={`${card} tarjeta-interactiva`}>
+                  <Link href={marca.url} className={card}>
                     {logo}
                   </Link>
                 ) : (

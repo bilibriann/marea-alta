@@ -51,11 +51,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function ProductoPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
+export default async function ProductoPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const producto = await getProducto(slug)
   if (!producto) notFound()
@@ -75,7 +71,9 @@ export default async function ProductoPage({
       <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
         Producto
       </span>
-      <h1 className="text-headline-lg-mobile text-primary md:text-headline-xl">{producto.nombre}</h1>
+      <h1 className="text-headline-lg-mobile text-primary md:text-headline-xl">
+        {producto.nombre}
+      </h1>
       {producto.subtitulo && (
         <p className="mt-2 text-lg text-on-surface-variant">{producto.subtitulo}</p>
       )}
@@ -104,9 +102,9 @@ export default async function ProductoPage({
           {producto.galeria.map((imagen) => (
             <div
               key={imagen}
-              className="relative h-64 overflow-hidden border border-outline-variant"
+              className="relative h-64 overflow-hidden rounded-md border border-outline-variant bg-white"
             >
-              <Image src={imagen} alt={producto.nombre} fill className="object-cover" />
+              <Image src={imagen} alt={producto.nombre} fill className="object-contain p-6" />
             </div>
           ))}
         </div>
@@ -132,13 +130,7 @@ export default async function ProductoPage({
         </div>
       )}
 
-      {producto.nota_adicional && (
-        <p className="mt-16 border-t border-outline-variant/30 pt-6 text-sm italic text-on-surface-variant">
-          {producto.nota_adicional}
-        </p>
-      )}
-
-      <div className="mt-20 border-t border-outline-variant/30 pt-16">
+      <div className="mt-36">
         <span className="mb-2 block font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
           Cotización
         </span>
@@ -162,6 +154,10 @@ export default async function ProductoPage({
             className="absolute inset-0 h-full w-full"
           />
         </div>
+      )}
+
+      {producto.nota_adicional && (
+        <p className="mt-16 text-sm italic text-on-surface-variant">{producto.nota_adicional}</p>
       )}
     </div>
   )

@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/Button'
-import { sendCotizacionForm } from '@/lib/forms'
+import { CAMPO_TRAMPA, LIMITES, sendCotizacionForm } from '@/lib/forms'
+import { CampoTrampa } from '@/components/CampoTrampa'
 
 interface Props {
   producto: string
@@ -35,6 +36,7 @@ export function CotizacionForm({ producto, productoUrl, cantidades }: Props) {
       producto,
       productoUrl,
       cantidades: data.getAll('cantidades').map(String),
+      trampa: String(data.get(CAMPO_TRAMPA) ?? ''),
     })
 
     if (result.ok) {
@@ -58,6 +60,7 @@ export function CotizacionForm({ producto, productoUrl, cantidades }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <CampoTrampa />
       {/* Prellenado y no editable: la cotización siempre queda atada al producto
           de esta página, y el visitante ve cuál es antes de enviar. */}
       <div>
@@ -79,13 +82,27 @@ export function CotizacionForm({ producto, productoUrl, cantidades }: Props) {
           <label htmlFor="nombre" className="mb-2 block text-sm font-medium text-on-surface">
             Nombre
           </label>
-          <input id="nombre" name="nombre" type="text" required className={inputClass} />
+          <input
+            id="nombre"
+            name="nombre"
+            type="text"
+            required
+            maxLength={LIMITES.nombre}
+            className={inputClass}
+          />
         </div>
         <div>
           <label htmlFor="apellido" className="mb-2 block text-sm font-medium text-on-surface">
             Apellido
           </label>
-          <input id="apellido" name="apellido" type="text" required className={inputClass} />
+          <input
+            id="apellido"
+            name="apellido"
+            type="text"
+            required
+            maxLength={LIMITES.nombre}
+            className={inputClass}
+          />
         </div>
       </div>
 
@@ -93,14 +110,28 @@ export function CotizacionForm({ producto, productoUrl, cantidades }: Props) {
         <label htmlFor="email" className="mb-2 block text-sm font-medium text-on-surface">
           Email
         </label>
-        <input id="email" name="email" type="email" required className={inputClass} />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          maxLength={LIMITES.email}
+          className={inputClass}
+        />
       </div>
 
       <div>
         <label htmlFor="mensaje" className="mb-2 block text-sm font-medium text-on-surface">
           Mensaje
         </label>
-        <textarea id="mensaje" name="mensaje" rows={4} required className={inputClass} />
+        <textarea
+          id="mensaje"
+          name="mensaje"
+          rows={4}
+          required
+          maxLength={LIMITES.mensaje}
+          className={inputClass}
+        />
       </div>
 
       {cantidades.length > 0 && (
@@ -114,7 +145,12 @@ export function CotizacionForm({ producto, productoUrl, cantidades }: Props) {
                 key={cantidad}
                 className="flex items-center gap-2 border border-outline-variant bg-surface-container-low px-4 py-2 text-sm text-on-surface-variant transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-container/20 has-[:checked]:text-on-surface"
               >
-                <input type="checkbox" name="cantidades" value={cantidad} className="accent-primary" />
+                <input
+                  type="checkbox"
+                  name="cantidades"
+                  value={cantidad}
+                  className="accent-primary"
+                />
                 {cantidad}
               </label>
             ))}
@@ -124,7 +160,11 @@ export function CotizacionForm({ producto, productoUrl, cantidades }: Props) {
 
       {status === 'error' && <p className="text-sm text-error">{error}</p>}
 
-      <Button type="submit" disabled={status === 'loading'} className="disabled:cursor-not-allowed disabled:opacity-60">
+      <Button
+        type="submit"
+        disabled={status === 'loading'}
+        className="disabled:cursor-not-allowed disabled:opacity-60"
+      >
         {status === 'loading' ? 'Enviando…' : 'Solicitar Cotización'}
       </Button>
     </form>

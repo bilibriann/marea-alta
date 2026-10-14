@@ -1,0 +1,67 @@
+# Verificación en cada push y PR. No despliega nada: solo confirma que el
+# proyecto compila, tipa y pasa lint antes de que algo llegue a producción.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    # Productos y Noticias se leen de MySQL en build time (src/lib/productos.ts,
+    # src/lib/noticias.ts). El CI no tiene ni necesita datos reales: una base
+    # vacía con el esquema migrado alcanza, porque generateStaticParams ya
+    # resuelve el caso de cero filas con un slug placeholder (ver
+    # src/app/productos/[slug]/page.tsx y src/app/_noticias/[slug]/page.tsx).
+    # No usar esto como DATABASE_URL de producción.
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: marea_alta
+          MYSQL_USER: marea_alta
+          MYSQL_PASSWORD: marea_alta
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -u root -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      DATABASE_URL: mysql://marea_alta:marea_alta@localhost:3306/marea_alta
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tipos
+        run: npx tsc --noEmit
+
+      - name: Migrar esquema (admin/prisma) a la base del CI
+        run: |
+          npm ci
+          npx prisma migrate deploy
+        working-directory: admin
+
+      # Build sin GITHUB_PAGES: el mismo que se sube a Hostinger.
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_FORMS_ENDPOINT: ${{ vars.FORMS_ENDPOINT || 'https://api.web3forms.com/submit' }}
+          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
+
+      - name: Verificar export
+        run: npm run check:export

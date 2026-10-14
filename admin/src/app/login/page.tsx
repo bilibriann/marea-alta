@@ -1,20 +1,36 @@
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { verificarCredenciales } from '@/lib/credenciales'
 import { signSession, SESSION_COOKIE, SESSION_COOKIE_OPTIONS } from '@/lib/auth'
+import {
+  destinoSeguro,
+  estaBloqueado,
+  limpiarFallos,
+  obtenerIp,
+  PAUSA_FALLO_MS,
+  registrarFallo,
+} from '@/lib/limite-login'
 
 async function login(formData: FormData) {
   'use server'
 
   const nombreUsuario = String(formData.get('nombreUsuario') ?? '')
   const password = String(formData.get('password') ?? '')
-  const from = String(formData.get('from') || '/')
+  const from = destinoSeguro(String(formData.get('from') || '/admin/'))
+  const ip = obtenerIp(await headers())
+
+  if (estaBloqueado(ip, nombreUsuario)) {
+    redirect(`/login?error=bloqueado&from=${encodeURIComponent(from)}`)
+  }
 
   const credenciales = await verificarCredenciales(nombreUsuario, password)
   if (!credenciales) {
+    registrarFallo(ip, nombreUsuario)
+    await new Promise((resolve) => setTimeout(resolve, PAUSA_FALLO_MS))
     redirect(`/login?error=1&from=${encodeURIComponent(from)}`)
   }
 
+  limpiarFallos(ip, nombreUsuario)
   const token = await signSession(credenciales)
   const cookieStore = await cookies()
   cookieStore.set(SESSION_COOKIE, token, SESSION_COOKIE_OPTIONS)
@@ -28,7 +44,7 @@ export default async function LoginPage({
   searchParams: Promise<{ from?: string; error?: string }>
 }) {
   const { from, error } = await searchParams
-  const redirectTo = from || '/'
+  const redirectTo = destinoSeguro(from || '/admin/')
 
   return (
     <main className="login-page">
@@ -60,7 +76,13 @@ export default async function LoginPage({
             autoComplete="current-password"
             className="login-input"
           />
-          {error && <p className="login-error">Usuario o contraseña incorrectos.</p>}
+          {error && (
+            <p className="login-error">
+              {error === 'bloqueado'
+                ? 'Demasiados intentos. Espera 15 minutos.'
+                : 'Usuario o contraseña incorrectos.'}
+            </p>
+          )}
           <button type="submit" className="login-button">
             Ingresar
           </button>

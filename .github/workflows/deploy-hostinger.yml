@@ -1,0 +1,62 @@
+# Construye el sitio y lo sube a public_html por FTP.
+#
+# Secrets que hay que crear en Settings -> Secrets and variables -> Actions:
+#   FTP_HOST                  host FTP de Hostinger (hPanel -> Archivos -> Cuentas FTP)
+#   FTP_USER                  usuario de esa cuenta
+#   FTP_PASSWORD              su contraseña
+#   WEB3FORMS_ACCESS_KEY      clave de web3forms.com
+#
+# Variable opcional (Settings -> Variables):
+#   FORMS_ENDPOINT            por defecto https://api.web3forms.com/submit
+name: Deploy a Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Dos despliegues simultáneos sobre el mismo FTP se pisan: que espere el anterior.
+concurrency:
+  group: hostinger
+  cancel-in-progress: false
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Sin GITHUB_PAGES: en Hostinger el sitio vive en la raíz del dominio y
+      # el basePath /marea-alta lo dejaría sin CSS ni JS.
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_FORMS_ENDPOINT: ${{ vars.FORMS_ENDPOINT || 'https://api.web3forms.com/submit' }}
+          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
+
+      # Corta antes de subir si falta el .htaccess, si se coló el basePath de
+      # Pages o si los formularios quedaron sin configurar.
+      - name: Verificar export
+        run: npm run check:export
+
+      - name: Subir por FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          # La barra final es obligatoria: sube el CONTENIDO de out/, no la carpeta.
+          local-dir: ./out/
+          # "/" y no "/public_html/": la cuenta FTP se creó apuntando a
+          # .../domains/mareaalta-latam.com/public_html, así que al conectarse
+          # su raíz ya ES public_html. Con /public_html/ acabaría creando
+          # public_html/public_html/ y el sitio no aparecería.
+          server-dir: /
