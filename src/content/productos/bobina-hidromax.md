@@ -1,6 +1,6 @@
 ---
-nombre: "Bobina HidroMax"
-subtitulo: "Toalla reutilizable, en bobina y en paquete"
+nombre: Bobina HidroMax
+subtitulo: Toalla reutilizable, en bobina y en paquete.
 galeria:
   - /images/productos/bobina-hidromax/01-bobina.webp
   - /images/productos/familia-hidromax.webp
@@ -27,7 +27,8 @@ grupos_opciones:
       - Absorción superior
       - Alta resistencia
       - Versatilidad multiuso
-nota_adicional: "Recomendado para industria alimenticia, farmacéutica, laboratorios, clínicas y centros odontológicos."
+nota_adicional: Recomendado para industria alimenticia, farmacéutica, laboratorios, clínicas y centros odontológicos.
+opciones_cantidad: []
 fichas:
   - archivo: /fichas/bobina-hidromax.pdf
     etiqueta: Bobina
@@ -35,4 +36,5 @@ fichas:
     etiqueta: Paquete 20x28 cm
   - archivo: /fichas/papel-hidromax-60-23x29.pdf
     etiqueta: Paquete 23x29 cm
+video_youtube: ''
 ---
