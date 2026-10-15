@@ -7,7 +7,6 @@ galeria:
   - /images/productos/papel-hidromax-60/01-paquete.webp
   - /images/productos/papel-hidromax-60/02-hojas.webp
   - /images/productos/papel-hidromax-60/03-uso-clinico.webp
-  - /images/productos/papel-hidromax-60/04-uso-cocina.webp
 grupos_opciones:
   - titulo_grupo: Formato bobina
     opciones:
