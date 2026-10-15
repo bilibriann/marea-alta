@@ -13,6 +13,10 @@ export interface HomeContent {
   }
   confianza: {
     titulo: string
+    imagen: {
+      src: string
+      alt: string
+    }
     items: {
       icono: 'snowflake' | 'history' | 'verified' | 'globe'
       titulo: string
@@ -27,6 +31,10 @@ export interface HomeContent {
   proposito: {
     eyebrow: string
     titulo: string
+    imagen: {
+      src: string
+      alt: string
+    }
   }
   mision: string
   vision: string

@@ -1,4 +1,5 @@
 import type { ComponentType, SVGProps } from 'react'
+import Image from 'next/image'
 import type { HomeContent } from '@/lib/home'
 import { SnowflakeIcon, HistoryIcon, VerifiedIcon, GlobeIcon } from '@/components/icons'
 import { Reveal } from '@/components/Reveal'
@@ -30,25 +31,42 @@ export function ConfianzaSection({ confianza }: Props) {
             {confianza.titulo}
           </h2>
         </Reveal>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {confianza.items.map((item, indice) => {
-            const Icon = ICONS[item.icono]
-            return (
-              // El escalonado sigue el orden de lectura de la grilla; 120ms es
-              // suficiente para leerse como cascada sin hacer esperar.
-              <Reveal key={item.titulo} retraso={indice * 120}>
-                <div className="item-interactivo group -m-2 flex h-full gap-4 rounded-xl p-2">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-outline-variant bg-primary-container/20 text-primary transition-colors duration-200 group-hover:border-primary group-hover:bg-primary group-hover:text-white">
-                    <Icon className="h-6 w-6" />
+        {/* La foto pone cara a los pilares: va a la izquierda para leerse antes
+            que la lista, y en vertical para que en escritorio acompañe el alto
+            de la grilla 2×2 sin dejar huecos. En móvil se apaisa y el foco se
+            sube para no cortar los cascos. */}
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          <Reveal variante="izquierda" className="mx-auto w-full max-w-sm lg:col-span-4 lg:max-w-none">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-outline-variant/40 lg:aspect-[4/5]">
+              <Image
+                src={confianza.imagen.src}
+                alt={confianza.imagen.alt}
+                fill
+                sizes="(min-width: 1024px) 30vw, 384px"
+                className="object-cover object-[50%_22%] lg:object-center"
+              />
+            </div>
+          </Reveal>
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:col-span-8">
+            {confianza.items.map((item, indice) => {
+              const Icon = ICONS[item.icono]
+              return (
+                // El escalonado sigue el orden de lectura de la grilla; 120ms es
+                // suficiente para leerse como cascada sin hacer esperar.
+                <Reveal key={item.titulo} retraso={indice * 120}>
+                  <div className="item-interactivo group -m-2 flex h-full gap-4 rounded-xl p-2">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-outline-variant bg-primary-container/20 text-primary transition-colors duration-200 group-hover:border-primary group-hover:bg-primary group-hover:text-white">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h3 className="mb-2 text-xl font-bold text-on-surface">{item.titulo}</h3>
+                      <p className="text-on-surface-variant">{item.descripcion}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="mb-2 text-xl font-bold text-on-surface">{item.titulo}</h3>
-                    <p className="text-on-surface-variant">{item.descripcion}</p>
-                  </div>
-                </div>
-              </Reveal>
-            )
-          })}
+                </Reveal>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

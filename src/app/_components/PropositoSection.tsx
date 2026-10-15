@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { HomeContent } from '@/lib/home'
 import { ExpandableText } from '@/components/ExpandableText'
 import { Reveal } from '@/components/Reveal'
@@ -23,29 +24,43 @@ export function PropositoSection({ proposito, vision, mision }: Props) {
             {proposito.titulo}
           </h2>
         </Reveal>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.4fr]">
-          <Reveal
-            variante="izquierda"
-            className="tarjeta-interactiva h-full rounded-md border border-outline-variant bg-white p-10"
-          >
-            <h3 className="mb-6 font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
-              Visión
-            </h3>
-            <ExpandableText
-              parrafos={visionParrafos}
-              parrafoClassName="text-lg leading-relaxed text-on-surface-variant"
+        {/* Las tarjetas mandan a la izquierda y la foto las acompaña a la
+            derecha, en una columna angosta y centrada respecto de ellas. La
+            foto es estática: sin `sticky` ni animación de entrada. */}
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="flex flex-col gap-6 lg:col-span-7">
+            <Reveal
+              variante="izquierda"
+              className="tarjeta-interactiva rounded-md border border-outline-variant bg-white p-10"
+            >
+              <h3 className="mb-6 font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
+                Visión
+              </h3>
+              <ExpandableText
+                parrafos={visionParrafos}
+                parrafoClassName="text-lg leading-relaxed text-on-surface-variant"
+              />
+            </Reveal>
+            <Reveal
+              variante="izquierda"
+              retraso={120}
+              className="tarjeta-interactiva rounded-md border border-outline-variant bg-white p-10"
+            >
+              <h3 className="mb-6 font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
+                Misión
+              </h3>
+              <ExpandableText parrafos={misionParrafos} parrafoClassName="text-on-surface-variant" />
+            </Reveal>
+          </div>
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl border border-outline-variant/40 lg:col-span-5">
+            <Image
+              src={proposito.imagen.src}
+              alt={proposito.imagen.alt}
+              fill
+              sizes="(min-width: 1024px) 35vw, 448px"
+              className="object-cover object-[50%_40%]"
             />
-          </Reveal>
-          <Reveal
-            variante="derecha"
-            retraso={120}
-            className="tarjeta-interactiva h-full rounded-md border border-outline-variant bg-white p-10"
-          >
-            <h3 className="mb-6 font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
-              Misión
-            </h3>
-            <ExpandableText parrafos={misionParrafos} parrafoClassName="text-on-surface-variant" />
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

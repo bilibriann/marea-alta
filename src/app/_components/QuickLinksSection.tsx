@@ -12,9 +12,11 @@ export function QuickLinksSection() {
   const items = [...links, { label: 'Llámanos', href: `tel:${siteConfig.contacto.telefono}` }]
 
   return (
-    <section className="hidden border-y border-outline-variant/30 bg-inverse-surface md:block">
+    // Sin bordes ni divisorias y con el azul exacto de la base de las olas
+    // (public/background/olas.webp): la franja se lee como continuación del hero.
+    <section className="hidden bg-[#135784] md:block">
       <div className="mx-auto max-w-7xl px-4 md:px-12">
-        <div className="grid grid-cols-3 divide-x divide-outline-variant/30">
+        <div className="grid grid-cols-3">
           {items.map((item, indice) => (
             <Reveal key={item.label} retraso={indice * 120}>
               <Link

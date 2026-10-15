@@ -14,22 +14,33 @@ export function HeroSection({ hero }: Props) {
     // líneas y la columna crece. Con `h-[70vh]` + `overflow-hidden` el CTA
     // secundario quedaba recortado fuera de la sección (hasta 71px en 320px de
     // ancho) y lo tapaba la sección blanca siguiente.
-    <section className="relative flex min-h-[70vh] items-center overflow-hidden py-12 sm:min-h-[75vh] sm:py-20 lg:min-h-[85vh]">
-      {/* El fondo y sus velos viven en una capa propia para poder animarlos
+    // El padding inferior reserva el alto de las olas para que el CTA no quede
+    // encima de ellas.
+    <section className="relative flex min-h-[70vh] items-center overflow-hidden pb-28 pt-12 sm:min-h-[75vh] sm:pb-40 sm:pt-20 lg:min-h-[85vh] lg:pb-64">
+      {/* El fondo y su velo viven en una capa propia para poder animarlos
           juntos (zoom-out cinematográfico de 2.2s) sin mover el contenido. */}
       <div className="hero-fondo pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         <Image
-          src="/background/puerto1.webp"
+          src="/background/foto-principal.webp"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center sm:object-right-bottom"
+          className="object-cover object-center"
         />
-        {/* La foto viene sin tratamiento: el velo azul profundo devuelve el contraste
-            del texto blanco y se apaga en la base para no ensuciar la onda de marca. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/45 to-primary/0" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/60 via-primary/25 to-transparent [mask-image:linear-gradient(to_bottom,black_65%,transparent_92%)]" />
+        {/* La foto va en su color original; el velo lateral azul da contraste al texto. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/55 via-primary/20 to-transparent" />
+      </div>
+      {/* Las olas van en una capa aparte y no dentro de la foto: así quedan
+          siempre pegadas a la base y a todo el ancho, sin que `object-cover` las
+          recorte en móvil. Se estiran (`object-fill`) porque son formas lisas y
+          lo toleran; la altura se topa para que en pantallas anchas no tapen el
+          contenido. `-bottom-px` evita una línea de la foto bajo el borde. */}
+      <div
+        className="pointer-events-none absolute inset-x-0 -bottom-px z-0 h-[22vw] max-h-64 min-h-20"
+        aria-hidden="true"
+      >
+        <Image src="/background/olas.webp" alt="" fill priority sizes="100vw" className="object-fill" />
       </div>
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 md:px-12">
         {/* Entrada escalonada: cada bloque entra 180ms después del anterior,
@@ -66,14 +77,13 @@ export function HeroSection({ hero }: Props) {
           </div>
         </div>
       </div>
-      {/* Indicador de scroll: aparece último, ya con el hero leído. Va en azul
-          y no en blanco porque el velo se apaga hacia la base — abajo el fondo
-          es la foto clara y una flecha blanca ahí no se lee. Solo desde `sm`:
-          en móvil apaisado se comería el CTA secundario. */}
+      {/* Indicador de scroll: aparece último, ya con el hero leído. Va en blanco
+          porque la base de la foto es la franja azul de la onda. Solo desde
+          `sm`: en móvil apaisado se comería el CTA secundario. */}
       <Link
         href="#confianza"
         aria-label="Ir a la siguiente sección"
-        className="elemento-aparece absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 text-primary/70 transition-colors hover:text-primary sm:flex"
+        className="elemento-aparece absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 text-white/70 transition-colors hover:text-white sm:flex"
         style={{ animationDelay: '1200ms' }}
       >
         <ChevronDownIcon className="scroll-flecha h-9 w-9" aria-hidden="true" />
