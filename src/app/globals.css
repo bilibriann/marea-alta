@@ -188,8 +188,8 @@ body {
   .al-ver-der {
     opacity: 0;
     transition:
-      opacity 0.65s ease,
-      transform 0.65s ease;
+      opacity 0.4s ease,
+      transform 0.4s ease;
   }
 
   .al-ver {
@@ -314,7 +314,7 @@ body {
   }
 
   .hero-fondo {
-    animation: heroFondo 2.2s ease-out both;
+    animation: heroFondo 1.2s ease-out both;
   }
 
   /* ─── Entrada escalonada de elementos (se escalona con animationDelay) ─── */
@@ -330,7 +330,7 @@ body {
   }
 
   .elemento-entrada {
-    animation: elementoEntrada 1s ease-out both;
+    animation: elementoEntrada 0.55s ease-out both;
   }
 
   /* Variante sin desplazamiento, para lo que no debe moverse al entrar. */
@@ -344,7 +344,7 @@ body {
   }
 
   .elemento-aparece {
-    animation: elementoAparece 1s ease-out both;
+    animation: elementoAparece 0.5s ease-out both;
   }
 
   /* ─── Motivo técnico de los servicios: los trazos se dibujan solos ───
@@ -359,7 +359,7 @@ body {
   .icono-servicio :is(path, circle, rect) {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    animation: trazoDibujo 1.8s ease-in-out 500ms forwards;
+    animation: trazoDibujo 1s ease-in-out 200ms forwards;
   }
 
   /* ─── Indicador de scroll ─── */

@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { siteConfig } from '@/config'
-import { CallIcon, MailIcon, ShareIcon, GlobeIcon } from '@/components/icons'
+import { CallIcon, MailIcon, LinkedinIcon } from '@/components/icons'
 
 export function Footer() {
   return (
     <footer className="border-t-4 border-primary bg-inverse-surface py-20 text-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 md:grid-cols-4 md:px-12">
-        <div className="space-y-8">
+        <div className="space-y-3">
           <Link href="/" className="inline-block shrink-0">
             <Image
               src="/logos/logo-marea-alta.png"
@@ -55,17 +55,17 @@ export function Footer() {
           <h4 className="text-sm font-bold uppercase tracking-widest text-accent">
             Síguenos
           </h4>
-          {/* Los iconos quedan a la vista pero sin enlace: las URLs de redes
-              todavía no están confirmadas y no queremos mandar a nadie a un
-              perfil equivocado. Para reactivarlos, rellena siteConfig.redes y
-              vuelve a envolver cada icono en un <a href>. */}
-          <div className="flex gap-4" aria-hidden="true">
-            <span className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5">
-              <ShareIcon className="h-5 w-5" />
-            </span>
-            <span className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5">
-              <GlobeIcon className="h-5 w-5" />
-            </span>
+          {/* LinkedIn es por ahora la única red confirmada (siteConfig.redes). */}
+          <div className="flex gap-4">
+            <a
+              href={siteConfig.redes.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Marea Alta en LinkedIn"
+              className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 bg-white/5 transition-colors hover:border-white/40 hover:bg-white/10"
+            >
+              <LinkedinIcon className="h-5 w-5" />
+            </a>
           </div>
           <Image
             src="/logos/marca-chile.webp"
@@ -77,7 +77,7 @@ export function Footer() {
         </div>
       </div>
       <div className="mx-auto mt-20 max-w-7xl border-t border-white/10 px-4 pt-10 text-center text-sm text-white/40 md:px-12">
-        © {new Date().getFullYear()} {siteConfig.name}. Todos los derechos reservados.
+        © {new Date().getFullYear()} Marea Alta Chile
       </div>
     </footer>
   )

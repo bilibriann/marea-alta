@@ -18,7 +18,7 @@ export function HeroSection({ hero }: Props) {
     // encima de ellas.
     <section className="relative flex min-h-[70vh] items-center overflow-hidden pb-28 pt-12 sm:min-h-[75vh] sm:pb-40 sm:pt-20 lg:min-h-[85vh] lg:pb-64">
       {/* El fondo y su velo viven en una capa propia para poder animarlos
-          juntos (zoom-out cinematográfico de 2.2s) sin mover el contenido. */}
+          juntos (zoom-out de 1.2s) sin mover el contenido. */}
       <div className="hero-fondo pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         <Image
           src="/background/foto-principal.webp"
@@ -43,30 +43,30 @@ export function HeroSection({ hero }: Props) {
         <Image src="/background/olas.webp" alt="" fill priority sizes="100vw" className="object-fill" />
       </div>
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 md:px-12">
-        {/* Entrada escalonada: cada bloque entra 180ms después del anterior,
+        {/* Entrada escalonada: cada bloque entra 80ms después del anterior,
             de arriba hacia abajo, para que la lectura siga el mismo orden. */}
         <div className="max-w-3xl space-y-6 sm:space-y-8">
           <span
             className="elemento-entrada inline-block rounded-md border border-tertiary-container bg-tertiary px-4 py-1.5 font-mono text-label-sm uppercase tracking-wider text-on-tertiary"
-            style={{ animationDelay: '200ms' }}
+            style={{ animationDelay: '60ms' }}
           >
             {hero.badge}
           </span>
           <h1
             className="elemento-entrada text-display text-white sm:text-headline-xl"
-            style={{ animationDelay: '380ms' }}
+            style={{ animationDelay: '140ms' }}
           >
             {hero.titulo}
           </h1>
           <p
             className="elemento-entrada max-w-xl text-lg text-white/80 sm:text-xl"
-            style={{ animationDelay: '560ms' }}
+            style={{ animationDelay: '220ms' }}
           >
             {hero.subtitulo}
           </p>
           <div
             className="elemento-entrada flex flex-col gap-4 pt-2 sm:flex-row sm:flex-wrap sm:pt-4"
-            style={{ animationDelay: '740ms' }}
+            style={{ animationDelay: '300ms' }}
           >
             <ButtonLink href={hero.ctaHref} variant="primary" className="w-full sm:w-auto">
               {hero.cta}
@@ -84,7 +84,7 @@ export function HeroSection({ hero }: Props) {
         href="#confianza"
         aria-label="Ir a la siguiente sección"
         className="elemento-aparece absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 text-white/70 transition-colors hover:text-white sm:flex"
-        style={{ animationDelay: '1200ms' }}
+        style={{ animationDelay: '600ms' }}
       >
         <ChevronDownIcon className="scroll-flecha h-9 w-9" aria-hidden="true" />
       </Link>

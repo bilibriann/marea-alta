@@ -11,7 +11,6 @@ import { PropositoSection } from './_components/PropositoSection'
 import { ProductosSection } from './_components/ProductosSection'
 import { SectoresSection } from './_components/SectoresSection'
 import { NoticiasSection } from './_components/NoticiasSection'
-import { EnConstruccionSection } from './_components/EnConstruccionSection'
 import { CertificacionesSection } from './_components/CertificacionesSection'
 import { ContactoSection } from './_components/ContactoSection'
 
@@ -34,7 +33,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <EnConstruccionSection />
       <HeroSection hero={content.hero} />
       <QuickLinksSection />
       <ConfianzaSection confianza={content.confianza} />

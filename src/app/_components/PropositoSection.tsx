@@ -9,6 +9,9 @@ interface Props {
   mision: string
 }
 
+const RECUADRO =
+  'rounded-md border border-transparent p-10 transition-colors duration-300 hover:border-outline-variant hover:bg-brand-crema'
+
 export function PropositoSection({ proposito, vision, mision }: Props) {
   const visionParrafos = vision.split('\n\n')
   const misionParrafos = mision.split('\n\n')
@@ -29,27 +32,28 @@ export function PropositoSection({ proposito, vision, mision }: Props) {
             foto es estática: sin `sticky` ni animación de entrada. */}
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="flex flex-col gap-6 lg:col-span-7">
-            <Reveal
-              variante="izquierda"
-              className="tarjeta-interactiva rounded-md border border-outline-variant bg-white p-10"
-            >
-              <h3 className="mb-6 font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
-                Visión
-              </h3>
-              <ExpandableText
-                parrafos={visionParrafos}
-                parrafoClassName="text-lg leading-relaxed text-on-surface-variant"
-              />
+            {/* Visión y Misión no muestran recuadro: el borde y el fondo crema
+                aparecen solo al pasar el cursor. Va en un div interno y no en el
+                Reveal porque `transition-colors` pisaría la transición de entrada
+                de `.al-ver-izq`. */}
+            <Reveal variante="izquierda">
+              <div className={RECUADRO}>
+                <h3 className="mb-4 text-headline-lg text-primary">
+                  Visión
+                </h3>
+                <ExpandableText
+                  parrafos={visionParrafos}
+                  parrafoClassName="text-lg leading-relaxed text-on-surface-variant"
+                />
+              </div>
             </Reveal>
-            <Reveal
-              variante="izquierda"
-              retraso={120}
-              className="tarjeta-interactiva rounded-md border border-outline-variant bg-white p-10"
-            >
-              <h3 className="mb-6 font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
-                Misión
-              </h3>
-              <ExpandableText parrafos={misionParrafos} parrafoClassName="text-on-surface-variant" />
+            <Reveal variante="izquierda" retraso={120}>
+              <div className={RECUADRO}>
+                <h3 className="mb-4 text-headline-lg text-primary">
+                  Misión
+                </h3>
+                <ExpandableText parrafos={misionParrafos} parrafoClassName="text-on-surface-variant" />
+              </div>
             </Reveal>
           </div>
           <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl border border-outline-variant/40 lg:col-span-5">

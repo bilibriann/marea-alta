@@ -19,19 +19,19 @@ export function BandaServicio({ servicio, tema }: Props) {
           <div>
             <h1
               className={`elemento-entrada text-display md:text-display-md lg:text-display-lg ${tema.titulo}`}
-              style={{ animationDelay: '120ms' }}
+              style={{ animationDelay: '40ms' }}
             >
               {servicio.titulo}
             </h1>
             <p
               className={`elemento-entrada mt-6 max-w-xl text-lg leading-relaxed md:text-xl ${tema.cuerpo}`}
-              style={{ animationDelay: '300ms' }}
+              style={{ animationDelay: '120ms' }}
             >
               {servicio.resumen}
             </p>
             <Link
               href="/contacto"
-              style={{ animationDelay: '480ms' }}
+              style={{ animationDelay: '200ms' }}
               className={`elemento-entrada group mt-10 inline-flex w-full items-center justify-center gap-2 rounded-md px-8 py-3.5 text-base font-bold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 sm:w-auto ${tema.boton}`}
             >
               Solicitar cotización

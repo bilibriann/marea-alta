@@ -34,7 +34,7 @@ export const siteConfig: SiteConfig = {
   // iconos igual, pero sin enlace, hasta que se completen con los perfiles reales.
   redes: {
     instagram: '',
-    linkedin: '',
+    linkedin: 'https://www.linkedin.com/company/mareaalta-latam/',
     facebook: '',
   },
 }
