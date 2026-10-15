@@ -140,6 +140,33 @@ collections:
           hint: "Resumen corto para el listado de noticias",
         }
       - {
+          label: "Logo o imagen secundaria",
+          name: "logo",
+          widget: "image",
+          required: false,
+          hint: "Opcional. Se muestra antes del título de la noticia",
+        }
+      - {
+          label: "Meta título (SEO)",
+          name: "meta_titulo",
+          widget: "string",
+          required: false,
+          hint: "Opcional. Título completo para Google, tal cual (ideal: menos de 60 caracteres). Si queda vacío se usa el título",
+        }
+      - {
+          label: "Meta descripción (SEO)",
+          name: "meta_descripcion",
+          widget: "text",
+          required: false,
+          hint: "Opcional. Si queda vacía se usa el extracto",
+        }
+      - {
+          label: "Palabras clave (SEO)",
+          name: "palabras_clave",
+          widget: "list",
+          required: false,
+        }
+      - {
           label: "Contenido",
           name: "body",
           widget: "markdown",

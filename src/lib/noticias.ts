@@ -8,6 +8,15 @@ const noticiaFrontmatterSchema = z.object({
   imagen_destacada: z.string().min(1),
   fecha: z.coerce.date(),
   extracto: z.string().min(1),
+  // Opcionales: una noticia sin ellos usa el título y el extracto. El CMS puede
+  // guardar campos vacíos como "" o null, que cuentan como ausentes.
+  /** Logo o imagen secundaria que se muestra antes del título. */
+  logo: z.string().nullish(),
+  /** Título completo para buscadores, tal cual (sin sufijo automático). Si falta se usa el titular. */
+  meta_titulo: z.string().nullish(),
+  /** Descripción para buscadores; si falta se usa el extracto. */
+  meta_descripcion: z.string().nullish(),
+  palabras_clave: z.array(z.string()).nullish(),
 })
 
 export interface Noticia extends z.infer<typeof noticiaFrontmatterSchema> {
