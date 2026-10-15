@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import type { HomeContent } from '@/lib/home'
 import { ExpandableText } from '@/components/ExpandableText'
 import { Reveal } from '@/components/Reveal'
@@ -27,44 +26,26 @@ export function PropositoSection({ proposito, vision, mision }: Props) {
             {proposito.titulo}
           </h2>
         </Reveal>
-        {/* Las tarjetas mandan a la izquierda y la foto las acompaña a la
-            derecha, en una columna angosta y centrada respecto de ellas. La
-            foto es estática: sin `sticky` ni animación de entrada. */}
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
-          <div className="flex flex-col gap-6 lg:col-span-7">
-            {/* Visión y Misión no muestran recuadro: el borde y el fondo crema
-                aparecen solo al pasar el cursor. Va en un div interno y no en el
-                Reveal porque `transition-colors` pisaría la transición de entrada
-                de `.al-ver-izq`. */}
-            <Reveal variante="izquierda">
-              <div className={RECUADRO}>
-                <h3 className="mb-4 text-headline-lg text-primary">
-                  Visión
-                </h3>
-                <ExpandableText
-                  parrafos={visionParrafos}
-                  parrafoClassName="text-lg leading-relaxed text-on-surface-variant"
-                />
-              </div>
-            </Reveal>
-            <Reveal variante="izquierda" retraso={120}>
-              <div className={RECUADRO}>
-                <h3 className="mb-4 text-headline-lg text-primary">
-                  Misión
-                </h3>
-                <ExpandableText parrafos={misionParrafos} parrafoClassName="text-on-surface-variant" />
-              </div>
-            </Reveal>
-          </div>
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl border border-outline-variant/40 lg:col-span-5">
-            <Image
-              src={proposito.imagen.src}
-              alt={proposito.imagen.alt}
-              fill
-              sizes="(min-width: 1024px) 35vw, 448px"
-              className="object-cover object-[50%_40%]"
-            />
-          </div>
+        {/* Visión y Misión lado a lado. No muestran recuadro: el borde y el
+            fondo crema aparecen solo al pasar el cursor. El recuadro va en un
+            div interno y no en el Reveal porque `transition-colors` pisaría la
+            transición de entrada de `.al-ver-*`. */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.4fr]">
+          <Reveal variante="izquierda">
+            <div className={RECUADRO}>
+              <h3 className="mb-4 text-headline-lg text-primary">Visión</h3>
+              <ExpandableText
+                parrafos={visionParrafos}
+                parrafoClassName="text-lg leading-relaxed text-on-surface-variant"
+              />
+            </div>
+          </Reveal>
+          <Reveal variante="derecha" retraso={120}>
+            <div className={RECUADRO}>
+              <h3 className="mb-4 text-headline-lg text-primary">Misión</h3>
+              <ExpandableText parrafos={misionParrafos} parrafoClassName="text-on-surface-variant" />
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

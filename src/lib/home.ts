@@ -31,10 +31,6 @@ export interface HomeContent {
   proposito: {
     eyebrow: string
     titulo: string
-    imagen: {
-      src: string
-      alt: string
-    }
   }
   mision: string
   vision: string

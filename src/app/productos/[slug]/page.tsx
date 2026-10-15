@@ -97,13 +97,13 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
         // (`object-cover`) para que no queden márgenes blancos alrededor. 4:3 y
         // no cuadrado porque el catálogo mezcla fotos 16:9 y 1:1: es el formato
         // que menos recorta a ambas. La lupa abre la foto completa y en grande.
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {producto.galeria.map((imagen) => (
             <div key={imagen} className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <ImagenAmpliable
                 src={imagen}
                 alt={producto.nombre}
-                sizes="(min-width: 896px) 270px, (min-width: 640px) 33vw, 50vw"
+                sizes="(min-width: 896px) 400px, (min-width: 640px) 50vw, 100vw"
                 cubrir
               />
             </div>

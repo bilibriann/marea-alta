@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { getAllServicios, getServicio } from '@/lib/servicios'
-import { getCertificaciones, getSectores, getTestimonios } from '@/lib/home'
+import { getCertificaciones, getSectores } from '@/lib/home'
 import { temaServicio } from '@/lib/serviciosTema'
 import { VerifiedIcon } from '@/components/icons'
 import { Reveal } from '@/components/Reveal'
@@ -56,18 +56,16 @@ export default async function ServicioPage({
   params: Promise<{ servicio: string }>
 }) {
   const { servicio: slug } = await params
-  const [servicio, servicios, sectores, certificaciones, testimonios] = await Promise.all([
+  const [servicio, servicios, sectores, certificaciones] = await Promise.all([
     getServicio(slug),
     getAllServicios(),
     getSectores(),
     getCertificaciones(),
-    getTestimonios(),
   ])
   if (!servicio) notFound()
 
   const tema = temaServicio(servicio.slug, servicio.orden)
   const nombresSector = new Map(sectores.map((s) => [s.slug, s.nombre]))
-  const testimonio = testimonios[0]
 
   return (
     <>
@@ -121,17 +119,6 @@ export default async function ServicioPage({
                 </p>
               </div>
             </div>
-
-            {testimonio && (
-              <figure className="mt-12 border-t border-outline-variant/50 pt-8">
-                <blockquote className="max-w-[52ch] text-lg leading-relaxed text-on-surface">
-                  &ldquo;{testimonio.testimonio}&rdquo;
-                </blockquote>
-                <figcaption className="mt-4 font-mono text-label-xs uppercase text-tertiary">
-                  {testimonio.nombre} — {testimonio.cargo}, {testimonio.empresa}
-                </figcaption>
-              </figure>
-            )}
           </Reveal>
 
           <Reveal variante="derecha" retraso={120}>
