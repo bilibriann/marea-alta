@@ -78,12 +78,49 @@ export default async function ServicioPage({
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 lg:py-16">
           <Reveal as="article" variante="izquierda" className="min-w-0">
-            <h2 className="font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
-              En qué consiste
-            </h2>
-            <p className="mt-6 max-w-[60ch] text-lg leading-relaxed text-on-surface-variant md:text-xl">
-              {servicio.descripcion}
-            </p>
+            {/* Foto a la izquierda y "En qué consiste" a su derecha, centrado a la
+                altura de la foto. Entre 1024 y 1279px la columna se angosta por el
+                riel lateral y no caben lado a lado: ahí se apilan, igual que en
+                móvil. Si el archivo aún no existe, queda solo el texto, sin hueco.
+                Una foto horizontal (`imagenHorizontal`) va completa, 16:9 y a todo
+                el ancho de la columna, siempre con el texto debajo. */}
+            <div
+              className={
+                servicio.imagenHorizontal
+                  ? 'flex flex-col gap-10'
+                  : 'flex flex-col gap-10 sm:flex-row sm:items-center lg:flex-col lg:items-start xl:flex-row xl:items-center'
+              }
+            >
+              {servicio.imagenDisponible && (
+                <div
+                  className={
+                    servicio.imagenHorizontal
+                      ? 'relative aspect-video w-full overflow-hidden rounded-xl'
+                      : 'relative mx-auto aspect-[4/5] w-full max-w-md shrink-0 overflow-hidden rounded-xl sm:mx-0 sm:w-64 md:w-80 lg:w-full xl:w-[400px]'
+                  }
+                >
+                  <Image
+                    src={servicio.imagen}
+                    alt={servicio.titulo}
+                    fill
+                    sizes={
+                      servicio.imagenHorizontal
+                        ? '(min-width: 1280px) 780px, (min-width: 1024px) 520px, 100vw'
+                        : '(min-width: 1280px) 400px, (min-width: 1024px) 448px, (min-width: 768px) 320px, (min-width: 640px) 256px, 448px'
+                    }
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <div className="min-w-0">
+                <h2 className="font-mono text-label-sm font-bold uppercase tracking-widest text-tertiary">
+                  En qué consiste
+                </h2>
+                <p className="mt-6 max-w-[60ch] text-lg leading-relaxed text-on-surface-variant md:text-xl">
+                  {servicio.descripcion}
+                </p>
+              </div>
+            </div>
 
             {testimonio && (
               <figure className="mt-12 border-t border-outline-variant/50 pt-8">

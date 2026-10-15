@@ -347,6 +347,21 @@ body {
     animation: elementoAparece 1s ease-out both;
   }
 
+  /* ─── Motivo técnico de los servicios: los trazos se dibujan solos ───
+     Cada trazo lleva pathLength="1", así que dasharray/offset de 1 equivalen a
+     su largo completo sin importar la forma. */
+  @keyframes trazoDibujo {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .icono-servicio :is(path, circle, rect) {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: trazoDibujo 1.8s ease-in-out 500ms forwards;
+  }
+
   /* ─── Indicador de scroll ─── */
   @keyframes scrollFlecha {
     0%,
@@ -397,6 +412,11 @@ body {
     .scroll-flecha,
     .destino-ancla:target {
       animation: none;
+    }
+
+    .icono-servicio :is(path, circle, rect) {
+      animation: none;
+      stroke-dashoffset: 0;
     }
 
     .tarjeta-interactiva:hover,

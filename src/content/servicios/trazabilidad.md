@@ -5,6 +5,7 @@ resumen: Seguimiento completo de cada producto desde la fabricación hasta la en
 descripcion: "Nuestro sistema de trazabilidad permite registrar y consultar el historial completo de cada lote producido: materias primas utilizadas, fecha de fabricación, controles de calidad aplicados y destino final. Esta información está disponible para nuestros clientes cuando la requieran."
 alcance: Cubre cada lote producido, desde la materia prima que lo compone hasta su destino final.
 imagen: /images/servicios/trazabilidad.webp
+imagen_horizontal: true
 beneficios:
   - Código de lote único por producción
   - Registro de materias primas e insumos

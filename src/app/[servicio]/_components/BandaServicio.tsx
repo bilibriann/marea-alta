@@ -1,8 +1,8 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import type { Servicio } from '@/lib/servicios'
 import type { TemaServicio } from '@/lib/serviciosTema'
 import { ArrowRightIcon } from '@/components/icons'
+import { IconoServicio } from './IconoServicio'
 
 interface Props {
   servicio: Servicio
@@ -39,22 +39,18 @@ export function BandaServicio({ servicio, tema }: Props) {
             </Link>
           </div>
 
-          {/* El espacio de la foto queda reservado y vacío hasta que exista el archivo:
-              sin marco, sin marca de agua, sin dibujo de relleno. */}
-          {servicio.imagenDisponible ? (
-            <div className="relative aspect-square w-full max-w-[420px] overflow-hidden rounded-md lg:ml-auto">
-              <Image
-                src={servicio.imagen}
-                alt={servicio.titulo}
-                fill
-                priority
-                sizes="(min-width: 1024px) 420px, 100vw"
-                className="object-cover"
-              />
-            </div>
-          ) : (
-            <div aria-hidden="true" className="hidden aspect-square w-full max-w-[420px] lg:block" />
-          )}
+          {/* Panel con el motivo técnico del servicio dibujándose sobre una grilla
+              de puntos, como una lámina técnica. La foto real va en el cuerpo de
+              la página. En móvil se oculta para que la banda no crezca. */}
+          <div
+            className={`relative hidden aspect-square w-full max-w-[220px] overflow-hidden rounded-3xl border lg:ml-auto lg:mr-16 lg:flex lg:items-center lg:justify-center ${tema.linea} ${tema.titulo}`}
+          >
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-[radial-gradient(currentColor_1px,transparent_1px)] [background-size:22px_22px] opacity-20"
+            />
+            <IconoServicio slug={servicio.slug} className="relative w-1/2" />
+          </div>
         </div>
       </div>
     </section>

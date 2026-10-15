@@ -12,6 +12,11 @@ export interface Servicio {
   imagen: string
   /** true solo si el archivo declarado en `imagen` existe en /public al momento del build. */
   imagenDisponible: boolean
+  /**
+   * true para una foto apaisada que no admite el recorte vertical 4:5 (p. ej. un
+   * grupo de personas a lo ancho): se muestra completa, 16:9 y a todo el ancho.
+   */
+  imagenHorizontal: boolean
   /** Se conserva para el CMS; la página de detalle ya no lo renderiza. */
   beneficios: string[]
   normas: string[]
@@ -42,6 +47,7 @@ async function normalizar(data: Record<string, unknown>): Promise<Servicio> {
     alcance: typeof data.alcance === 'string' ? data.alcance : '',
     imagen,
     imagenDisponible: await existeEnPublic(imagen),
+    imagenHorizontal: data.imagen_horizontal === true,
     beneficios: comoLista(data.beneficios),
     normas: comoLista(data.normas),
     sectores: comoLista(data.sectores),
