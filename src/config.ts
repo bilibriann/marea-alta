@@ -22,8 +22,7 @@ export const siteConfig: SiteConfig = {
     { label: 'Servicios', href: '#', menu: 'servicios' },
     { label: 'Productos', href: '/productos' },
     { label: 'Contacto', href: '/contacto' },
-    // Noticias oculto temporalmente: la sección se retomará más adelante.
-    // { label: 'Noticias', href: '/noticias' },
+    { label: 'Noticias', href: '/noticias' },
   ],
   contacto: {
     email: CONTACT_EMAIL,

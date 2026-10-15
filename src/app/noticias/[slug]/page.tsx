@@ -9,8 +9,14 @@ import { ArrowRightIcon } from '@/components/icons'
 
 export const dynamicParams = false
 
+// Con `output: 'export'` Next aborta el build si esta lista sale vacía. Mientras
+// no haya noticias se genera un único slug de relleno que no existe en
+// src/content/noticias: la página llama a notFound() y queda como un 404.
+const SLUG_SIN_NOTICIAS = 'sin-noticias'
+
 export async function generateStaticParams() {
   const noticias = await getAllNoticias()
+  if (noticias.length === 0) return [{ slug: SLUG_SIN_NOTICIAS }]
   return noticias.map((n) => ({ slug: n.slug }))
 }
 
