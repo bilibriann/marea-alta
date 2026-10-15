@@ -1,5 +1,5 @@
 ---
-nombre: Bobina HidroMax
+nombre: HidroMax 60
 subtitulo: Toalla reutilizable, en bobina y en paquete
 galeria:
   - /images/productos/bobina-hidromax/01-bobina.webp
