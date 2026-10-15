@@ -12,7 +12,7 @@ backend:
   # reemplazarse por el dominio real del nuevo proyecto de Vercel antes de
   # desplegar — si se deja así, el login con GitHub falla de forma visible
   # en vez de apuntar silenciosamente al proyecto de pruebas equivocado.
-  base_url: https://TODO-actualizar-dominio-vercel-repo-real
+  base_url: https://marea-alta-admin.vercel.app
 
 media_folder: "public/images"
 public_folder: "/images"
@@ -50,7 +50,7 @@ collections:
         name: "grupos_opciones"
         widget: "list"
         required: false
-        hint: "Deja vacío si el producto no tiene variantes (ej: Bobina Hidromax). Cada grupo es una categoría libre (Formatos, Empaque, etc.) con sus propias opciones."
+        hint: "Deja vacío si el producto no tiene variantes. Cada grupo es una categoría libre (Formatos, Empaque, etc.) con sus propias opciones."
         fields:
           - {
               label: "Título del Grupo",
