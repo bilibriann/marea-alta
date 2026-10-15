@@ -3,10 +3,48 @@ import fs from 'fs/promises'
 import matter from 'gray-matter'
 import { z } from 'zod'
 
+// Sveltia CMS guarda un campo opcional vacío como '' en vez de omitirlo,
+// lo que rompe .optional() (espera undefined, no un string vacío). Se
+// normaliza '' a undefined antes de validar.
+const optionalString = (schema: z.ZodString | z.ZodURL) =>
+  z.preprocess((v) => (v === '' ? undefined : v), schema.optional())
+
+// Sveltia permite agregar una fila a una lista y dejarla en blanco; se
+// descarta en vez de romper el build.
+const filteredStringList = () =>
+  z.preprocess(
+    (v) => (Array.isArray(v) ? v.filter((item) => item !== '') : v),
+    z.array(z.string().min(1)).default([])
+  )
+
 const opcionGrupoSchema = z.object({
   titulo_grupo: z.string().min(1),
   opciones: z.array(z.string().min(1)).min(1),
 })
+
+// Igual que arriba: una fila de "Agregar grupo" dejada a medias no debe
+// romper el build, se descarta el grupo incompleto.
+const grupoOpcionesListSchema = z.preprocess((v) => {
+  if (!Array.isArray(v)) return v
+  return v
+    .map((grupo) => {
+      if (typeof grupo !== 'object' || grupo === null) return grupo
+      const g = grupo as Record<string, unknown>
+      const opciones = Array.isArray(g.opciones)
+        ? g.opciones.filter((o) => o !== '')
+        : g.opciones
+      return { ...g, opciones }
+    })
+    .filter((grupo) => {
+      const g = grupo as Record<string, unknown>
+      return (
+        typeof g.titulo_grupo === 'string' &&
+        g.titulo_grupo !== '' &&
+        Array.isArray(g.opciones) &&
+        g.opciones.length > 0
+      )
+    })
+}, z.array(opcionGrupoSchema).default([]))
 
 const fichaSchema = z.object({
   // El PDF vive en public/, así que la ruta empieza en / (ej: /fichas/x.pdf).
@@ -17,17 +55,17 @@ const fichaSchema = z.object({
       message: 'La ficha debe ser una ruta dentro de public/, empezando por "/" (ej: /fichas/producto.pdf)',
     }),
   /** Distingue una ficha de otra cuando el producto tiene varias. */
-  etiqueta: z.string().min(1).optional(),
+  etiqueta: optionalString(z.string().min(1)),
 })
 
 const productoFrontmatterSchema = z.object({
   nombre: z.string().min(1),
-  subtitulo: z.string().min(1).optional(),
-  galeria: z.array(z.string().min(1)).default([]),
-  grupos_opciones: z.array(opcionGrupoSchema).default([]),
-  nota_adicional: z.string().min(1).optional(),
-  opciones_cantidad: z.array(z.string().min(1)).default([]),
-  video_youtube: z.url().optional(),
+  subtitulo: optionalString(z.string().min(1)),
+  galeria: filteredStringList(),
+  grupos_opciones: grupoOpcionesListSchema,
+  nota_adicional: optionalString(z.string().min(1)),
+  opciones_cantidad: filteredStringList(),
+  video_youtube: optionalString(z.url()),
   // Un producto puede documentarse con más de una ficha: el mismo artículo tiene
   // fichas separadas por formato (20x28 y 23x29) o por envase (impreso y
   // metalizado). La etiqueta es lo que distingue un botón de descarga del otro.
