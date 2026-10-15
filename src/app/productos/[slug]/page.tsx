@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { getAllProductos, getProducto } from '@/lib/productos'
 import { assetPath } from '@/lib/assetPath'
 import { siteConfig } from '@/config'
 import { ArrowRightIcon, DownloadIcon } from '@/components/icons'
+import { ImagenAmpliable } from '@/components/ImagenAmpliable'
 import { CotizacionForm } from '../_components/CotizacionForm'
 
 export const dynamicParams = false
@@ -93,13 +93,19 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
       )}
 
       {producto.galeria.length > 0 && (
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        // Cuadros redondeados sin borde ni relleno: la foto cubre todo el cuadro
+        // (`object-cover`) para que no queden márgenes blancos alrededor. 4:3 y
+        // no cuadrado porque el catálogo mezcla fotos 16:9 y 1:1: es el formato
+        // que menos recorta a ambas. La lupa abre la foto completa y en grande.
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
           {producto.galeria.map((imagen) => (
-            <div
-              key={imagen}
-              className="relative h-64 overflow-hidden rounded-md border border-outline-variant bg-white"
-            >
-              <Image src={imagen} alt={producto.nombre} fill className="object-contain p-6" />
+            <div key={imagen} className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <ImagenAmpliable
+                src={imagen}
+                alt={producto.nombre}
+                sizes="(min-width: 896px) 270px, (min-width: 640px) 33vw, 50vw"
+                cubrir
+              />
             </div>
           ))}
         </div>
