@@ -17,6 +17,8 @@ export interface Servicio {
    * grupo de personas a lo ancho): se muestra completa, 16:9 y a todo el ancho.
    */
   imagenHorizontal: boolean
+  /** false oculta los botones y el panel de "Solicitar cotización" del servicio. */
+  mostrarCotizacion: boolean
   /** Se conserva para el CMS; la página de detalle ya no lo renderiza. */
   beneficios: string[]
   normas: string[]
@@ -48,6 +50,7 @@ async function normalizar(data: Record<string, unknown>): Promise<Servicio> {
     imagen,
     imagenDisponible: await existeEnPublic(imagen),
     imagenHorizontal: data.imagen_horizontal === true,
+    mostrarCotizacion: data.mostrar_cotizacion !== false,
     beneficios: comoLista(data.beneficios),
     normas: comoLista(data.normas),
     sectores: comoLista(data.sectores),

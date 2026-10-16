@@ -19,30 +19,43 @@ export function DistribucionSection({ distribucion }: Props) {
             Distribuidor Estratégico Oficial
           </h2>
         </Reveal>
+        {/* La foto encabeza la tarjeta a todo su ancho; logo y texto siguen
+            debajo, lado a lado desde `sm`. */}
         <Reveal
           retraso={120}
-          className="tarjeta-interactiva mx-auto flex max-w-4xl flex-col items-center gap-8 rounded-md border border-outline-variant bg-white p-8 text-center sm:flex-row sm:gap-10 sm:p-10 sm:text-left"
+          className="tarjeta-interactiva mx-auto max-w-4xl overflow-hidden rounded-md border border-outline-variant bg-white"
         >
-          <div className="flex h-24 w-full shrink-0 items-center justify-center sm:w-48">
+          <div className="relative aspect-video w-full sm:aspect-[21/9]">
             <Image
-              src={distribucion.logo}
-              alt={distribucion.alt}
-              width={320}
-              height={128}
-              className="h-auto max-h-20 w-auto max-w-full object-contain"
+              src={distribucion.imagen.src}
+              alt={distribucion.imagen.alt}
+              fill
+              sizes="(min-width: 896px) 896px, 100vw"
+              className="object-cover object-[50%_35%]"
             />
           </div>
-          <div className="space-y-4">
-            <h3 className="text-headline-lg text-primary">{distribucion.nombre}</h3>
-            <p className="text-body-md text-on-surface-variant">{distribucion.descripcion}</p>
-            <ButtonLink
-              href={distribucion.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto"
-            >
-              Visitar glutlack.cl
-            </ButtonLink>
+          <div className="flex flex-col items-center gap-8 p-8 text-center sm:flex-row sm:gap-10 sm:p-10 sm:text-left">
+            <div className="flex h-24 w-full shrink-0 items-center justify-center sm:w-48">
+              <Image
+                src={distribucion.logo}
+                alt={distribucion.alt}
+                width={320}
+                height={128}
+                className="h-auto max-h-20 w-auto max-w-full object-contain"
+              />
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-headline-lg text-primary">{distribucion.nombre}</h3>
+              <p className="text-body-md text-on-surface-variant">{distribucion.descripcion}</p>
+              <ButtonLink
+                href={distribucion.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
+              >
+                Visitar glutlack.cl
+              </ButtonLink>
+            </div>
           </div>
         </Reveal>
       </div>

@@ -1,7 +1,11 @@
 {
-  "nombre": "GlutLack",
+  "nombre": "Glutlack",
   "logo": "/logos/logo_glutlack.png",
-  "alt": "Logo de GlutLack",
+  "alt": "Logo de Glutlack",
+  "imagen": {
+    "src": "/images/nosotros/glutlack.webp",
+    "alt": "Representantes de Marea Alta y Glutlack se dan la mano frente a un mural de osos polares."
+  },
   "url": "https://www.glutlack.cl/",
-  "descripcion": "GlutLack es el Distribuidor Estratégico Oficial de Marea Alta en Chile."
+  "descripcion": "Glutlack es el Distribuidor Estratégico Oficial de Marea Alta en Chile."
 }

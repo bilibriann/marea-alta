@@ -118,7 +118,26 @@ export async function getAllProductos(): Promise<Producto[]> {
         return parseProducto(file, raw)
       })
   )
-  return productos.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'))
+  return productos.sort(
+    (a, b) => posicion(a.slug) - posicion(b.slug) || a.nombre.localeCompare(b.nombre, 'es')
+  )
+}
+
+/**
+ * Orden pedido por el cliente. Un producto nuevo creado desde el CMS que no
+ * esté en la lista va al final, en orden alfabético.
+ */
+const ORDEN_PRODUCTOS = [
+  'gelpack-tres-osos',
+  'freddo-box',
+  'bobina-hidromax',
+  'placa-termica',
+  'sobre-termico-freddo',
+]
+
+function posicion(slug: string): number {
+  const indice = ORDEN_PRODUCTOS.indexOf(slug)
+  return indice === -1 ? ORDEN_PRODUCTOS.length : indice
 }
 
 export async function getProducto(slug: string): Promise<Producto | null> {

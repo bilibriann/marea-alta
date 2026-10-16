@@ -5,6 +5,7 @@ resumen: Todos nuestros procesos están certificados bajo ISO 9001 desde 2008, c
 descripcion: Marea Alta opera bajo un sistema de gestión de calidad certificado ISO 9001 desde 2008. Nuestros procesos son auditados por AENOR e IQNET, organismos internacionales de certificación, lo que garantiza estándares consistentes en cada producto que fabricamos.
 alcance: Cubre la totalidad de los procesos de la planta, desde la recepción de materias primas hasta el despacho.
 imagen: /images/servicios/certificacion-de-procesos.webp
+mostrar_cotizacion: false
 beneficios:
   - ISO 9001 vigente desde 2008
   - Auditorías periódicas por AENOR e IQNET

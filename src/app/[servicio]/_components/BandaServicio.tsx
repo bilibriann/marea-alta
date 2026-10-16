@@ -29,14 +29,16 @@ export function BandaServicio({ servicio, tema }: Props) {
             >
               {servicio.resumen}
             </p>
-            <Link
-              href="/contacto"
-              style={{ animationDelay: '200ms' }}
-              className={`elemento-entrada group mt-10 inline-flex w-full items-center justify-center gap-2 rounded-md px-8 py-3.5 text-base font-bold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 sm:w-auto ${tema.boton}`}
-            >
-              Solicitar cotización
-              <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
+            {servicio.mostrarCotizacion && (
+              <Link
+                href="/contacto"
+                style={{ animationDelay: '200ms' }}
+                className={`elemento-entrada group mt-10 inline-flex w-full items-center justify-center gap-2 rounded-md px-8 py-3.5 text-base font-bold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 sm:w-auto ${tema.boton}`}
+              >
+                Solicitar cotización
+                <ArrowRightIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            )}
           </div>
 
           {/* Panel con el motivo técnico del servicio dibujándose sobre una grilla

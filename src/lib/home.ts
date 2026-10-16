@@ -31,6 +31,10 @@ export interface HomeContent {
   proposito: {
     eyebrow: string
     titulo: string
+    imagen: {
+      src: string
+      alt: string
+    }
   }
   mision: string
   vision: string
@@ -77,6 +81,10 @@ export interface Distribucion {
   nombre: string
   logo: string
   alt: string
+  imagen: {
+    src: string
+    alt: string
+  }
   url: string
   descripcion: string
 }

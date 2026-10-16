@@ -76,25 +76,17 @@ export default async function ServicioPage({
       <div className="mx-auto max-w-7xl px-4 md:px-12">
         <div className="grid gap-12 py-14 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 lg:py-16">
           <Reveal as="article" variante="izquierda" className="min-w-0">
-            {/* Foto a la izquierda y "En qué consiste" a su derecha, centrado a la
-                altura de la foto. Entre 1024 y 1279px la columna se angosta por el
-                riel lateral y no caben lado a lado: ahí se apilan, igual que en
-                móvil. Si el archivo aún no existe, queda solo el texto, sin hueco.
-                Una foto horizontal (`imagenHorizontal`) va completa, 16:9 y a todo
-                el ancho de la columna, siempre con el texto debajo. */}
-            <div
-              className={
-                servicio.imagenHorizontal
-                  ? 'flex flex-col gap-10'
-                  : 'flex flex-col gap-10 sm:flex-row sm:items-center lg:flex-col lg:items-start xl:flex-row xl:items-center'
-              }
-            >
+            {/* Foto arriba y "En qué consiste" siempre debajo. Si el archivo aún
+                no existe, queda solo el texto, sin hueco. Una foto horizontal
+                (`imagenHorizontal`) va completa, 16:9 y a todo el ancho de la
+                columna; una vertical, 4:5 con un ancho máximo. */}
+            <div className="flex flex-col gap-10">
               {servicio.imagenDisponible && (
                 <div
                   className={
                     servicio.imagenHorizontal
                       ? 'relative aspect-video w-full overflow-hidden rounded-xl'
-                      : 'relative mx-auto aspect-[4/5] w-full max-w-md shrink-0 overflow-hidden rounded-xl sm:mx-0 sm:w-64 md:w-80 lg:w-full xl:w-[400px]'
+                      : 'relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-xl sm:mx-0'
                   }
                 >
                   <Image
@@ -104,7 +96,7 @@ export default async function ServicioPage({
                     sizes={
                       servicio.imagenHorizontal
                         ? '(min-width: 1280px) 780px, (min-width: 1024px) 520px, 100vw'
-                        : '(min-width: 1280px) 400px, (min-width: 1024px) 448px, (min-width: 768px) 320px, (min-width: 640px) 256px, 448px'
+                        : '(min-width: 640px) 448px, 100vw'
                     }
                     className="object-cover"
                   />

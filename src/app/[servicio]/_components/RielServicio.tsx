@@ -77,41 +77,43 @@ export function RielServicio({ servicio, tema, nombresSector }: Props) {
         </div>
       )}
 
-      <div className={`rounded-md p-6 lg:sticky lg:top-28 ${tema.bloque}`}>
-        <h2 className={`text-xl font-bold leading-snug ${tema.titulo}`}>
-          ¿Necesita este servicio?
-        </h2>
-        <p className={`mt-3 text-sm leading-relaxed ${tema.bloqueCuerpo}`}>
-          Cuéntenos el rango de temperatura, el volumen y el tiempo de tránsito que debe cubrir.
-          Con eso le respondemos con una propuesta concreta.
-        </p>
-        <Link
-          href="/contacto"
-          className={`mt-6 flex w-full items-center justify-center gap-2 rounded-md px-6 py-3.5 font-bold transition-all active:scale-95 ${tema.bloqueBoton}`}
-        >
-          Solicitar cotización
-          <ArrowRightIcon className="h-4 w-4" />
-        </Link>
-        <div className={`mt-6 space-y-3 border-t pt-6 ${tema.linea}`}>
-          <a
-            href={`tel:${siteConfig.contacto.telefono.replace(/\s/g, '')}`}
-            className={`flex items-center gap-3 text-sm font-semibold transition-opacity hover:opacity-75 ${tema.titulo}`}
-          >
-            <CallIcon className="h-4 w-4 shrink-0" />
-            {siteConfig.contacto.telefono}
-          </a>
-          <a
-            href={`mailto:${siteConfig.contacto.email}`}
-            className={`flex items-center gap-3 break-all text-sm font-semibold transition-opacity hover:opacity-75 ${tema.titulo}`}
-          >
-            <MailIcon className="h-4 w-4 shrink-0" />
-            {siteConfig.contacto.email}
-          </a>
-          <p className={`pt-1 font-mono text-label-xs uppercase ${tema.bloqueCuerpo}`}>
-            {siteConfig.contacto.horario}
+      {servicio.mostrarCotizacion && (
+        <div className={`rounded-md p-6 lg:sticky lg:top-28 ${tema.bloque}`}>
+          <h2 className={`text-xl font-bold leading-snug ${tema.titulo}`}>
+            ¿Necesita este servicio?
+          </h2>
+          <p className={`mt-3 text-sm leading-relaxed ${tema.bloqueCuerpo}`}>
+            Cuéntenos el rango de temperatura, el volumen y el tiempo de tránsito que debe cubrir.
+            Con eso le respondemos con una propuesta concreta.
           </p>
+          <Link
+            href="/contacto"
+            className={`mt-6 flex w-full items-center justify-center gap-2 rounded-md px-6 py-3.5 font-bold transition-all active:scale-95 ${tema.bloqueBoton}`}
+          >
+            Solicitar cotización
+            <ArrowRightIcon className="h-4 w-4" />
+          </Link>
+          <div className={`mt-6 space-y-3 border-t pt-6 ${tema.linea}`}>
+            <a
+              href={`tel:${siteConfig.contacto.telefono.replace(/\s/g, '')}`}
+              className={`flex items-center gap-3 text-sm font-semibold transition-opacity hover:opacity-75 ${tema.titulo}`}
+            >
+              <CallIcon className="h-4 w-4 shrink-0" />
+              {siteConfig.contacto.telefono}
+            </a>
+            <a
+              href={`mailto:${siteConfig.contacto.email}`}
+              className={`flex items-center gap-3 break-all text-sm font-semibold transition-opacity hover:opacity-75 ${tema.titulo}`}
+            >
+              <MailIcon className="h-4 w-4 shrink-0" />
+              {siteConfig.contacto.email}
+            </a>
+            <p className={`pt-1 font-mono text-label-xs uppercase ${tema.bloqueCuerpo}`}>
+              {siteConfig.contacto.horario}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </aside>
   )
 }
