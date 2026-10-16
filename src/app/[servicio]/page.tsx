@@ -79,14 +79,16 @@ export default async function ServicioPage({
             {/* Foto arriba y "En qué consiste" siempre debajo. Si el archivo aún
                 no existe, queda solo el texto, sin hueco. Una foto horizontal
                 (`imagenHorizontal`) va completa, 16:9 y a todo el ancho de la
-                columna; una vertical, 4:5 con un ancho máximo. */}
-            <div className="flex flex-col gap-10">
+                columna; una vertical, 4:5 con un ancho máximo. Foto y texto comparten
+                el eje central: `items-center` encoge el bloque de texto al ancho de
+                su párrafo (máx. 60ch) y lo centra bajo la foto. */}
+            <div className="flex flex-col items-center gap-10">
               {servicio.imagenDisponible && (
                 <div
                   className={
                     servicio.imagenHorizontal
                       ? 'relative aspect-video w-full overflow-hidden rounded-xl'
-                      : 'relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-xl sm:mx-0'
+                      : 'relative aspect-[4/5] w-full max-w-md overflow-hidden rounded-xl'
                   }
                 >
                   <Image
