@@ -4,12 +4,14 @@ import { ArrowRightIcon } from '@/components/icons'
 import { Reveal } from '@/components/Reveal'
 
 const links = [
-  { label: 'Cotización Rápida', href: '/contacto' },
-  { label: 'Catálogo de Productos', href: '/productos' },
+  { label: 'Cotización Rápida', href: '/contacto', externo: false },
+  { label: 'Catálogo de Productos', href: '/productos', externo: false },
 ]
 
 export function QuickLinksSection() {
-  const items = [...links, { label: 'Llámanos', href: `tel:${siteConfig.contacto.telefono}` }]
+  // wa.me exige el número solo con dígitos y código de país, sin '+' ni espacios.
+  const whatsapp = `https://wa.me/${siteConfig.contacto.telefono.replace(/\D/g, '')}`
+  const items = [...links, { label: 'Contáctanos', href: whatsapp, externo: true }]
 
   return (
     // Sin bordes ni divisorias y con el azul exacto de la base de las olas
@@ -21,6 +23,7 @@ export function QuickLinksSection() {
             <Reveal key={item.label} retraso={indice * 120}>
               <Link
                 href={item.href}
+                {...(item.externo && { target: '_blank', rel: 'noopener noreferrer' })}
                 className="item-interactivo-oscuro group flex h-full items-center justify-between p-6"
               >
                 <span className="font-medium text-white">{item.label}</span>
