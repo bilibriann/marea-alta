@@ -4,7 +4,7 @@ titulo: Monitoreo de Temperatura
 resumen: Estudios permanentes que validan el desempeño térmico de nuestros productos bajo condiciones reales de distribución.
 descripcion: "Realizamos estudios de monitoreo de temperatura utilizando data loggers calibrados. Los estudios simulan condiciones reales de transporte —incluyendo variaciones estacionales y tiempos de tránsito— para validar que nuestras soluciones cumplen con las especificaciones declaradas."
 alcance: Se aplica por producto y, cuando el cliente lo requiere, por ruta específica de distribución.
-imagen: /images/servicios/monitoreo-de-temperatura.webp
+imagen: /images/servicios/monitoreo-de-temperatura-2026.webp
 beneficios:
   - Data loggers calibrados y certificados
   - Estudios de perfil térmico por producto

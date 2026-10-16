@@ -4,7 +4,7 @@ titulo: Servicio Postventa
 resumen: Acompañamiento técnico después de la compra para asegurar el correcto desempeño de nuestras soluciones en campo.
 descripcion: Nuestro equipo de postventa acompaña a los clientes durante la implementación y operación de nuestros productos. Atendemos consultas técnicas, analizamos incidencias en campo y entregamos recomendaciones para optimizar el desempeño de las soluciones en cada cadena logística.
 alcance: Acompaña la implementación y la operación de nuestras soluciones, sin plazo de término asociado a la compra.
-imagen: /images/servicios/servicio-postventa.webp
+imagen: /images/servicios/servicio-postventa-2026.webp
 imagen_horizontal: true
 beneficios:
   - Atención técnica Lun–Vie 9:00–18:00
