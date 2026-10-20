@@ -2,11 +2,16 @@ import type { MetadataRoute } from 'next'
 import { siteConfig } from '@/config'
 import { getAllServicios } from '@/lib/servicios'
 import { getAllNoticias } from '@/lib/noticias'
+import { getAllProductos } from '@/lib/productos'
 
 export const dynamic = 'force-static'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [servicios, noticias] = await Promise.all([getAllServicios(), getAllNoticias()])
+  const [servicios, productos, noticias] = await Promise.all([
+    getAllServicios(),
+    getAllProductos(),
+    getAllNoticias(),
+  ])
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: siteConfig.url, priority: 1, changeFrequency: 'monthly' },
@@ -21,6 +26,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: 'monthly' as const,
   }))
 
+  const productoRoutes: MetadataRoute.Sitemap = productos.map((p) => ({
+    url: `${siteConfig.url}/productos/${p.slug}`,
+    priority: 0.7,
+    changeFrequency: 'monthly' as const,
+  }))
+
   const noticiaRoutes: MetadataRoute.Sitemap = noticias.map((n) => ({
     url: `${siteConfig.url}/noticias/${n.slug}`,
     lastModified: n.fecha,
@@ -28,5 +39,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: 'yearly' as const,
   }))
 
-  return [...staticRoutes, ...servicioRoutes, ...noticiaRoutes]
+  return [...staticRoutes, ...servicioRoutes, ...productoRoutes, ...noticiaRoutes]
 }
