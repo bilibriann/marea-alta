@@ -2,8 +2,7 @@ import type { SiteConfig } from '@/types'
 
 /**
  * Destino único de todo el correo que sale del sitio: formulario de contacto,
- * newsletter y las cotizaciones por producto. El dominio definitivo todavía no
- * está confirmado, así que se sobreescribe por entorno
+ * newsletter y las cotizaciones por producto. Se puede sobreescribir por entorno
  * (NEXT_PUBLIC_CONTACT_EMAIL) sin tocar código. No repitas esta dirección en
  * ningún otro archivo: importa esta constante.
  */
@@ -30,11 +29,8 @@ export const siteConfig: SiteConfig = {
     direccion: 'José Joaquín Prieto 9001, Bodegas 11-12, Galpón 2, Lo Espejo, RM',
     horario: 'Lun–Vie, 9:00–18:00',
   },
-  // Sin confirmar: las URLs que había acá eran supuestas. El Footer muestra los
-  // iconos igual, pero sin enlace, hasta que se completen con los perfiles reales.
+  // LinkedIn es la única red del sitio: Instagram y Facebook se omitieron.
   redes: {
-    instagram: '',
     linkedin: 'https://www.linkedin.com/company/mareaalta-latam/',
-    facebook: '',
   },
 }

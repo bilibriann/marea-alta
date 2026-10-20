@@ -55,7 +55,7 @@ export function Footer() {
           <h4 className="text-sm font-bold uppercase tracking-widest text-accent">
             Síguenos
           </h4>
-          {/* LinkedIn es por ahora la única red confirmada (siteConfig.redes). */}
+          {/* LinkedIn es la única red del sitio (siteConfig.redes). */}
           <div className="flex gap-4">
             <a
               href={siteConfig.redes.linkedin}

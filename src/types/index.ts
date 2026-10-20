@@ -20,8 +20,6 @@ export interface SiteConfig {
     horario: string
   }
   redes: {
-    facebook?: string
-    instagram?: string
-    linkedin?: string
+    linkedin: string
   }
 }

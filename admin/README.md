@@ -62,63 +62,43 @@ navegador), así que lo implementamos nosotros mismos en vez de sumar
 Ver `.env.example`. Configurarlas en el proyecto de Vercel (Settings →
 Environment Variables), no en un `.env` committeado.
 
-## Migración al repo real (pendiente)
+## Despliegue actual
 
-**Estado actual (2026-08-12):** todo el código apunta a `bilibriann/marea-alta`
-(el repo real), pero el único deploy funcionando en Vercel hoy usa el fork de
-Randy (`randyman123/marea-alta`) para poder probar el login y el flujo OAuth
-sin depender de nadie más. Bloqueado en que bilibriann autorice el acceso de
-Vercel al repo real. Cuando lo confirme, seguir esta lista en orden:
+- Proyecto de Vercel conectado a `bilibriann/marea-alta`, con **Root
+  Directory `admin/`**. Cada push a `main` lo vuelve a desplegar.
+- Dominio: `https://marea-alta-admin.vercel.app` (el mismo que figura en
+  `backend.base_url` de `public/admin/config.yml`).
+- La OAuth App de GitHub tiene como callback
+  `https://marea-alta-admin.vercel.app/callback`.
 
-### 1. Crear el proyecto de Vercel nuevo (no reusar el del fork)
+Como Sveltia también commitea a `main`, antes de hacer push desde local
+conviene `git fetch` + `git rebase origin/main`.
 
-- Vercel → Add New → Project → importar `bilibriann/marea-alta`.
-- **Root Directory: `admin/`** (el mismo ajuste que ya usa el proyecto del
-  fork — sin esto, Vercel intenta buildear el sitio público).
-- Dejar el proyecto del fork **como está, sin tocar** (ver punto 4) — no
-  reconectar su repo ni borrarlo todavía, para no perder el entorno de
-  pruebas mientras se termina de configurar el nuevo.
-- Anotar el dominio `*.vercel.app` que Vercel asigna al proyecto nuevo — se
-  necesita para los dos pasos siguientes.
+## Seguridad del panel
 
-### 2. Variables de entorno a configurar en el proyecto nuevo
+- **Acceso:** contraseña por rol (cliente o desarrollador), comparada en
+  tiempo constante (hash SHA-256 + `timingSafeEqual`).
+- **Sesión:** JWT HS256 firmado con `ADMIN_SESSION_SECRET`, válido 7 días,
+  en cookie `HttpOnly; Secure; SameSite=Lax`.
+- **Fuerza bruta:** 5 intentos fallidos por IP en 15 minutos bloquean el
+  login, y cada fallo espera 1 s. El contador vive en memoria de cada
+  instancia de Vercel: es un freno, no un límite global.
+- **Redirección segura:** el parámetro `from` solo acepta rutas internas
+  (`destinoSeguro`), así el login no se puede usar para mandar a otro sitio.
+- **OAuth con GitHub:** token CSRF aleatorio en cookie `HttpOnly` de 10
+  minutos, comparado con el `state` que vuelve de GitHub. El token se entrega
+  por `postMessage` solo al origin que respondió el handshake, nunca a `*`.
+  `ALLOWED_DOMAINS` (opcional) limita qué sitios pueden usar el proxy.
+- **Sveltia CMS:** se carga desde unpkg con versión fija en
+  `public/admin/index.html`. Para actualizarlo, cambiar el número a mano.
+- **Buscadores:** el panel lleva `noindex, nofollow` y el `robots.txt` del
+  sitio público excluye `/admin`.
 
-Ninguna se hereda automáticamente del proyecto del fork — hay que cargarlas
-todas de nuevo en Settings → Environment Variables:
+## Cambiar el dominio del panel
 
-| Variable | ¿Mismo valor que en el proyecto de pruebas? |
-|---|---|
-| `ADMIN_PASSWORD_CLIENT` | Recomendado generar una nueva — la de pruebas ya circuló en esta conversación |
-| `ADMIN_PASSWORD_DEV` | Recomendado generar una nueva, mismo motivo |
-| `ADMIN_SESSION_SECRET` | Generar una nueva (`openssl rand -base64 32`) — que una sesión firmada en el entorno de pruebas nunca sea válida contra producción |
-| `GITHUB_CLIENT_ID` | Nueva — ver punto 3, es una OAuth App distinta |
-| `GITHUB_CLIENT_SECRET` | Nueva — ver punto 3 |
-
-### 3. OAuth App de GitHub: crear una nueva, no reutilizar la actual
-
-Una OAuth App clásica solo admite **una** Authorization callback URL. Como
-el proyecto del fork se mantiene vivo (punto 4) y su OAuth App actual sigue
-apuntando a `https://marea-alta-6m7y.vercel.app/callback`, reutilizarla y
-cambiarle la callback URL rompería el login GitHub del entorno de pruebas.
-Por eso, crear una **OAuth App nueva y separada**:
-
-1. GitHub → Settings → Developer settings → OAuth Apps → New OAuth App.
-2. Homepage URL y Authorization callback URL usando el dominio anotado en el
-   paso 1, ej.: `https://{dominio-nuevo}.vercel.app/callback`.
-3. Generar el Client Secret y cargar ambos valores (punto 2).
-
-Después de esto, actualizar `public/admin/config.yml`:
-- `backend.base_url` → reemplazar el placeholder `https://TODO-actualizar-dominio-vercel-repo-real` por `https://{dominio-nuevo}.vercel.app`.
-
-Y hacer commit + push (esto sí dispara el deploy real).
-
-### 4. Qué hacer con el proyecto de Vercel del fork
-
-**Dejarlo activo, no borrarlo.** Sirve como entorno de pruebas permanente y
-aislado (nuevas colecciones de Sveltia, cambios al proxy OAuth, etc.) sin
-arriesgar el panel real del cliente. Sugerencia: renombrarlo en el dashboard
-de Vercel a algo como `marea-alta-admin-testing` para que no se confunda con
-el proyecto de producción una vez que ambos convivan.
+Hay que actualizar **tres lugares** a la vez: `backend.base_url` en
+`public/admin/config.yml`, y la *Homepage URL* y la *Authorization callback
+URL* de la OAuth App en GitHub.
 
 ## Desarrollo local
 

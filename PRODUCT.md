@@ -14,7 +14,7 @@ Marea Alta Chile SpA fabrica embalajes térmicos de alta precisión para mantene
 
 ## Positioning
 
-33 años de trayectoria (fundada en 1987) fabricando soluciones de cadena de frío, con certificación ISO 9001 vigente desde 2008 (organismo AENOR, red IQNET) y distribución activa en Chile y el Cono Sur. La combinación de trayectoria larga + certificación formal + cobertura regional es lo que un competidor nuevo o solo local no puede igualar de inmediato.
+36 años de trayectoria fabricando soluciones de cadena de frío, con certificación ISO 9001 vigente desde 2008 (organismo AENOR, red IQNET) y distribución activa en Chile y el Cono Sur. La combinación de trayectoria larga + certificación formal + cobertura regional es lo que un competidor nuevo o solo local no puede igualar de inmediato.
 
 ## Operating Context
 
@@ -47,6 +47,6 @@ Marea Alta Chile SpA fabrica embalajes térmicos de alta precisión para mantene
 ## Product Principles
 
 - Credibilidad técnica ante compradores B2B exigentes (regulados) pesa más que estilo aspiracional genérico.
-- La certificación formal (ISO 9001, IQNET) y la trayectoria de 33 años son pruebas, no eslóganes — deben quedar verificables, no diluidas en marketing vago.
+- La certificación formal (ISO 9001, IQNET) y la trayectoria de 36 años son pruebas, no eslóganes — deben quedar verificables, no diluidas en marketing vago.
 - El sitio es una herramienta de generación de cotizaciones/contacto, no una tienda: cada superficie debe empujar hacia `/contacto` o la solicitud de cotización.
 - El contenido editorial vive fuera del código (`src/content/`) para que el futuro CMS lo actualice sin tocar componentes; el diseño no debe asumir que el contenido actual (incluyendo huecos vacíos) es definitivo.

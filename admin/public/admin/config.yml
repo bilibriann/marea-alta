@@ -7,11 +7,9 @@ backend:
   name: github
   repo: bilibriann/marea-alta
   branch: main
-  # Proxy OAuth propio (admin/src/app/auth, admin/src/app/callback) — ver
-  # "Migración al repo real" en admin/README.md. Este placeholder DEBE
-  # reemplazarse por el dominio real del nuevo proyecto de Vercel antes de
-  # desplegar — si se deja así, el login con GitHub falla de forma visible
-  # en vez de apuntar silenciosamente al proyecto de pruebas equivocado.
+  # Proxy OAuth propio (admin/src/app/auth, admin/src/app/callback). Si cambia
+  # el dominio del panel, actualizar también la OAuth App de GitHub — ver
+  # admin/README.md.
   base_url: https://marea-alta-admin.vercel.app
 
 media_folder: "public/images"

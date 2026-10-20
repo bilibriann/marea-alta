@@ -1,95 +1,100 @@
 # Marea Alta — Sitio Corporativo
 
-Sitio corporativo estático de Marea Alta Chile SpA. Build 100% estático desplegado en Hostinger vía FTP con GitHub Actions.
+Sitio corporativo de Marea Alta Chile SpA (https://mareaalta-latam.com). El repositorio tiene dos aplicaciones:
+
+| Parte | Qué es | Dónde corre |
+|---|---|---|
+| Sitio público (raíz) | Export 100% estático de Next.js | Hostinger, subido por FTPS con GitHub Actions |
+| Panel admin (`admin/`) | Sveltia CMS detrás de un login propio | Vercel (https://marea-alta-admin.vercel.app) — ver `admin/README.md` |
 
 ## Stack
 
-- Next.js 16 (App Router, `output: 'export'`)
+- Next.js 16 (App Router, `output: 'export'`) + React 19
 - TypeScript strict
-- Tailwind CSS
-- ESLint + Prettier
-- gray-matter (parseo de frontmatter en archivos .md)
+- Tailwind CSS 4
+- Zod (valida el contenido al construir)
+- gray-matter, react-markdown y remark-gfm (contenido en Markdown)
+- Web3Forms (formularios)
+- ESLint 9 + Prettier 3
 
 ## Estructura
 
 ```
 src/
-├── app/                     # Rutas del sitio
-│   ├── layout.tsx           # Layout global (Header + Footer)
-│   ├── page.tsx             # /
-│   ├── _components/         # Componentes exclusivos del home
-│   ├── [servicio]/          # /control-de-calidad, /trazabilidad, etc.
-│   ├── servicios/           # /servicios — índice estático
-│   ├── productos/           # /productos
-│   ├── contacto/            # /contacto
-│   ├── sitemap.ts           # Genera /sitemap.xml
-│   └── robots.ts            # Genera /robots.txt (excluye /admin)
+├── app/                      # Rutas del sitio
+│   ├── layout.tsx            # Layout global (Header + Footer)
+│   ├── page.tsx              # /  (secciones en _components/)
+│   ├── [servicio]/           # /control-de-calidad, /trazabilidad, etc. (7 servicios)
+│   ├── productos/            # /productos y /productos/[slug] (ficha + cotización)
+│   ├── noticias/             # /noticias y /noticias/[slug]
+│   ├── contacto/             # /contacto
+│   ├── sitemap.ts            # Genera /sitemap.xml
+│   └── robots.ts             # Genera /robots.txt (excluye /admin)
 │
-├── components/              # Header, Footer, Button, icons — usan siteConfig
+├── components/               # Header, Footer, Button, tarjetas, animaciones, icons
+├── config.ts                 # Fuente única: nav, contacto, LinkedIn, CONTACT_EMAIL
 │
-├── config.ts                # Fuente única: nav, contacto, redes, metadata base
+├── content/                  # Todo el contenido editable
+│   ├── productos/*.md        # Un .md por producto (lo edita el panel)
+│   ├── noticias/*.md         # Un .md por noticia (lo edita el panel)
+│   ├── servicios/*.md        # Un .md por servicio
+│   └── *.json                # home, sectores, marcas propias, distribución, etc.
 │
-├── content/                 # Archivos que edita el CMS
-│   ├── servicios/           # Un .md por servicio (frontmatter YAML)
-│   ├── sectores.json
-│   ├── testimonios.json
-│   ├── clientes.json
-│   ├── certificaciones.json
-│   └── home.json
+├── lib/                      # Lectura y validación del contenido + formularios
+│   ├── home.ts, productos.ts, servicios.ts, noticias.ts
+│   └── forms.ts              # Único camino de envío de formularios (Web3Forms)
 │
-├── lib/                     # Funciones de acceso al contenido + stub de formularios
-│   ├── home.ts              # getHomeContent(), getSectores(), etc.
-│   ├── servicios.ts         # getServicio(slug), getAllServicios()
-│   ├── productos.ts         # getProductosContent()
-│   └── forms.ts             # Stub de envío de formularios
-│
-└── types/
-    └── index.ts             # Tipos compartidos entre módulos
+└── types/index.ts            # Tipos compartidos
+
+public/        # Imágenes .webp, logos, fichas PDF y .htaccess
+admin/         # Panel de administración (proyecto Next.js aparte)
+scripts/       # check-export.mjs: revisa out/ antes de subirlo
 ```
 
-Material de referencia de diseño (mockups de Stitch, no se publica): `/design-reference/` en la raíz del repo.
+Material de referencia de diseño (mockups de Stitch, no se publica): `/design-reference/`. Lineamientos visuales en `DESIGN.md`, contexto de negocio en `PRODUCT.md`.
 
-## Por qué `servicios/` tiene precedencia sobre `[servicio]/`
-
-Next.js da prioridad a rutas estáticas sobre dinámicas. La carpeta `servicios/page.tsx` coincide exactamente con `/servicios`, por lo que nunca entra al handler dinámico `[servicio]/page.tsx`. Lo mismo aplica a `/productos` y `/contacto`.
-
-## Flujo de datos (home como ejemplo)
+## Flujo del contenido
 
 ```
-src/config.ts                → Header, Footer, metadata base
-src/content/home.json        → src/lib/home.ts → getHomeContent()
-src/content/sectores.json    → src/lib/home.ts → getSectores()
-                                        ↓
-                              src/app/page.tsx
-                                        ↓
-     _components/HeroSection, QuickLinksSection, ConfianzaSection,
-                   SectoresSection, ContactoSection
+src/content/*.json, *.md  →  src/lib/*.ts (validación con Zod)  →  páginas en src/app/
 ```
 
-## Por qué la capa lib/
+Si un archivo de contenido está mal formado, el build falla e indica cuál.
 
-Cuando entre el CMS (Sveltia o Decap), los archivos en `src/content/` van a cambiar de formato (TypeScript → Markdown con frontmatter, o JSON con esquema del CMS). Solo cambia la implementación dentro de `src/lib/`. Los componentes reciben los mismos tipos TypeScript y no se tocan.
+## Formularios
+
+Contacto, newsletter y cotización pasan todos por `src/lib/forms.ts` hacia Web3Forms. El correo llega a la dirección asociada a la access key. Antispam: campo trampa (`CampoTrampa.tsx`), 30 s entre envíos y largo máximo por campo.
+
+## Despliegue
+
+Cada push a `main` dispara dos workflows:
+
+- `ci.yml` — lint, tipos, build y `check:export`.
+- `deploy-hostinger.yml` — build, `check:export` y subida de `out/` por FTPS.
+
+`check:export` corta la subida si falta el `.htaccess`, si el build trae el basePath de GitHub Pages o si los formularios no quedaron configurados.
+
+## Seguridad
+
+- Sitio estático: no hay servidor ni base de datos propios en Hostinger.
+- `public/.htaccess` agrega HSTS, X-Frame-Options, nosniff, Referrer-Policy y Permissions-Policy.
+- Los secretos viven en GitHub Secrets (FTP, Web3Forms) y en Vercel (panel), nunca en el repo: `.env*` está en `.gitignore`.
+- El panel tiene su propia sesión firmada, freno de intentos y proxy OAuth con CSRF — detalle en `admin/README.md`.
 
 ## Imágenes
 
-Todas las imágenes viven en `public/images/`. No se usa ningún CDN externo.
-
-| Carpeta                          | Contenido                        | Convención de nombre         |
-|----------------------------------|----------------------------------|------------------------------|
-| `public/images/hero/`            | Fondos y video del hero          | `hero-bg.webp`               |
-| `public/images/servicios/`       | Una imagen por servicio          | `{slug}.webp`                |
-| `public/images/sectores/`        | Una imagen por sector            | `{slug}.webp`                |
-| `public/images/clientes/`        | Logos de clientes                | `logo-{nombre-cliente}.webp` |
-| `public/images/certificaciones/` | Logos ISO, AENOR, IQNET          | `iso-9001.webp`, `aenor.webp`|
+Todas las imágenes viven en `public/images/`, sin CDN externo. Para reemplazar una foto, usar un nombre de archivo nuevo: el `.htaccess` cachea `.webp` por 1 año.
 
 ## Desarrollo
 
 ```bash
-npm run dev     # servidor de desarrollo
-npm run build   # build estático → carpeta out/
-npm run lint    # ESLint
+npm run dev            # servidor de desarrollo
+npm run build          # build estático → carpeta out/
+npm run lint           # ESLint
+npx tsc --noEmit       # revisión de tipos
+npm run check:export   # verifica out/ antes de subir
 ```
 
 ## Variables de entorno
 
-Ver `.env.example`.
+Ver `.env.example` (sitio) y `admin/.env.example` (panel).

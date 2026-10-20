@@ -1,6 +1,6 @@
 ---
 name: Marea Alta — Glacial Precision Works
-description: Sharp, flat, cold-chain industrial system for a 33-year Chilean thermal-packaging manufacturer
+description: Sharp, flat, cold-chain industrial system for a 36-year Chilean thermal-packaging manufacturer
 colors:
   # Paleta oficial — originales/marca/manual de marca.pdf
   # Azul Principal #045684 es el único azul del proyecto: fondos, textos y estados usan este tono o blanco como contraste.
@@ -123,7 +123,7 @@ components:
 
 **Creative North Star: "Glacial Precision Works"**
 
-Marea Alta fabricates thermal packaging that keeps regulated cargo (pharma, food, health care) inside a critical temperature band across a 33-year track record and an ISO 9001 certification. The implemented system reads like the inside of a precision cold-storage facility: deep maritime blue for authority, safe-guard green for verification, and every surface cut at a hard, exact edge. Nothing is soft, nothing is decorative — the confidence comes from precision, not warmth.
+Marea Alta fabricates thermal packaging that keeps regulated cargo (pharma, food, health care) inside a critical temperature band across a 36-year track record and an ISO 9001 certification. The implemented system reads like the inside of a precision cold-storage facility: deep maritime blue for authority, safe-guard green for verification, and every surface cut at a hard, exact edge. Nothing is soft, nothing is decorative — the confidence comes from precision, not warmth.
 
 This is deliberately **not** the "Modern Corporate / softly structured" direction sketched in the early Stitch mockup (`design-reference/stitch_marea_alta_modern_redesign/arctic_maritime_expressive/DESIGN.md`, 8–24px radii, tinted ambient shadows). What actually shipped rejected rounding and shadow entirely in favor of flat, bordered, architectural blocks — closer to a shipping manifest or a lab instrument panel than a marketing brochure. Treat the shipped implementation as the current source of truth; the mockup is historical reference only.
 

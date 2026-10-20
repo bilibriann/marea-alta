@@ -36,8 +36,7 @@ interface EnvioBase {
  *
  * El destinatario sale siempre de CONTACT_EMAIL (src/config.ts). Ojo: en el
  * plan gratuito Web3Forms entrega al buzón asociado a la access key e ignora
- * `to`; se manda igual para que el destino viaje en el payload y para que al
- * confirmar el dominio baste con cambiar la constante.
+ * `to`; se manda igual para que el destino viaje en el payload.
  */
 async function postForm(
   campos: Record<string, string | string[]>,
