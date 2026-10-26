@@ -32,22 +32,21 @@ export function ConfianzaSection({ confianza }: Props) {
           </h2>
         </Reveal>
         {/* La foto pone cara a los pilares: va a la izquierda para leerse antes
-            que la lista, y en vertical para que en escritorio acompañe el alto
-            de la grilla 2×2 sin dejar huecos. En móvil se apaisa y el foco se
-            sube para no cortar los cascos. */}
+            que la lista. Es del equipo de pie, lado a lado, así que se mantiene
+            apaisada (4:3) en todos los tamaños para no cortar a nadie. */}
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-          <Reveal variante="izquierda" className="mx-auto w-full max-w-sm lg:col-span-4 lg:max-w-none">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-outline-variant/40 lg:aspect-[4/5]">
+          <Reveal variante="izquierda" className="mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-outline-variant/40">
               <Image
                 src={confianza.imagen.src}
                 alt={confianza.imagen.alt}
                 fill
-                sizes="(min-width: 1024px) 30vw, 384px"
-                className="object-cover object-[50%_22%] lg:object-center"
+                sizes="(min-width: 1280px) 480px, (min-width: 1024px) 38vw, 448px"
+                className="object-cover"
               />
             </div>
           </Reveal>
-          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:col-span-8">
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:col-span-7">
             {confianza.items.map((item, indice) => {
               const Icon = ICONS[item.icono]
               return (
