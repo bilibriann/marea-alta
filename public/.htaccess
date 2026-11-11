@@ -12,6 +12,20 @@ DirectorySlash Off
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # URLs viejas con tildes -> nuevas sin tildes (301 = movida para siempre).
+  # Esas noticias se publicaron primero con tildes en la URL, que en Hostinger
+  # daban 404. Van antes que la regla de .html para que respondan primero.
+  # Cada letra con tilde se escribe como o?[\x80-\xFF]{2}: coincide si llega
+  # como un carácter (ó = 2 bytes) o descompuesta (o + tilde de 2 bytes). Exige
+  # bytes no-ASCII, así la URL nueva (sin tildes) no coincide y no hay bucle.
+  RewriteRule ^noticias/co?[\x80-\xFF]{2}mo-protegimos-la-cadena-de-fri?[\x80-\xFF]{2}o-de-las-vacunas-en-chile(\.html)?/?$ /noticias/como-protegimos-la-cadena-de-frio-de-las-vacunas-en-chile [R=301,L]
+  RewriteRule ^noticias/gel-pack-tres-osos-ma?[\x80-\xFF]{2}xima-eficiencia-y-seguridad-en-cadena-de-fri?[\x80-\xFF]{2}o(\.html)?/?$ /noticias/gel-pack-tres-osos-maxima-eficiencia-y-seguridad-en-cadena-de-frio [R=301,L]
+  RewriteRule "^images/Almace?[\x80-\xFF]{2}n industrial con carretilla elevadora\.png$" /images/almacen-industrial-con-carretilla-elevadora.png [R=301,L]
+
+  # Papel HidroMax 60 se fusionó en Bobina HidroMax (mismo artículo en paquete
+  # y en bobina); su URL vieja daba 404.
+  RewriteRule ^productos/papel-hidromax-60(\.html)?/?$ /productos/bobina-hidromax [R=301,L]
+
   # /contacto  ->  /contacto.html  (solo si el archivo existe)
   # Sin "!-d" a propósito: el .html tiene que ganarle a la carpeta homónima.
   RewriteCond %{REQUEST_FILENAME} !-f
