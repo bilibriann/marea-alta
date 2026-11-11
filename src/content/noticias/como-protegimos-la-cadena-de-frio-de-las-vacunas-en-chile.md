@@ -24,4 +24,4 @@ En 2020 asumimos el desafío de resguardar la cadena de frío para millones de d
 
 Protege tus envíos con los más altos estándares del mercado. Cotiza tus soluciones de empaque térmico con nosotros.
 
-[![Video en el canal de YT](/images/Almac%C3%A9n%20industrial%20con%20carretilla%20elevadora.png "Aquí te contamos como fue")](https://www.youtube.com/watch?v=AXjbB3YGDN4)
+[![Video en el canal de YT](/images/almacen-industrial-con-carretilla-elevadora.png "Aquí te contamos como fue")](https://www.youtube.com/watch?v=AXjbB3YGDN4)

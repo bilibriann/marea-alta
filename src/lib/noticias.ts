@@ -26,11 +26,25 @@ export interface Noticia extends z.infer<typeof noticiaFrontmatterSchema> {
 
 const noticiasDir = path.join(process.cwd(), 'src/content/noticias')
 
+// El slug sale del nombre del archivo, pero siempre en ASCII: si el panel
+// guarda "cómo-…-frío.md", la URL queda /noticias/como-…-frio. Una URL con
+// tildes da 404 en Hostinger.
+function slugDesdeArchivo(file: string): string {
+  return file
+    .replace(/\.md$/, '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
 function parseNoticia(file: string, raw: string): Noticia {
   const { data, content } = matter(raw)
   try {
     const frontmatter = noticiaFrontmatterSchema.parse(data)
-    return { ...frontmatter, slug: file.replace(/\.md$/, ''), contenido: content.trim() }
+    return { ...frontmatter, slug: slugDesdeArchivo(file), contenido: content.trim() }
   } catch (err) {
     throw new Error(
       `Noticia inválida en src/content/noticias/${file}: ${err instanceof Error ? err.message : String(err)}`
@@ -61,12 +75,8 @@ export async function getAllNoticias(): Promise<Noticia[]> {
 }
 
 export async function getNoticia(slug: string): Promise<Noticia | null> {
-  const file = `${slug}.md`
-  try {
-    const raw = await fs.readFile(path.join(noticiasDir, file), 'utf8')
-    return parseNoticia(file, raw)
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null
-    throw err
-  }
+  // Se busca en el listado y no por nombre de archivo: el slug ya no tiene
+  // por qué coincidir letra a letra con el archivo (ver slugDesdeArchivo).
+  const noticias = await getAllNoticias()
+  return noticias.find((n) => n.slug === slug) ?? null
 }
