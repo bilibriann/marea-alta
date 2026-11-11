@@ -2,6 +2,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import matter from 'gray-matter'
 import { z } from 'zod'
+import { slugDesdeArchivo } from './slug'
 
 // Sveltia CMS guarda un campo opcional vacío como '' en vez de omitirlo,
 // lo que rompe .optional() (espera undefined, no un string vacío). Se
@@ -100,7 +101,7 @@ function parseProducto(file: string, raw: string): Producto {
   const { data } = matter(raw)
   try {
     const frontmatter = productoFrontmatterSchema.parse(data)
-    return { ...frontmatter, slug: file.replace(/\.md$/, '') }
+    return { ...frontmatter, slug: slugDesdeArchivo(file) }
   } catch (err) {
     throw new Error(
       `Producto inválido en src/content/productos/${file}: ${err instanceof Error ? err.message : String(err)}`
@@ -141,12 +142,8 @@ function posicion(slug: string): number {
 }
 
 export async function getProducto(slug: string): Promise<Producto | null> {
-  const file = `${slug}.md`
-  try {
-    const raw = await fs.readFile(path.join(productosDir, file), 'utf8')
-    return parseProducto(file, raw)
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null
-    throw err
-  }
+  // Se busca en el listado y no por nombre de archivo: el slug no tiene por qué
+  // coincidir letra a letra con el archivo (ver slugDesdeArchivo).
+  const productos = await getAllProductos()
+  return productos.find((p) => p.slug === slug) ?? null
 }

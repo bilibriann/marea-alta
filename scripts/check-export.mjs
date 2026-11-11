@@ -70,6 +70,23 @@ try {
   /* sin carpeta noticias: correcto */
 }
 
+// 5. Nombres con tildes o eñes — en Hostinger esas URLs dan 404 (páginas e
+// imágenes). El panel ya guarda nombres limpios; esto ataja lo que entre a mano.
+const conTildes = []
+async function buscarNoAscii(d) {
+  for (const e of await readdir(d, { withFileTypes: true })) {
+    const p = path.join(d, e.name)
+    if (/[^\x00-\x7F]/.test(e.name)) conTildes.push(path.relative(OUT, p).replaceAll('\\', '/'))
+    if (e.isDirectory()) await buscarNoAscii(p)
+  }
+}
+await buscarNoAscii(OUT)
+if (conTildes.length) {
+  fallos.push(
+    `Archivos con tildes o eñes (darán 404 en Hostinger). Renómbralos sin tildes en public/ y actualiza dónde se usan:\n  ${conTildes.join('\n  ')}`
+  )
+}
+
 for (const a of avisos) console.warn(`⚠ ${a}`)
 for (const f of fallos) console.error(`✗ ${f}`)
 

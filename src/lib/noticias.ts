@@ -2,6 +2,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import matter from 'gray-matter'
 import { z } from 'zod'
+import { slugDesdeArchivo } from './slug'
 
 const noticiaFrontmatterSchema = z.object({
   titulo: z.string().min(1),
@@ -25,20 +26,6 @@ export interface Noticia extends z.infer<typeof noticiaFrontmatterSchema> {
 }
 
 const noticiasDir = path.join(process.cwd(), 'src/content/noticias')
-
-// El slug sale del nombre del archivo, pero siempre en ASCII: si el panel
-// guarda "cómo-…-frío.md", la URL queda /noticias/como-…-frio. Una URL con
-// tildes da 404 en Hostinger.
-function slugDesdeArchivo(file: string): string {
-  return file
-    .replace(/\.md$/, '')
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9-]+/g, '-')
-    .replace(/-{2,}/g, '-')
-    .replace(/^-|-$/g, '')
-}
 
 function parseNoticia(file: string, raw: string): Noticia {
   const { data, content } = matter(raw)
