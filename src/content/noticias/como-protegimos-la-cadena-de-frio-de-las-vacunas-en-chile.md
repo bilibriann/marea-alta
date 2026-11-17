@@ -12,6 +12,8 @@ palabras_clave:
 
 **Cadena de frío de alta precisión para productos críticos y del sector salud.** En Marea Alta desarrollamos soluciones de empaque térmico y gel packs diseñados para garantizar la integridad de envíos sensibles ante las condiciones más exigentes.
 
+[Ver en YouTube](https://www.youtube.com/watch?v=AXjbB3YGDN4)
+
 **Garantía y Calidad Validada a Gran Escala**
 
 En 2020 asumimos el desafío de resguardar la cadena de frío para millones de dosis de vacunas contra el COVID-19 en Chile. La misma ingeniería, inocuidad y resistencia utilizada en la emergencia sanitaria nacional hoy respalda todo nuestro catálogo de soluciones logísticas e industriales.
@@ -23,5 +25,3 @@ En 2020 asumimos el desafío de resguardar la cadena de frío para millones de d
 - **Respaldo Sanitario e Industrial:** Procesos validados por la autoridad sanitaria, ideales para logística médica, farmacéutica y alimentaria.
 
 Protege tus envíos con los más altos estándares del mercado. Cotiza tus soluciones de empaque térmico con nosotros.
-
-[![Video en el canal de YT](/images/almacen-industrial-con-carretilla-elevadora.png "Aquí te contamos como fue")](https://www.youtube.com/watch?v=AXjbB3YGDN4)
