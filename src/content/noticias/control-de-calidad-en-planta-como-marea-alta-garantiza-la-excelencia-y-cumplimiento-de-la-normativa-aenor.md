@@ -12,7 +12,7 @@ palabras_clave:
 
 En la industria moderna, el control de calidad en planta no es únicamente una etapa final de inspección, sino el pilar operativo que define la confiabilidad y sustentabilidad de una empresa. En **Marea Alta**, la excelencia operacional representa un compromiso absoluto con la satisfacción de nuestras partes interesadas y la optimización continua de cada proceso productivo. Tras culminar con éxito la rigurosa auditoría de **AENOR**, reafirmamos nuestro liderazgo industrial al validar que cada uno de nuestros estándares técnicos cumple estrictamente con las exigencias del mercado nacional e internacional.
 
-[ver en YouTube](https://youtu.be/qe4fm_gxydE)
+[ver en YouTube](https://youtu.be/G907ED2LA6w)
 
 ## El Rol del Departamento de Control de Calidad en Marea Alta
 
